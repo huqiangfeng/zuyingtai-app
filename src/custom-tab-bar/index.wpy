@@ -1,0 +1,107 @@
+<style lang="less">
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: white;
+  display: flex;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tab-bar-border {
+  background-color: rgba(0, 0, 0, 0.33);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 1px;
+  transform: scaleY(0.5);
+}
+
+.tab-bar-item {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.tab-bar-item cover-image {
+  width: 27px;
+  height: 27px;
+}
+
+.tab-bar-item cover-view {
+  font-size: 10px;
+}
+</style>
+<template>
+  <!--miniprogram/custom-tab-bar/index.wxml-->
+  <cover-view class="tab-bar">
+    <cover-view class="tab-bar-border"></cover-view>
+    <cover-view
+      wx:for="{{list}}"
+      wx:key="index"
+      class="tab-bar-item"
+      data-path="{{item.pagePath}}"
+      data-index="{{index}}"
+      bindtap="switchTab"
+    >
+      <cover-image src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></cover-image>
+      <cover-view style="color: {{selected === index ? selectedColor : color}}">{{item.text}}</cover-view>
+    </cover-view>
+  </cover-view>
+
+</template>
+<script>
+import wepy from '@wepy/core'
+
+wepy.component({
+  data: {
+    selected: 0,
+    color: '#f00',
+    selectedColor: '#3cc51f',
+    list: [{
+      text: '首页',
+      pagePath: 'pages/index',
+      iconPath: '/static/image/tab1.png',
+      selectedIconPath: '/static/image/tab1-active.png'
+    }, {
+      text: '选款',
+      pagePath: 'pages/choose',
+      iconPath: '/static/image/tab2.png',
+      selectedIconPath: '/static/image/tab2-active.png'
+    }, {
+      text: '闲置',
+      pagePath: 'pages/leaveUnused',
+      iconPath: '/static/image/tab3.png',
+      selectedIconPath: '/static/image/tab3-active.png'
+    }, {
+      text: '收藏',
+      pagePath: 'pages/collect',
+      iconPath: '/static/image/tab4.png',
+      selectedIconPath: '/static/image/tab4-active.png'
+    }, {
+      text: '我的',
+      pagePath: 'pages/myIndex',
+      iconPath: '/static/image/tab5.png',
+      selectedIconPath: '/static/image/tab5-active.png'
+    }]
+  },
+  methods: {
+    switchTab (e) {
+      const data = e.currentTarget.dataset
+      const url = data.path
+      wx.switchTab({
+        url
+      })
+      this.setData({
+        selected: data.index
+      })
+    }
+  }
+})
+</script>

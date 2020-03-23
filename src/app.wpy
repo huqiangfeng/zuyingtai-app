@@ -1,0 +1,73 @@
+<style lang="less">
+</style>
+<script>
+import wepy from '@wepy/core'
+import vuex from '@wepy/x'
+wepy.use(vuex)
+wepy.app({
+
+  globalData: {
+    userInfo: null
+  },
+  onLaunch () {
+
+  },
+  methods: {
+  }
+})
+</script>
+<config>
+{
+    pages: [
+       // 首页
+    'pages/index',
+    // 选款
+    'pages/choose',
+    // 闲置
+    'pages/leaveUnused',
+    // 收藏
+    'pages/collect',
+    // 我的
+    'pages/myIndex'
+    ],
+    tabBar: {
+    custom: true,
+    color: '#A1A1A1',
+    backgroundColor: '#FFFFFF',
+    selectedColor: '#000000',
+    list: [{
+        text: '首页',
+        pagePath: 'pages/index',
+        iconPath: 'static/image/tab1.png',
+        selectedIconPath: 'static/image/tab1-active.png'
+      }, {
+        text: '选款',
+        pagePath: 'pages/choose',
+        iconPath: 'static/image/tab2.png',
+        selectedIconPath: 'static/image/tab2-active.png'
+      }, {
+        text: '闲置',
+        pagePath: 'pages/leaveUnused',
+        iconPath: 'static/image/tab3.png',
+        selectedIconPath: 'static/image/tab3-active.png'
+      }, {
+        text: '收藏',
+        pagePath: 'pages/collect',
+        iconPath: 'static/image/tab4.png',
+        selectedIconPath: 'static/image/tab4-active.png'
+      }, {
+        text: '我的',
+        pagePath: 'pages/myIndex',
+        iconPath: 'static/image/tab5.png',
+        selectedIconPath: 'static/image/tab5-active.png'
+      }],
+      'position': 'bottom'
+    },
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'black'
+    }
+}
+</config>
