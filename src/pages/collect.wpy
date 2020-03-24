@@ -3,7 +3,7 @@
 
 <template>
   <div class="container">
-    123WS
+    收藏
   </div>
 </template>
 
@@ -14,7 +14,7 @@ import store from '../store'
 wepy.page({
   store,
   config: {
-    navigationBarTitleText: '123',
+    navigationBarTitleText: '收藏',
     usingComponents: {}
   },
   data: {},
@@ -24,11 +24,13 @@ wepy.page({
   methods: {
   },
   created () {
-    wx.getUserInfo({
-      success (res) {
-        console.log(res)
-      }
-    })
+
   }
 })
 </script>
+<config>
+{
+    usingComponents: {
+    }
+}
+</config>

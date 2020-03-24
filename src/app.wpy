@@ -10,7 +10,10 @@ wepy.app({
     userInfo: null
   },
   onLaunch () {
-
+    wx.hideTabBar({
+      success: _ => {
+      }
+    })
   },
   methods: {
   }
@@ -19,7 +22,7 @@ wepy.app({
 <config>
 {
     pages: [
-       // 首页
+    // 首页
     'pages/index',
     // 选款
     'pages/choose',
