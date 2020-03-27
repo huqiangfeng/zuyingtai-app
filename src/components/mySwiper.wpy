@@ -1,0 +1,51 @@
+<style lang="less">
+.img-swiper {
+  width: 100%;
+  display: block;
+}
+</style>
+
+<template>
+  <swiper style="{{ setStyle }}" autoplay="{{autoplay}}" indicator-dots="{{ indicator }}" indicator-color="#30313B" indicator-active-color="#C9AB79">
+    <block wx:for="{{list}}" wx:key="*this">
+      <swiper-item>
+        <image class="img-swiper" src="{{ item.imgUrl }}" mode="widthFix"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+wepy.component({
+  props: {
+    list: {
+      type: [Array],
+      default: []
+    },
+    setStyle: {
+      type: [String],
+      default: ''
+    },
+    // 自动播放
+    autoplay: {
+      type: [Boolean],
+      default: true
+    },
+    // 面板指示点
+    indicator: {
+      type: [Boolean],
+      default: true
+    }
+  },
+  methods: {
+  }
+})
+</script>
+<config>
+{
+    usingComponents: {
+
+    }
+}
+</config>

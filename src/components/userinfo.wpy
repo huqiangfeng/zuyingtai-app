@@ -1,0 +1,87 @@
+<style lang="less">
+.container {
+  display: flex;
+  .left {
+    width: 126rpx;
+    height: 126rpx;
+    position: relative;
+    margin-right: 25rpx;
+    .img-head {
+      display: block;
+      width: 126rpx;
+      height: 126rpx;
+      border-radius: 50%;
+    }
+    .set-img {
+      position: absolute;
+      right: 10rpx;
+      bottom: 0;
+      width: 32rpx;
+      height: 32rpx;
+    }
+  }
+  .right {
+    color: #fff;
+    .name {
+      font-size: 36rpx;
+      margin: 25rpx 0;
+      line-height: 1;
+    }
+    .tel {
+      line-height: 1;
+      font-size: 24rpx;
+    }
+  }
+}
+</style>
+
+<template>
+  <div class="container" @click="on_setOrLogin">
+    <div class="left">
+      <image class="img-head" v-if="login&&userInfo.headImg" src="{{ userInfo.headImg }}" mode="widthFix"></image>
+      <image class="img-head" v-else src="@image/touxiang.png" mode="widthFix"></image>
+      <image class="set-img" src="@image/sezhi.png" mode="widthFix"></image>
+    </div>
+    <div class="right">
+      <div class="name">{{ name }}</div>
+      <div class="tel">{{ tel }}</div>
+    </div>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+import store from '../store'
+import { mapState } from '@wepy/x'
+wepy.component({
+  store,
+  computed: {
+    ...mapState(['userInfo', 'login']),
+    name () {
+      return this.login ? this.userInfo.name : '登录/注册'
+    },
+    tel () {
+      return this.login ? this.userInfo.tel : '登录后成为会员0元用包'
+    }
+  },
+  props: {},
+  methods: {
+    on_setOrLogin () {
+      if (this.login) {
+        wx.navigateTo({
+          url: ''
+        })
+      } else {
+
+      }
+    }
+  }
+})
+</script>
+<config>
+{
+    usingComponents: {
+
+    }
+}
+</config>

@@ -1,0 +1,42 @@
+<style lang="less">
+.container {
+  width: 100%;
+  display: flex;
+  .arr-item {
+    margin: 10rpx;
+    flex: 1;
+    .arr-img {
+      width: 100%;
+    }
+  }
+}
+</style>
+
+<template>
+  <div class="container">
+    <div class="arr-item" v-for="(item,index) in list" :key="index">
+      <image class="arr-img" src="{{ item.imgUrl }}" mode="widthFix"></image>
+    </div>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+wepy.component({
+  props: {
+    list: {
+      type: [Array],
+      default: []
+    }
+  },
+  methods: {
+  }
+})
+</script>
+<config>
+{
+    usingComponents: {
+
+    }
+}
+</config>

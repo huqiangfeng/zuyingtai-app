@@ -1,0 +1,84 @@
+<style lang="less">
+.container {
+  .img-not {
+    width: 100%;
+    padding: 20rpx 40rpx;
+  }
+  .list {
+    padding: 20rpx 0rpx;
+  }
+}
+</style>
+
+<template>
+  <div class="container">
+    <block v-if="not">
+      <image class="img-not" src="@image/meiyouo.png" mode="widthFix"></image>
+    </block>
+    <block v-else>
+      <div class="list">
+        <commodity-list collect="{{ true }}" list="{{ list }}"></commodity-list>
+      </div>
+    </block>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+wepy.component({
+  config: {
+    navigationBarTitleText: '收藏'
+  },
+  data: {
+    // 商品列表
+    list: [
+      //
+      {
+        text1: 'CUCCI古驰',
+        text2: 100,
+        text3: 20
+      }, {
+        text1: 'CUCCI古驰',
+        text2: 100,
+        text3: 20
+      }, {
+        text1: 'CUCCI古驰',
+        text2: 100,
+        text3: 20
+      }, {
+        text1: 'CUCCI古驰',
+        text2: 100,
+        text3: 20
+      }, {
+        text1: 'CUCCI古驰',
+        text2: 100,
+        text3: 20
+      }, {
+        text1: 'CUCCI古驰',
+        text2: 100,
+        text3: 20
+      }, {
+        text1: 'CUCCI古驰',
+        text2: 100,
+        text3: 20
+      }]
+  },
+  computed: {
+    not () {
+      return this.list.length === 0
+    }
+  },
+  methods: {
+  },
+  created () {
+
+  }
+})
+</script>
+<config>
+{
+    usingComponents: {
+       "commodity-list": "~@components/commodityList"
+    }
+}
+</config>

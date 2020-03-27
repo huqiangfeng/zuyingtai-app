@@ -1,0 +1,50 @@
+<style lang="less">
+.option {
+  width: 200rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  font-size: 30rpx;
+  font-family: PingFang SC;
+  color: #000;
+  border-radius: 12rpx;
+}
+.bgc {
+  background-color: #f4f4f4;
+}
+.option.active {
+  color: #fff;
+  background-color: #c9ab79;
+}
+</style>
+
+<template>
+  <div class="option" :class="{'active':active,'bgc':bgc}">
+    {{ text }}
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+wepy.component({
+  props: {
+    text: {
+      type: [String],
+      default: '全部'
+    },
+    active: {
+      type: [Boolean],
+      default: false
+    },
+    bgc: {
+      type: [Boolean],
+      default: false
+    }
+  },
+  data: {},
+  methods: {
+  },
+  created () {
+  }
+})
+</script>

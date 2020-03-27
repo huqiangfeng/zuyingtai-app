@@ -1,0 +1,181 @@
+<style lang="less">
+.container {
+  background-color: #f5f5f5;
+  .userinfo-card {
+    box-sizing: border-box;
+    width: 750rpx;
+    height: 566rpx;
+    background: #000;
+    padding: 60rpx 40rpx 50rpx;
+    position: relative;
+    .cards {
+      margin-top: 60rpx;
+    }
+    .icons {
+      display: flex;
+      position: absolute;
+      right: 40rpx;
+      top: 20rpx;
+      .icon {
+        padding: 10rpx;
+        position: relative;
+        .img-icon {
+          width: 44rpx;
+          height: 44rpx;
+        }
+        &.active::after {
+          content: '';
+          position: absolute;
+          top: 10rpx;
+          right: 10rpx;
+          width: 8rpx;
+          height: 8rpx;
+          background: rgba(224, 46, 36, 1);
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .img-icon {
+      width: 26rpx;
+      height: 26rpx;
+      display: block;
+      padding: 10rpx;
+    }
+    .text {
+      padding: 0 40rpx;
+      font-size: 28rpx;
+      color: rgba(48, 49, 59, 1);
+    }
+  }
+  .advertising {
+    background-color: #fff;
+    padding: 30rpx 40rpx 40rpx;
+    margin-top: 20rpx;
+  }
+}
+</style>
+
+<template>
+  <div class="container">
+    <!-- 用户信息卡片 -->
+    <div class="userinfo-card">
+      <!-- 用户信息 -->
+      <div class="userinfo">
+        <user-info></user-info>
+      </div>
+      <!-- 积分余额vip -->
+      <div class="cards">
+        <cards></cards>
+      </div>
+      <!-- 消息/推 -->
+      <div class="icons">
+        <div class="tui-icon icon">
+          <image class="img-icon" src="@image/tui.png" mode="widthFix"></image>
+        </div>
+        <div class="ling-icon icon" :class="{'active':true}">
+          <image class="img-icon" src="@image/xiaoxi.png" mode="widthFix"></image>
+        </div>
+      </div>
+    </div>
+    <!-- 订单 -->
+    <nav-box @ontitle="ontitle" @onitem="onitem" list="{{ orders }}" title="全部订单">
+      <div class="title">
+        <image class="img-icon" src="@image/bofang1.png" mode="widthFix"></image>
+        <div class="text">地址管理</div>
+      </div>
+    </nav-box>
+    <!-- 服务 -->
+    <nav-box list="{{ serve }}" title="我的服务"></nav-box>
+    <!-- 广告 -->
+    <div class="advertising">
+      <my-swiper indicator="{{ false }}" list="{{ swiper }}"></my-swiper>
+    </div>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+wepy.component({
+  config: {
+    navigationBarTitleText: '我的',
+    usingComponents: {}
+  },
+  data: {
+    // 订单nav
+    orders: [
+
+      {
+        text: '待支付',
+        imgUrl: '/static/image/zhifu.png',
+        pagePath: ''
+      }, {
+        text: '待收货',
+        imgUrl: '/static/image/shouhuo.png',
+        pagePath: ''
+      }, {
+        text: '待归还',
+        imgUrl: '/static/image/daiguihuan.png',
+        pagePath: ''
+      }, {
+        text: '归还中',
+        imgUrl: '/static/image/huihuanzhong.png',
+        pagePath: ''
+      }, {
+        text: '客服售后',
+        imgUrl: '/static/image/shouhouda.png',
+        pagePath: ''
+      }],
+    // 服务nav
+    serve: [
+      //
+      {
+        text: '我要鉴定',
+        imgUrl: '/static/image/jianding.png',
+        pagePath: ''
+      }, {
+        text: '我要养护',
+        imgUrl: '/static/image/yanghu.png',
+        pagePath: ''
+      }, {
+        text: '我要晒单',
+        imgUrl: '/static/image/zhifu.png',
+        pagePath: ''
+      }, {
+        text: '常见问题',
+        imgUrl: '/static/image/zhifu.png',
+        pagePath: ''
+      }],
+    // 轮播图
+    swiper: [
+      {
+        imgUrl: '/static/image/xuangou.png'
+      }
+    ]
+  },
+  methods: {
+    ontitle () {
+
+    },
+    onitem (item) {
+      console.log(item)
+    }
+  },
+  created () {
+  }
+})
+</script>
+<config>
+{
+    usingComponents: {
+      "user-info": "~@components/userinfo",
+      "cards": "~@components/cards",
+      "nav-box": "~@components/navBox",
+      "my-swiper": "~@components/mySwiper"
+    }
+}
+</config>
