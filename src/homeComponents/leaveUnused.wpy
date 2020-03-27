@@ -1,0 +1,34 @@
+<style lang="less">
+</style>
+
+<template>
+  <div class="container">
+    闲置
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+import { mapState } from '@wepy/x'
+import store from '../store'
+wepy.component({
+  store,
+  config: {
+    navigationBarTitleText: '闲置'
+  },
+  data: {},
+  computed: {
+    ...mapState(['counter'])
+  },
+  methods: {
+  },
+  created () {
+  }
+})
+</script>
+<config>
+{
+    usingComponents: {
+    }
+}
+</config>

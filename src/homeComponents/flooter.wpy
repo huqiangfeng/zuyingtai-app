@@ -1,0 +1,91 @@
+<style lang="less">
+.tab-bar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.tab-bar-item {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.tab-bar-item cover-image {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+.tab-bar-item cover-view {
+  font-size: 22rpx;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  margin-top: 2rpx;
+}
+</style>
+<template>
+  <!--miniprogram/custom-tab-bar/index.wxml-->
+  <cover-view class="tab-bar">
+    <cover-view wx:for="{{list}}" wx:key="index" class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
+      <cover-image v-show="footer === index" src="{{item.selectedIconPath }}"></cover-image>
+      <cover-image v-show="footer !== index" src="{{ item.iconPath}}"></cover-image>
+      <cover-view v-show="footer === index" style="color: {{selectedColor }}">{{item.text}}</cover-view>
+      <cover-view v-show="footer !== index" style="color: {{ color}}">{{item.text}}</cover-view>
+    </cover-view>
+  </cover-view>
+</template>
+<script>
+import wepy from '@wepy/core'
+import store from '../store'
+import { mapState, mapMutations } from '@wepy/x'
+wepy.component({
+  store,
+  computed: mapState(['footer']),
+  data: {
+    color: '#A1A1A1',
+    selectedColor: '#000000',
+    list: [{
+      text: '首页',
+      pagePath: '/pages/index',
+      iconPath: '/static/image/tab1.png',
+      selectedIconPath: '/static/image/tab1-active.png'
+    }, {
+      text: '选款',
+      pagePath: '/pages/choose',
+      iconPath: '/static/image/tab2.png',
+      selectedIconPath: '/static/image/tab2-active.png'
+    }, {
+      text: '闲置',
+      pagePath: '/packageLeaveUnused/pages/leaveUnused',
+      iconPath: '/static/image/tab3.png',
+      selectedIconPath: '/static/image/tab3-active.png'
+    }, {
+      text: '收藏',
+      pagePath: '/pages/collect',
+      iconPath: '/static/image/tab4.png',
+      selectedIconPath: '/static/image/tab4-active.png'
+    }, {
+      text: '我的',
+      pagePath: '/pages/myIndex',
+      iconPath: '/static/image/tab5.png',
+      selectedIconPath: '/static/image/tab5-active.png'
+    }]
+  },
+  methods: {
+    ...mapMutations(['changeFooter']),
+    switchTab (e) {
+      const data = e.currentTarget.dataset
+      const url = data.path
+      if (url === '/packageLeaveUnused/pages/leaveUnused') {
+        wx.navigateTo({ url: url })
+        return
+      }
+      this.changeFooter({ footer: data.index })
+    }
+  }
+})
+</script>

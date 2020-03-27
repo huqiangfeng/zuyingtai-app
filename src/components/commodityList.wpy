@@ -1,0 +1,47 @@
+<style lang="less">
+.list {
+  padding: 0 40rpx;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  .commodity-item {
+    width: 325rpx;
+  }
+}
+</style>
+
+<template>
+  <div class="list">
+    <div class="commodity-item" v-for="(item,index) in list" :key="index">
+      <commodity-item collect="{{ collect }}" item="{{item}}"></commodity-item>
+    </div>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+wepy.component({
+  props: {
+    list: {
+      type: [Object, Array],
+      default: []
+    },
+    collect: {
+      type: [Boolean],
+      default: false
+    }
+  },
+  methods: {
+  },
+  attached () {
+    console.log(this.collect)
+  }
+})
+</script>
+<config>
+{
+    usingComponents: {
+      "commodity-item": "~@components/commodityItem"
+    }
+}
+</config>

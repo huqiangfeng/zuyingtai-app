@@ -1,0 +1,221 @@
+<style lang="less">
+.page-container {
+  height: 100%;
+  background-color: #f6f6f6;
+  .title {
+    line-height: 66rpx;
+    width: 100%;
+    font-size: 28rpx;
+    color: rgba(158, 158, 158, 1);
+  }
+  .brand-box {
+    position: relative;
+    background-color: #fff;
+    padding: 40rpx;
+    display: flex;
+    flex-wrap: wrap;
+    .option-item {
+      margin-bottom: 20rpx;
+      &:nth-child(3n) {
+        margin: 0 35rpx 20rpx;
+      }
+    }
+  }
+  .more {
+    width: 100%;
+    height: 80rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28rpx;
+    font-weight: 400;
+    color: rgba(158, 158, 158, 1);
+    margin-bottom: -30rpx;
+    .img {
+      margin-left: 10rpx;
+      width: 19rpx;
+      display: block;
+    }
+  }
+  .type-box {
+    .brand-box();
+    margin-top: 20rpx;
+  }
+
+  .bon-box {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    line-height: 100rpx;
+    text-align: center;
+    font-size: 36rpx;
+    color: #fff;
+    .btn-reset {
+      flex: 3;
+      background: rgba(201, 171, 121, 1);
+    }
+    .btn-affirm {
+      flex: 4;
+      background: rgba(48, 49, 59, 1);
+    }
+  }
+}
+.turn {
+  transform: rotate(180deg);
+}
+</style>
+
+<template>
+  <div class="page-container">
+    <!-- 品牌 -->
+    <div class="brand-box">
+      <div class="title">品牌</div>
+      <div class="option-item" @click="on_brandItem(index)" hidden="{{index > 5 && !more}}" v-for="(item, index) in brandList" :key="index">
+        <option-item text="{{ item.text }}" active="{{ item.checkde }}"></option-item>
+      </div>
+      <div class="more" @click="more = !more">
+        <div>{{ moreText }}</div>
+        <image class="img" :class="{'turn':more}" src="@image/jiantouxia.png" mode="widthFix"></image>
+      </div>
+    </div>
+    <!-- 类型 -->
+    <div class="type-box">
+      <div class="title">类型</div>
+      <div class="option-item" @click="on_typeItem(index)" v-for="(item, index) in typeList" :key="index">
+        <option-item text="{{ item.text }}" active="{{ checkedType === item.text }}" bgc="{{ true }}"></option-item>
+      </div>
+    </div>
+    <!-- btn -->
+    <div class="bon-box">
+      <div class="btn-reset" @click="on_reset">重置</div>
+      <div class="btn-affirm" @click="on_submit">确认</div>
+    </div>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+wepy.page({
+  config: {
+    navigationBarTitleText: '筛选'
+  },
+  computed: {
+    moreText () {
+      return this.more ? '收起' : '展开'
+    }
+  },
+  data: {
+    // 更多
+    more: false,
+    // 品牌
+    brandList: [{
+      text: 'CHANEL',
+      checkde: false
+    }, {
+      text: 'LV',
+      checkde: false
+    }, {
+      text: 'Hermes',
+      checkde: false
+    }, {
+      text: 'Dior',
+      checkde: false
+    }, {
+      text: 'Dior',
+      checkde: false
+    }, {
+      text: 'Dior',
+      checkde: false
+    }, {
+      text: 'Dior',
+      checkde: false
+    }, {
+      text: 'Dior',
+      checkde: false
+    }, {
+      text: 'Dior',
+      checkde: false
+    }, {
+      text: 'Dior',
+      checkde: false
+    }, {
+      text: 'Dior',
+      checkde: false
+    }, {
+      text: 'Dior',
+      checkde: false
+    }, {
+      text: 'Dior',
+      checkde: false
+    }, {
+      text: 'Dior',
+      checkde: false
+    }],
+    // 类型
+    checkedType: '',
+    typeList: [{
+      text: '默认'
+    }, {
+      text: '上新'
+    }, {
+      text: '价格升序'
+    }, {
+      text: '价格降序'
+    }]
+  },
+  methods: {
+    // 品牌选择
+    on_brandItem (index) {
+      this.brandList[index].checkde = !this.brandList[index].checkde
+    },
+    // 类型选择
+    on_typeItem (index) {
+      this.checkedType = this.typeList[index].text
+    },
+    // 重置
+    on_reset () {
+      this.checkedType = ''
+      this.brandList.forEach(element => {
+        element.checkde = false
+      })
+    },
+    // 提交
+    on_submit () {
+      console.log(this)
+      const eventChannel = this.$wx.getOpenerEventChannel()
+      eventChannel.emit('filtrate', { data: '全部' })
+    }
+  },
+  // 监听页面加载
+  onLoad () { },
+  // 生命周期回调—监听页面显示
+  onShow () { },
+  // 生命周期回调—监听页面初次渲染完成
+  onReady () { },
+  // 生命周期回调—监听页面隐藏
+  onHide () { },
+  // 生命周期回调—监听页面卸载
+  onUnload () { },
+  // 监听用户下拉动作
+  onPullDownRefresh () { },
+  // 页面上拉触底事件的处理函数
+  onReachBottom () { },
+  // 用户点击右上角转发
+  onShareAppMessage () { },
+  // 页面滚动触发事件的处理函数
+  onPageScroll () { },
+  // 页面尺寸改变时触发，详见 响应显示区域变化
+  onResize () { },
+  // 当前是 tab 页时，点击 tab 时触发
+  onTabItemTap () { }
+})
+</script>
+<config>
+{
+    usingComponents: {
+        "option-item": "./../components/option"
+    }
+}
+</config>

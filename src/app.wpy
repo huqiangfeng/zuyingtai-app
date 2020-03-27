@@ -10,7 +10,6 @@ wepy.app({
     userInfo: null
   },
   onLaunch () {
-
   },
   methods: {
   }
@@ -19,54 +18,79 @@ wepy.app({
 <config>
 {
     pages: [
-       // 首页
-    'pages/index',
-    // 选款
-    'pages/choose',
-    // 闲置
-    'pages/leaveUnused',
-    // 收藏
-    'pages/collect',
-    // 我的
-    'pages/myIndex'
+    // 首页
+    'pages/index'
     ],
-    tabBar: {
-    custom: true,
-    color: '#A1A1A1',
-    backgroundColor: '#FFFFFF',
-    selectedColor: '#000000',
-    list: [{
-        text: '首页',
-        pagePath: 'pages/index',
-        iconPath: 'static/image/tab1.png',
-        selectedIconPath: 'static/image/tab1-active.png'
-      }, {
-        text: '选款',
-        pagePath: 'pages/choose',
-        iconPath: 'static/image/tab2.png',
-        selectedIconPath: 'static/image/tab2-active.png'
-      }, {
-        text: '闲置',
-        pagePath: 'pages/leaveUnused',
-        iconPath: 'static/image/tab3.png',
-        selectedIconPath: 'static/image/tab3-active.png'
-      }, {
-        text: '收藏',
-        pagePath: 'pages/collect',
-        iconPath: 'static/image/tab4.png',
-        selectedIconPath: 'static/image/tab4-active.png'
-      }, {
-        text: '我的',
-        pagePath: 'pages/myIndex',
-        iconPath: 'static/image/tab5.png',
-        selectedIconPath: 'static/image/tab5-active.png'
-      }],
-      'position': 'bottom'
+    subpackages: [
+    // 登录
+    {
+      root: 'packageLogin',
+      name: 'login',
+      pages: [
+        // 登录入口
+        'pages/loginIndex',
+        // 登录授权页
+        'pages/loginAuthorization'
+      ]
     },
+    // 商品
+    {
+      root: 'packageCommodity',
+      name: 'commodity',
+      pages: [
+        // 筛选
+        'pages/filtrate'
+      ]
+    },
+    // 我的信息
+    {
+      root: 'packageMyInfo',
+      name: 'myInfo',
+      pages: [
+        // 编辑个人信息
+        'pages/setMyInfo'
+      ]
+    },
+    // 闲置
+    {
+      root: 'packageLeaveUnused',
+      name: 'LeaveUnused',
+      pages: [
+        // 闲置
+        'pages/leaveUnused'
+      ]
+    },
+    // 订单统计
+    {
+      root: 'packageOrders',
+      name: 'orders',
+      pages: [
+        // 订单
+        'pages/orders'
+      ]
+    },
+    // 其他独立分包
+    {
+      root: 'packageElse',
+      name: 'else',
+      pages: [
+        // 问题
+        'pages/problem'
+      ],
+      independent: true
+    }
+  ],
+  // 预加载
+  preloadRule: {
+    'pages/index': {
+      network: 'all',
+      packages: ['login', 'commodity']
+    }
+  },
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: '租英台',
       navigationBarTextStyle: 'black'
     }
 }

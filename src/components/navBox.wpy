@@ -1,0 +1,93 @@
+<style lang="less">
+.container {
+  margin-bottom: 20rpx;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 30rpx 0;
+  .title {
+    padding-left: 40rpx;
+    width: 100%;
+    display: flex;
+    margin-bottom: 40rpx;
+    .title-left {
+      font-size: 32rpx;
+      font-weight: 500;
+      color: #30313b;
+    }
+    .title-right {
+      flex: 1;
+    }
+  }
+  .list-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    .list-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .img {
+        width: 60rpx;
+        height: 60rpx;
+        display: block;
+      }
+      .text {
+        font-size: 26rpx;
+        color: #30313b;
+      }
+    }
+  }
+}
+</style>
+
+<template>
+  <div class="container">
+    <div class="title">
+      <div class="title-left" @click="on_title">{{ title }}</div>
+      <div class="title-right">
+        <slot></slot>
+      </div>
+    </div>
+    <div class="list-box">
+      <div @click="on_item(item)" class="list-item" v-for="(item,index) in list" :key="index">
+        <image class="img" src="{{ item.imgUrl }}" mode="widthFix"></image>
+        <div class="text"> {{item.text }} </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+wepy.component({
+  props: {
+    list: {
+      type: [Array],
+      default: []
+    },
+    title: {
+      type: [String],
+      default: ''
+    }
+  },
+  methods: {
+    on_item (item) {
+      this.$emit('onitem', item)
+    },
+    on_title () {
+      this.$emit('ontitle')
+    }
+
+  }
+})
+</script>
+<config>
+{
+    usingComponents: {
+
+    }
+}
+</config>

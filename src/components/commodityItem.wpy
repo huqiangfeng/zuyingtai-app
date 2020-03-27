@@ -1,0 +1,112 @@
+<style lang="less">
+.container {
+  width: 100%;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: PingFang SC;
+  font-weight: 400;
+  // 星星
+  .xinxin {
+    position: absolute;
+    top: 0;
+    right: 0;
+    .img-xinxin {
+      width: 44rpx;
+      height: 44rpx;
+      display: block;
+    }
+  }
+  // 已租
+  .leased {
+    position: absolute;
+    width: 265rpx;
+    border-radius: 12rpx;
+    overflow: hidden;
+    text-align: center;
+    line-height: 50rpx;
+    .top {
+      background: rgba(201, 171, 121, 0.7);
+      font-size: 28rpx;
+      font-weight: 500;
+      color: #fff;
+    }
+    .bottom {
+      color: #fff;
+      background: rgba(201, 171, 121, 1);
+      font-size: 24rpx;
+    }
+  }
+  .img {
+    width: 100%;
+    margin-bottom: 20rpx;
+    display: block;
+  }
+  .name {
+    font-size: 28rpx;
+    color: #30313b;
+  }
+  .money {
+    font-size: 24rpx;
+    color: #30313b;
+    margin: 9rpx 0;
+  }
+  .v-money {
+    font-size: 24rpx;
+    color: #c8aa78;
+  }
+}
+</style>
+
+<template>
+  <div class="container">
+    <!-- 星星 -->
+    <div class="xinxin" v-if="collect">
+      <image v-if="collect" class="xinxin-yes img-xinxin" src="@image/yishouchang.png" mode="widthFix"></image>
+      <image v-else class="xinxin-no img-xinxin" src="@image/shouchang.png" mode="widthFix"></image>
+    </div>
+    <!-- 已租用 -->
+    <div class="leased" v-if="collect">
+      <div class="top">
+        已租用
+      </div>
+      <div class="bottom">
+        还剩35天
+      </div>
+    </div>
+    <!-- 商品 -->
+    <image class="img" src="@image/listitem.png" mode="widthFix"></image>
+    <div class="name">{{item.text1}}</div>
+    <div class="money">¥{{ item.text2}}/天</div>
+    <div class="v-money">VIP:¥{{item.text3}}/天</div>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+wepy.component({
+  props: {
+    item: {
+      type: [Object],
+      default: {}
+    },
+    collect: {
+      type: [Boolean],
+      default: false
+    }
+  },
+  methods: {
+  },
+  attached () {
+    console.log(this.collect)
+  }
+})
+</script>
+<config>
+{
+    usingComponents: {
+    }
+}
+</config>
