@@ -21,76 +21,47 @@
 
 <template>
   <div class="container">
-    <!-- logo2  -->
-    <image class="img logo2" src="../static/image/logo2.png" mode="widthFix"></image>
-    <!-- 海报 -->
-    <img-box list="{{ arr }}"></img-box>
-    <img-box list="{{ arr1 }}"></img-box>
-    <!-- swiper  -->
-    <div class="swiper">
-      <my-swiper setStyle="height: 240rpx;" list="{{ swiperList }}" />
-    </div>
     <!--  -->
-    <img-box list="{{ arr2 }}"></img-box>
-    <img-box list="{{ arr3 }}"></img-box>
+    <block v-for="(item,index) in images" :key="index">
+      <block v-if="item.imageSrc === 'carousel'">
+        <div class="swiper">
+          <my-swiper setStyle="height: 240rpx;" list="{{ item.list }}" />
+        </div>
+      </block>
+      <block v-else-if="item.imageSrc === 'list'">
+        <img-box list="{{ item.list }}"></img-box>
+      </block>
+      <block v-else>
+        <img-box list="{{ [item] }}"></img-box>
+      </block>
+    </block>
   </div>
 </template>
 
 <script>
 import wepy from '@wepy/core'
-import { mapState } from '@wepy/x'
-import store from '../store'
+import $http from './../http/http.js'
 wepy.component({
-  store,
   config: {
     navigationBarTitleText: '首页'
   },
-  swiper: ['../static/image/baozheng.png', '../static/image/baozheng.png', '../static/image/baozheng.png'],
   data: {
-    swiperList: [{ imgUrl: '../static/image/baozheng.png' }, { imgUrl: '../static/image/baozheng.png' }, { imgUrl: '../static/image/baozheng.png' }],
-    arr: [{
-      imgUrl: '../static/image/b1.png'
-    }],
-    arr1: [{
-      imgUrl: '../static/image/b2.png'
-    }],
-    arr2: [{
-      imgUrl: '../static/image/a1.png'
-    }, {
-      imgUrl: '../static/image/a2.png'
-    }],
-    arr3: [{
-      imgUrl: '../static/image/a3.png'
-    }, {
-      imgUrl: '../static/image/a4.png'
-    }]
-
+    images: []
   },
   computed: {
-    ...mapState(['counter'])
   },
   methods: {
   },
   // 在组件实例刚刚被创建时执行
   created () {
-    console.log('created')
+    let _this = this
+    $http.post('/ma/page/getImagePage', { pageKey: 'miniapp_home' }).then(res => {
+      if (res.code === 0) {
+        console.log(res);
+        _this.images = res.data.images
+      }
+    })
   },
-  // 在组件实例进入页面节点树时执行
-  attached () {
-    console.log('attached')
-  },
-  // 组件生命周期函数-在组件布局完成后执行
-  ready () {
-    console.log('ready')
-  },
-  // 在组件实例被移动到节点树另一个位置时执行)
-  moved () {
-    console.log('moved')
-  },
-  // 在组件实例被从页面节点树移除时执行)
-  detached () {
-    console.log('detached')
-  }
 })
 </script>
 

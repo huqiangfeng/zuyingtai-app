@@ -1,0 +1,113 @@
+<style lang="less">
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.block {
+  width: 560rpx;
+  height: 648rpx;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // justify-content: center;
+  .logo {
+    width: 120rpx;
+    height: 120rpx;
+    display: block;
+    margin: 60rpx 0 30rpx;
+  }
+  .p {
+    font-size: 24rpx;
+    color: #000;
+    line-height: 1;
+    padding-bottom: 10rpx;
+  }
+  .btn {
+    width: 480rpx;
+    height: 80rpx;
+    border-radius: 12rpx;
+    line-height: 80rpx;
+    text-align: center;
+    font-size: 30rpx;
+    color: rgba(48, 49, 59, 1);
+    margin-top: 30rpx;
+    border: 1px solid rgba(48, 49, 59, 1);
+  }
+  .btn-wx {
+    border: none;
+    background: rgba(48, 49, 59, 1);
+    color: #fff;
+  }
+}
+</style>
+<template>
+  <van-overlay show="{{ show }}">
+    <div class="wrapper">
+      <div class="block">
+        <image class="img logo" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/logo3.png" mode="widthFix"></image>
+        <div class="p">租英台奢侈包包</div>
+        <div class="p">100%正品保证·放心选购</div>
+        <button class="btn btn-wx" open-type="getUserInfo" type="primary" @getuserinfo="getUserInformation">
+          授权信息
+        </button>
+      </div>
+    </div>
+  </van-overlay>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+import store from '../store'
+import { mapState, mapActions } from '@wepy/x'
+import $http from './../http/http.js'
+wepy.component({
+  store,
+  computed: {
+    ...mapState(['userInfo', 'login', 'code'])
+  },
+  data: {
+  },
+  props: {
+    show: {
+      type: [Boolean],
+      default: false
+    }
+  },
+  methods: {
+    ...mapActions(['setLogin']),
+    // 获取用户信息
+    getUserInformation (e) {
+      let _this = this
+      let data = e.$wx.detail
+      $http.post('/ma/public/login', {
+        encryptedData: JSON.stringify(data.encryptedData),
+        iv: JSON.stringify(data.iv),
+        signature: data.signature,
+        code: _this.code
+      })
+        .then(res => {
+          _this.setLogin({ isLogin: true })
+          console.log(res)
+        })
+        .catch(() => {
+          _this.setLogin({ isLogin: true })
+        })
+    },
+    // 隐藏弹框
+    onClickHide () {
+      this.$emit('onClickHide')
+    }
+  }
+})
+</script>
+<config>
+{
+    usingComponents: {
+      "van-overlay": "~@vant/overlay/index"
+    }
+}
+</config>

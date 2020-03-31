@@ -1,11 +1,12 @@
 <style lang="less">
+@import './utils/style/weui.less';
 </style>
 <script>
 import wepy from '@wepy/core'
 import vuex from '@wepy/x'
+import 'wepy-async-function'
 wepy.use(vuex)
 wepy.app({
-
   globalData: {
     userInfo: null
   },
@@ -27,10 +28,8 @@ wepy.app({
       root: 'packageLogin',
       name: 'login',
       pages: [
-        // 登录入口
-        'pages/loginIndex',
         // 登录授权页
-        'pages/loginAuthorization'
+        'pages/newTelLogin'
       ]
     },
     // 商品
@@ -39,7 +38,8 @@ wepy.app({
       name: 'commodity',
       pages: [
         // 筛选
-        'pages/filtrate'
+        'pages/filtrate',
+        'pages/details',
       ]
     },
     // 我的信息
@@ -47,8 +47,8 @@ wepy.app({
       root: 'packageMyInfo',
       name: 'myInfo',
       pages: [
-        // 我的
-        'pages/myIndex'
+        // 编辑个人信息
+        'pages/setMyInfo'
       ]
     },
     // 闲置

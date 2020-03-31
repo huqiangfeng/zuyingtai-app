@@ -9,7 +9,7 @@
   <swiper style="{{ setStyle }}" autoplay="{{autoplay}}" indicator-dots="{{ indicator }}" indicator-color="#30313B" indicator-active-color="#C9AB79">
     <block wx:for="{{list}}" wx:key="*this">
       <swiper-item>
-        <image class="img-swiper" src="{{ item.imgUrl }}" mode="widthFix"></image>
+        <image class="img-swiper" src="{{ item.imageSrc }}" mode="widthFix"></image>
       </swiper-item>
     </block>
   </swiper>

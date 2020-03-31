@@ -1,0 +1,84 @@
+<style lang="less">
+.xiadan-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px -6px 12px 0px rgba(77, 77, 77, 0.12);
+  .icon-box {
+    padding: 0 20rpx;
+    text-align: center;
+    .img-icon {
+      display: block;
+      width: 44rpx;
+      height: 44rpx;
+      margin-bottom: 9rpx;
+    }
+    .text {
+      line-height: 1;
+      font-size: 22rpx;
+      color: rgba(49, 49, 59, 1);
+    }
+  }
+  .btn {
+    padding: 0 20rpx;
+    width: 418rpx;
+    height: 68rpx;
+    line-height: 68rpx;
+    text-align: center;
+    background: rgba(49, 49, 59, 1);
+    font-size: 30rpx;
+    color: rgba(255, 255, 255, 1);
+  }
+}
+</style>
+
+<template>
+  <div class="xiadan-bar">
+    <div class="icon-box" v-for="(item,index) in icons" :key="index">
+      <image class="img-icon" src="{{ item.imageSrc }}" mode="widthFix"></image>
+      <div class="text">{{ item.text }}</div>
+    </div>
+    <div class="btn" @tap="on_xiaDan">下单试用</div>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+wepy.component({
+  props: {
+    text: {
+      type: [String],
+      default: '全部'
+    }
+  },
+  data: {
+    icons: [
+      {
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/feixinxin.png',
+        text: '海报'
+      },
+      {
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouhouxiao.png',
+        text: '客服'
+      }, {
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouchang.png',
+        text: '收藏'
+      }
+    ]
+  },
+  methods: {
+    on_xiaDan () {
+      // this.$emit('', )
+    }
+  },
+  created () {
+  }
+})
+</script>

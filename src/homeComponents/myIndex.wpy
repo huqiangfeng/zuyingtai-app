@@ -75,17 +75,17 @@
       <!-- 消息/推 -->
       <div class="icons">
         <div class="tui-icon icon">
-          <image class="img-icon" src="@image/tui.png" mode="widthFix"></image>
+          <image class="img-icon" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/tui.png" mode="widthFix"></image>
         </div>
         <div class="ling-icon icon" :class="{'active':true}">
-          <image class="img-icon" src="@image/xiaoxi.png" mode="widthFix"></image>
+          <image class="img-icon" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi.png" mode="widthFix"></image>
         </div>
       </div>
     </div>
     <!-- 订单 -->
     <nav-box @ontitle="ontitle" @onitem="onitem" list="{{ orders }}" title="全部订单">
       <div class="title">
-        <image class="img-icon" src="@image/bofang1.png" mode="widthFix"></image>
+        <image class="img-icon" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/bofang1.png" mode="widthFix"></image>
         <div class="text">地址管理</div>
       </div>
     </nav-box>
@@ -93,7 +93,7 @@
     <nav-box list="{{ serve }}" title="我的服务"></nav-box>
     <!-- 广告 -->
     <div class="advertising">
-      <my-swiper indicator="{{ false }}" list="{{ swiper }}"></my-swiper>
+      <my-swiper setStyle="height: 200rpx;" indicator="{{ false }}" list="{{ swiper }}"></my-swiper>
     </div>
   </div>
 </template>
@@ -111,23 +111,23 @@ wepy.component({
 
       {
         text: '待支付',
-        imgUrl: '/static/image/zhifu.png',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zhifu.png',
         pagePath: ''
       }, {
         text: '待收货',
-        imgUrl: '/static/image/shouhuo.png',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouhuo.png',
         pagePath: ''
       }, {
         text: '待归还',
-        imgUrl: '/static/image/daiguihuan.png',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/daiguihuan.png',
         pagePath: ''
       }, {
         text: '归还中',
-        imgUrl: '/static/image/huihuanzhong.png',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/huihuanzhong.png',
         pagePath: ''
       }, {
         text: '客服售后',
-        imgUrl: '/static/image/shouhouda.png',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouhouda.png',
         pagePath: ''
       }],
     // 服务nav
@@ -135,25 +135,25 @@ wepy.component({
       //
       {
         text: '我要鉴定',
-        imgUrl: '/static/image/jianding.png',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/jianding.png',
         pagePath: ''
       }, {
         text: '我要养护',
-        imgUrl: '/static/image/yanghu.png',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/yanghu.png',
         pagePath: ''
       }, {
         text: '我要晒单',
-        imgUrl: '/static/image/zhifu.png',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zhifu.png',
         pagePath: ''
       }, {
         text: '常见问题',
-        imgUrl: '/static/image/zhifu.png',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zhifu.png',
         pagePath: ''
       }],
     // 轮播图
     swiper: [
       {
-        imgUrl: '/static/image/xuangou.png'
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xuangou.png'
       }
     ]
   },

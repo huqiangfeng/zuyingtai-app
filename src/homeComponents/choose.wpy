@@ -87,28 +87,29 @@
 <template>
   <div class="container">
     <!-- 搜索 -->
-    <van-search @search="on_search" value="{{ value }}" shape="round" placeholder="请输入搜索关键词" />
+    <van-search @search="on_search" value="{{ goodsName }}" shape="round" placeholder="请输入搜索关键词" />
     <!-- 主要内容 -->
     <div class="main">
       <div class="nav">
         <div class="nav-l">
-          <div class="nav-l-item" @click="onChangeNavActive(0)" :class="{'nav-active': navActive=== 0 }">全部</div>
-          <div class="nav-l-item" @click="onChangeNavActive(1)" :class="{'nav-active': navActive=== 1 }">0元专区</div>
+          <div class="nav-l-item" @tap="onChangeNavActive(0)" :class="{'nav-active': navActive=== 0 }">全部</div>
+          <div class="nav-l-item" @tap="onChangeNavActive(1)" :class="{'nav-active': navActive=== 1 }">0元专区</div>
         </div>
-        <div class="nav-r" @click="to_filtrate">
-          <image class="img" src="@image/zu.png" mode="widthFix"></image>
+        <div class="nav-r" @tap="to_filtrate">
+          <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zu.png" mode="widthFix"></image>
           <div>筛选</div>
         </div>
       </div>
       <div class="list" v-show="isShowlist">
         <commodity-list list="{{ list }}"></commodity-list>
       </div>
-      <div class="nonmember" v-show="nonmember">
-        <image class="img" src="@image/zuiyuanzhuanxiang.png" mode="widthFix"></image>
+      <!-- 非会员 -->
+      <!-- <div class="nonmember">
+        <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zuiyuanzhuanxiang.png" mode="widthFix"></image>
         <div class="p1">您还不是会员！</div>
         <div class="p2">0元专区为VIP会员专享服务</div>
         <div class="btn">加入VIP</div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -117,6 +118,7 @@
 import wepy from '@wepy/core'
 import store from '../store'
 import { mapState } from '@wepy/x'
+import $http from './../http/http.js'
 wepy.component({
   store,
   config: {
@@ -128,60 +130,31 @@ wepy.component({
     ...mapState(['member']),
     isShowlist () {
       return this.list.length > 0 && (this.navActive === 0 || this.member)
-    },
-    // 非会员
-    nonmember () {
-      return this.navActive === 1 && !this.member
     }
   },
   data: {
     // 搜索的值
-    value: '123',
+    goodsName: '',
     // 全部/0元
     navActive: 0,
     // 筛选条件
-    filtrate: {},
+    filtrate: {
+      brandId: '',
+      goodsSort: ''
+    },
     // 商品列表
-    list: [
-      //
-      {
-        text1: 'CUCCI古驰',
-        text2: 100,
-        text3: 20
-      }, {
-        text1: 'CUCCI古驰',
-        text2: 100,
-        text3: 20
-      }, {
-        text1: 'CUCCI古驰',
-        text2: 100,
-        text3: 20
-      }, {
-        text1: 'CUCCI古驰',
-        text2: 100,
-        text3: 20
-      }, {
-        text1: 'CUCCI古驰',
-        text2: 100,
-        text3: 20
-      }, {
-        text1: 'CUCCI古驰',
-        text2: 100,
-        text3: 20
-      }, {
-        text1: 'CUCCI古驰',
-        text2: 100,
-        text3: 20
-      }]
+    list: []
   },
   methods: {
     // 搜索
     on_search (e) {
-      this.value = e.$wx.detail
+      this.goodsName = e.$wx.detail
+      this.getData()
     },
     // 全部/0元
     onChangeNavActive (e) {
       this.navActive = e
+      this.getData()
     },
     // 筛选
     to_filtrate () {
@@ -189,16 +162,33 @@ wepy.component({
         url: '/packageCommodity/pages/filtrate',
         events: {
           filtrate: data => {
+            // 得到筛选条件
             this.filtrate = data
+            this.getData()
             console.log(this.filtrate)
           }
         }
       })
+    },
+    getData () {
+      let _this = this
+      let data = {
+        brandId: this.filtrate.brandId,// 品牌标识
+        goodsName: this.goodsName, //  商品名称
+        goodsSort: this.filtrate.goodsSort, //排序
+        vip: this.navActive,  // 1会员专享
+      }
+      $http.post('/ma/goods/listGoods', data).then(res => {
+        if (res.code === 0) {
+          _this.list = res.data.listRows
+        }
+      })
     }
   },
+  // 在组件实例刚刚被创建时执行
   created () {
-  }
-
+    this.getData()
+  },
 })
 </script>
 <config>

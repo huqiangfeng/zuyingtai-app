@@ -1,0 +1,230 @@
+<style lang="less">
+page {
+  background-color: #f6f6f6;
+}
+.page-container {
+  .item-content:after {
+    content: ' ';
+    width: 12px;
+    height: 24px;
+    mask-position: 0 0;
+    mask-repeat: no-repeat;
+    mask-size: 100%;
+    color: var(--weui-FG-3);
+    background-color: currentColor;
+    mask-image: url(data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2224%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M2.454%206.58l1.06-1.06%205.78%205.779a.996.996%200%20010%201.413l-5.78%205.779-1.06-1.061%205.425-5.425-5.425-5.424z%22%20fill%3D%22%23B2B2B2%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E);
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -12px;
+  }
+  .item-cell__bd {
+    background: #fff;
+    padding: 0rpx 40rpx;
+    .item-content {
+      position: relative;
+      padding: 37rpx 0;
+      padding-right: 15px;
+      border-bottom: 1px solid #f6f6f6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .item-label {
+        line-height: 1;
+        font-size: 26rpx;
+        color: rgba(49, 49, 59, 1);
+      }
+      .item-right {
+        line-height: 50rpx;
+        font-size: 26rpx;
+        color: rgba(161, 161, 161, 1);
+        .img-header {
+          width: 126rpx;
+          height: 126rpx;
+          border-radius: 50%;
+          display: block;
+        }
+        picker {
+          width: 200rpx;
+          line-height: 50rpx;
+          min-height: 50rpx;
+          text-align: right;
+        }
+      }
+    }
+  }
+}
+</style>
+
+<template>
+  <div class="page-container">
+    <!-- 头像 -->
+    <div class="item item-cell__bd" @tap="getAvatar">
+      <div class="item-content">
+        <div class="item-label">头像</div>
+        <div class="item-right">
+          <image class="img-header" src="{{ avatar }}" mode="widthFix"></image>
+        </div>
+      </div>
+    </div>
+    <!-- 昵称 -->
+    <div class="item item-cell__bd">
+      <div class="item-content">
+        <div class="item-label">昵称</div>
+        <div class="item-right">
+          虾米吃馍馍
+        </div>
+      </div>
+    </div>
+    <!-- 性别 -->
+    <div class="item item-cell__bd">
+      <div class="item-content">
+        <div class="item-label">性别</div>
+        <div class="item-right">
+          <picker bindchange="bindSexChange" value="{{sexIndex}}" range="{{sex}}">
+            <div class="itemselect itemselect_in-select-after">{{sex[sexIndex]}}</div>
+          </picker>
+        </div>
+      </div>
+    </div>
+    <!-- 生日 -->
+    <div class="item item-cell__bd">
+      <div class="item-content">
+        <div class="item-label">生日</div>
+        <div class="item-right">
+          <picker mode="date" value="{{date}}" bindchange="bindDateChange">
+            <view class="weui-input">{{date}}</view>
+          </picker>
+        </div>
+      </div>
+    </div>
+    <!-- 手机号 -->
+    <div class="item item-cell__bd">
+      <div class="item-content">
+        <div class="item-label">手机号</div>
+        <div class="item-right">
+          13986532254
+        </div>
+      </div>
+    </div>
+    <!-- 加入租英台推手 -->
+    <div class="item item-cell__bd" style="margin-top:30rpx;">
+      <div class="item-content">
+        <div class="item-label">加入租英台推手</div>
+        <div class="item-right">
+        </div>
+      </div>
+    </div>
+    <!-- 当前版本 -->
+    <div class="item item-cell__bd">
+      <div class="item-content">
+        <div class="item-label">当前版本</div>
+        <div class="item-right" style="color:#31313B">
+          V1.0.0
+        </div>
+      </div>
+    </div>
+
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+import $http from './../../http/http.js'
+wepy.page({
+  config: {
+    navigationBarTitleText: '首页'
+  },
+  data: {
+    // 头像
+    avatar: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/touxiang.png',
+    sex: ['男', '女'],
+    // 选中的性别
+    sexIndex: 0,
+    date: "2016-09-01",
+    // 生日
+    date: '',
+    preventClick: true
+  },
+  methods: {
+    bindDateChange: function (e) {
+      this.date = e.$wx.detail.value
+    },
+    bindSexChange: function (e) {
+      this.sexIndex = e.$wx.detail.value
+    },
+    // 调用本地头像
+    getAvatar () {
+      if (this.preventClick) {
+        this.preventClick = false
+        wx.chooseImage({
+          count: 1,
+          sizeType: ['original', 'compressed'],
+          sourceType: ['album', 'camera'],
+          success: res => {
+            this.preventClick = true
+            const tempFilePaths = res.tempFilePaths
+            console.log(tempFilePaths);
+            this.avatar = tempFilePaths[0]
+            // 上传头像
+            wx.uploadFile({
+              url: '',
+              filePath: tempFilePaths[0],
+              name: 'file',
+              success: res1 => {
+                console.log(res1);
+                //  更新头像
+                // $http.post('', {
+                //   avatar: JSON.parse(res1.data).data.id
+                // })
+              }
+            })
+          }
+        })
+        setTimeout(() => {
+          this.preventClick = true;
+        }, 2000);
+      }
+    }
+  },
+  created () {
+    wx.getUserInfo({
+      success (res) {
+        console.log(res)
+      }
+    })
+
+    // 获取版本号
+    // wx.getAccountInfoSync()
+  },
+  // 监听页面加载
+  onLoad () { },
+  // 生命周期回调—监听页面显示
+  onShow () { },
+  // 生命周期回调—监听页面初次渲染完成
+  onReady () { },
+  // 生命周期回调—监听页面隐藏
+  onHide () { },
+  // 生命周期回调—监听页面卸载
+  onUnload () { },
+  // 监听用户下拉动作
+  onPullDownRefresh () { },
+  // 页面上拉触底事件的处理函数
+  onReachBottom () { },
+  // 用户点击右上角转发
+  onShareAppMessage () { },
+  // 页面滚动触发事件的处理函数
+  onPageScroll () { },
+  // 页面尺寸改变时触发，详见 响应显示区域变化
+  onResize () { },
+  // 当前是 tab 页时，点击 tab 时触发
+  onTabItemTap () { }
+})
+</script>
+<config>
+{
+    navigationBarTitleText: '设置',
+    usingComponents: {
+    }
+}
+</config>

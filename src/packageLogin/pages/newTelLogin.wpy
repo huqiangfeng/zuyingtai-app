@@ -1,0 +1,154 @@
+<style lang="less">
+page {
+  width: 100%;
+  height: 100%;
+}
+.page-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/background.png');
+  background-size: cover;
+  .img-logo {
+    width: 135rpx;
+    height: 235rpx;
+    margin: 40rpx 0 100rpx;
+  }
+  .weui-cell_vcode {
+    font-size: 30rpx;
+    border-bottom: 1px solid rgba(222, 222, 222, 0.15);
+    width: 520rpx;
+    height: 100rpx;
+    margin-bottom: 30rpx;
+    .weui-vcode-btn:before {
+      content: ' ';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      width: 1px;
+      bottom: 0;
+      height: 60%;
+      background-color: rgba(222, 222, 222, 0.15);
+    }
+    .weui-vcode-btn {
+      font-size: 26rpx;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    input {
+      color: rgba(222, 222, 222, 0.7);
+    }
+  }
+  .btn {
+    width: 370rpx;
+    height: 83rpx;
+    line-height: 83rpx;
+    text-align: center;
+    border-radius: 40rpx;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    margin-top: 60rpx;
+    font-size: 30rpx;
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+</style>
+
+<template>
+  <div class="page-container">
+    <mp-navigation-bar back="{{ false }}" ext-class="navigation" show="{{true}}">
+      <!-- <div slot="left"></div> -->
+    </mp-navigation-bar>
+
+    <image class="img-logo " src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/Logo (1).png" mode="widthFix"></image>
+
+    <view class="weui-cell weui-cell_vcode">
+      <view class="weui-cell__bd">
+        <input class="weui-input" v-model="tel" placeholder="请输入手机号" />
+      </view>
+    </view>
+
+    <view class="weui-cell weui-cell_vcode">
+      <view class="weui-cell__bd">
+        <input class="weui-input" v-model="code" placeholder="请输入验证码" />
+      </view>
+      <view class="weui-cell__ft">
+        <view class="weui-vcode-btn" @tap="on_getCode">获取验证码</view>
+      </view>
+    </view>
+
+    <div class="btn" @tap="on_loginTel">登录</div>
+    <div class="btn" @tap="on_back">取消</div>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+import $http from './../../http/http.js'
+wepy.page({
+  data: {
+    code: '',
+    tel: ''
+  },
+  methods: {
+    // 获取验证码
+    on_getCode () {
+      $http.post('', {
+        tel: this.tel
+      }).then(res => {
+        console.log(res);
+
+      })
+
+    },
+    // 返回上一页
+    on_back () {
+      wx.navigateBack({
+        delta: 1
+      })
+    },
+    // 登录
+    on_loginTel () {
+      console.log(this.code);
+      console.log(this.tel);
+
+    }
+  },
+  created () {
+    wx.getUserInfo({
+      success (res) {
+        console.log(res)
+      }
+    })
+  },
+  // 监听页面加载
+  onLoad () { },
+  // 生命周期回调—监听页面显示
+  onShow () { },
+  // 生命周期回调—监听页面初次渲染完成
+  onReady () { },
+  // 生命周期回调—监听页面隐藏
+  onHide () { },
+  // 生命周期回调—监听页面卸载
+  onUnload () { },
+  // 监听用户下拉动作
+  onPullDownRefresh () { },
+  // 页面上拉触底事件的处理函数
+  onReachBottom () { },
+  // 用户点击右上角转发
+  onShareAppMessage () { },
+  // 页面滚动触发事件的处理函数
+  onPageScroll () { },
+  // 页面尺寸改变时触发，详见 响应显示区域变化
+  onResize () { },
+  // 当前是 tab 页时，点击 tab 时触发
+  onTabItemTap () { }
+})
+</script>
+<config>
+{
+    usingComponents: {
+        'mp-navigation-bar': '~@weui/navigation-bar/navigation-bar',
+    },
+    "navigationStyle": "custom",
+}
+</config>

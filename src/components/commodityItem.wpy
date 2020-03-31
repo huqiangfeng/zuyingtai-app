@@ -61,11 +61,11 @@
 </style>
 
 <template>
-  <div class="container">
+  <div class="container" @tap="on_tapItem">
     <!-- 星星 -->
     <div class="xinxin" v-if="collect">
-      <image v-if="collect" class="xinxin-yes img-xinxin" src="@image/yishouchang.png" mode="widthFix"></image>
-      <image v-else class="xinxin-no img-xinxin" src="@image/shouchang.png" mode="widthFix"></image>
+      <image v-if="collect" class="xinxin-yes img-xinxin" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/yishouchang.png" mode="widthFix"></image>
+      <image v-else class="xinxin-no img-xinxin" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouchang.png" mode="widthFix"></image>
     </div>
     <!-- 已租用 -->
     <div class="leased" v-if="collect">
@@ -77,10 +77,10 @@
       </div>
     </div>
     <!-- 商品 -->
-    <image class="img" src="@image/listitem.png" mode="widthFix"></image>
-    <div class="name">{{item.text1}}</div>
-    <div class="money">¥{{ item.text2}}/天</div>
-    <div class="v-money">VIP:¥{{item.text3}}/天</div>
+    <image class="img" src="{{ item.goodsIcon }}" mode="widthFix"></image>
+    <div class="name">{{item.brandSourceName}}</div>
+    <div class="money">¥{{ item.dayRent}}/天</div>
+    <div class="v-money">VIP:¥{{item.vipDayRent}}/天</div>
   </div>
 </template>
 
@@ -98,6 +98,9 @@ wepy.component({
     }
   },
   methods: {
+    on_tapItem () {
+      this.$emit('tapitem', this.item)
+    }
   },
   attached () {
     console.log(this.collect)

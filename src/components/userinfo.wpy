@@ -36,17 +36,19 @@
 </style>
 
 <template>
-  <div class="container" @click="on_setOrLogin">
+  <div class="container" @tap="on_setOrLogin">
     <div class="left">
       <image class="img-head" v-if="login&&userInfo.headImg" src="{{ userInfo.headImg }}" mode="widthFix"></image>
-      <image class="img-head" v-else src="@image/touxiang.png" mode="widthFix"></image>
-      <image class="set-img" src="@image/sezhi.png" mode="widthFix"></image>
+      <image class="img-head" v-else src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/touxiang.png" mode="widthFix"></image>
+      <image class="set-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/sezhi.png" mode="widthFix"></image>
     </div>
     <div class="right">
       <div class="name">{{ name }}</div>
       <div class="tel">{{ tel }}</div>
     </div>
   </div>
+  <!-- 手机号登录弹框 -->
+  <tel-login show="{{ show }}" bind:onClickHide="onClickHide" />
 </template>
 
 <script>
@@ -56,23 +58,30 @@ import { mapState } from '@wepy/x'
 wepy.component({
   store,
   computed: {
-    ...mapState(['userInfo', 'login']),
+    ...mapState(['userInfo', 'bindTel']),
     name () {
-      return this.login ? this.userInfo.name : '登录/注册'
+      return this.bindTel ? this.userInfo.name : '登录/注册'
     },
     tel () {
-      return this.login ? this.userInfo.tel : '登录后成为会员0元用包'
+      return this.bindTel ? this.userInfo.tel : '登录后成为会员0元用包'
     }
+  },
+  data: {
+    show: false
   },
   props: {},
   methods: {
+    // 弹框
+    onClickHide () {
+      this.show = false
+    },
     on_setOrLogin () {
-      if (this.login) {
+      if (this.bindTel) {
         wx.navigateTo({
-          url: ''
+          url: '/packageMyInfo/pages/setMyInfo'
         })
       } else {
-
+        this.show = true
       }
     }
   }
@@ -81,7 +90,7 @@ wepy.component({
 <config>
 {
     usingComponents: {
-
+      "tel-login": "~@components/telLogin"
     }
 }
 </config>

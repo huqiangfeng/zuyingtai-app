@@ -41,11 +41,11 @@ Component({
   methods: {
 
     cancelEvent() {
-      this.triggerEvent("cancelEvent")
+      this.triggerEvent('cancelEvent')
     },
 
     confirmEvent() {
-      this.triggerEvent("confirmEvent")
+      this.triggerEvent('confirmEvent')
     }
   }
 })

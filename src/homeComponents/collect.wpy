@@ -13,7 +13,7 @@
 <template>
   <div class="container">
     <block v-if="not">
-      <image class="img-not" src="@image/meiyouo.png" mode="widthFix"></image>
+      <image class="img-not" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/meiyouo.png" mode="widthFix"></image>
     </block>
     <block v-else>
       <div class="list">

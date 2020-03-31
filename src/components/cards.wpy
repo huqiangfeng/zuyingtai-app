@@ -40,17 +40,17 @@
 <template>
   <div class="container">
     <div class="vip card">
-      <image class="img" src="@image/v.png" mode="widthFix"></image>
+      <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/v.png" mode="widthFix"></image>
       <div class="k">Member</div>
       <div class="v">开通VIP</div>
     </div>
     <div class="integral card">
-      <image class="img" src="@image/yuanxinxing.png" mode="widthFix"></image>
+      <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/yuanxinxing.png" mode="widthFix"></image>
       <div class="k">积分</div>
       <div class="v">99999</div>
     </div>
     <div class="balance card">
-      <image class="img" src="@image/qian.png" mode="widthFix"></image>
+      <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/qian.png" mode="widthFix"></image>
       <div class="k">余额</div>
       <div class="v">¥999999.00</div>
     </div>
