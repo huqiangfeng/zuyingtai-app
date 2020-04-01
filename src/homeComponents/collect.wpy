@@ -13,11 +13,18 @@
 <template>
   <div class="container">
     <block v-if="not">
-      <image class="img-not" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/meiyouo.png" mode="widthFix"></image>
+      <image
+        class="img-not"
+        src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/meiyouo.png"
+        mode="widthFix"
+      ></image>
     </block>
     <block v-else>
       <div class="list">
-        <commodity-list collect="{{ true }}" list="{{ list }}"></commodity-list>
+        <commodity-list
+          collect="{{ true }}"
+          list="{{ list }}"
+        ></commodity-list>
       </div>
     </block>
   </div>

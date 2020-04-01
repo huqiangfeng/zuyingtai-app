@@ -46,14 +46,26 @@
 <template>
   <div class="container">
     <div class="title">
-      <div class="title-left" @tap="on_title">{{ title }}</div>
+      <div
+        class="title-left"
+        @tap="on_title"
+      >{{ title }}</div>
       <div class="title-right">
         <slot></slot>
       </div>
     </div>
     <div class="list-box">
-      <div @tap="on_item(item)" class="list-item" v-for="(item,index) in list" :key="index">
-        <image class="img" src="{{ item.imageSrc }}" mode="widthFix"></image>
+      <div
+        @tap="on_item(item)"
+        class="list-item"
+        v-for="(item,index) in list"
+        :key="index"
+      >
+        <image
+          class="img"
+          src="{{ item.imageSrc }}"
+          mode="widthFix"
+        ></image>
         <div class="text"> {{item.text }} </div>
       </div>
     </div>

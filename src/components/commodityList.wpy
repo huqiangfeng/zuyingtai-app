@@ -12,8 +12,16 @@
 
 <template>
   <div class="list">
-    <div class="commodity-item" v-for="(item,index) in list" :key="index">
-      <commodity-item @tapitem="on_tapItem" collect="{{ collect }}" item="{{item}}"></commodity-item>
+    <div
+      class="commodity-item"
+      v-for="(item,index) in list"
+      :key="index"
+    >
+      <commodity-item
+        @tapitem="on_tapItem"
+        collect="{{ collect }}"
+        item="{{item}}"
+      ></commodity-item>
     </div>
   </div>
 </template>
@@ -34,7 +42,8 @@ wepy.component({
   methods: {
     on_tapItem (e) {
       let goodsId = e.goodsId
-      wx.navigateTo({        url: '/packageCommodity/pages/details',
+      wx.navigateTo({
+        url: '/packageCommodity/pages/details',
         success: function (res) {
           res.eventChannel.emit('getGoodsId', { goodsId })
         }

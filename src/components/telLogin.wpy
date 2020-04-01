@@ -49,14 +49,29 @@
   <van-overlay show="{{ show }}">
     <div class="wrapper">
       <div class="block">
-        <image class="img logo" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/logo3.png" mode="widthFix"></image>
+        <image
+          class="img logo"
+          src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/logo3.png"
+          mode="widthFix"
+        ></image>
         <div class="p">租英台奢侈包包</div>
         <div class="p">100%正品保证·放心选购</div>
-        <button class="btn btn-wx" open-type="getPhoneNumber" type="primary" @getphonenumber="getUserPhoneNumber">
+        <button
+          class="btn btn-wx"
+          open-type="getPhoneNumber"
+          type="primary"
+          @getphonenumber="getUserPhoneNumber"
+        >
           微信一键登录
         </button>
-        <div class="btn" @tap="to_newTelLogin">手机验证码登录</div>
-        <div class="btn" @tap="onClickHide">取 消</div>
+        <div
+          class="btn"
+          @tap="to_newTelLogin"
+        >手机验证码登录</div>
+        <div
+          class="btn"
+          @tap="onClickHide"
+        >取 消</div>
       </div>
 
     </div>

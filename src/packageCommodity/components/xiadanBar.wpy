@@ -41,11 +41,22 @@
 
 <template>
   <div class="xiadan-bar">
-    <div class="icon-box" v-for="(item,index) in icons" :key="index">
-      <image class="img-icon" src="{{ item.imageSrc }}" mode="widthFix"></image>
+    <div
+      class="icon-box"
+      v-for="(item,index) in icons"
+      :key="index"
+    >
+      <image
+        class="img-icon"
+        src="{{ item.imageSrc }}"
+        mode="widthFix"
+      ></image>
       <div class="text">{{ item.text }}</div>
     </div>
-    <div class="btn" @tap="on_xiaDan">下单试用</div>
+    <div
+      class="btn"
+      @tap="on_xiaDan"
+    >下单试用</div>
   </div>
 </template>
 
@@ -69,6 +80,7 @@ wepy.component({
         text: '客服'
       }, {
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouchang.png',
+        imageActioveSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouchang.png',
         text: '收藏'
       }
     ]

@@ -36,21 +36,39 @@
 </style>
 
 <template>
-  <div class="container" @tap="on_setOrLogin">
+  <div
+    class="container"
+    @tap="on_setOrLogin"
+  >
     <div class="left">
-      <image class="img-head" v-if="login&&userInfo.headImg" src="{{ userInfo.headImg }}" mode="widthFix"></image>
-      <image class="img-head" v-else src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/touxiang.png" mode="widthFix"></image>
-      <image class="set-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/sezhi.png" mode="widthFix"></image>
+      <image
+        class="img-head"
+        v-if="login&&userInfo.headImg"
+        src="{{ userInfo.headImg }}"
+        mode="widthFix"
+      ></image>
+      <image
+        class="img-head"
+        v-else
+        src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/touxiang.png"
+        mode="widthFix"
+      ></image>
+      <image
+        class="set-img"
+        src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/sezhi.png"
+        mode="widthFix"
+      ></image>
     </div>
     <div class="right">
       <div class="name">{{ name }}</div>
       <div class="tel">{{ tel }}</div>
     </div>
   </div>
-  <!-- 手机号登录弹框 -->
-  <tel-login show="{{ show }}" bind:onClickHide="onClickHide" />
+  <tel-login
+    show="{{ show }}"
+    @onClickHide="onClickHide"
+  />
 </template>
-
 <script>
 import wepy from '@wepy/core'
 import store from '../store'

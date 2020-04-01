@@ -75,25 +75,52 @@
       <!-- 消息/推 -->
       <div class="icons">
         <div class="tui-icon icon">
-          <image class="img-icon" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/tui.png" mode="widthFix"></image>
+          <image
+            class="img-icon"
+            src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/tui.png"
+            mode="widthFix"
+          ></image>
         </div>
-        <div class="ling-icon icon" :class="{'active':true}">
-          <image class="img-icon" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi.png" mode="widthFix"></image>
+        <div
+          class="ling-icon icon"
+          :class="{'active':true}"
+        >
+          <image
+            class="img-icon"
+            src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi.png"
+            mode="widthFix"
+          ></image>
         </div>
       </div>
     </div>
     <!-- 订单 -->
-    <nav-box @ontitle="ontitle" @onitem="onitem" list="{{ orders }}" title="全部订单">
+    <nav-box
+      @ontitle="ontitle"
+      @onitem="onitem"
+      list="{{ orders }}"
+      title="全部订单"
+    >
       <div class="title">
-        <image class="img-icon" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/bofang1.png" mode="widthFix"></image>
+        <image
+          class="img-icon"
+          src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/bofang1.png"
+          mode="widthFix"
+        ></image>
         <div class="text">地址管理</div>
       </div>
     </nav-box>
     <!-- 服务 -->
-    <nav-box list="{{ serve }}" title="我的服务"></nav-box>
+    <nav-box
+      list="{{ serve }}"
+      title="我的服务"
+    ></nav-box>
     <!-- 广告 -->
     <div class="advertising">
-      <my-swiper setStyle="height: 200rpx;" indicator="{{ false }}" list="{{ swiper }}"></my-swiper>
+      <my-swiper
+        setStyle="height: 200rpx;"
+        indicator="{{ false }}"
+        list="{{ swiper }}"
+      ></my-swiper>
     </div>
   </div>
 </template>

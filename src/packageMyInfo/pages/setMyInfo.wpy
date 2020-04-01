@@ -59,11 +59,18 @@ page {
 <template>
   <div class="page-container">
     <!-- 头像 -->
-    <div class="item item-cell__bd" @tap="getAvatar">
+    <div
+      class="item item-cell__bd"
+      @tap="getAvatar"
+    >
       <div class="item-content">
         <div class="item-label">头像</div>
         <div class="item-right">
-          <image class="img-header" src="{{ avatar }}" mode="widthFix"></image>
+          <image
+            class="img-header"
+            src="{{ avatar }}"
+            mode="widthFix"
+          ></image>
         </div>
       </div>
     </div>
@@ -81,7 +88,11 @@ page {
       <div class="item-content">
         <div class="item-label">性别</div>
         <div class="item-right">
-          <picker bindchange="bindSexChange" value="{{sexIndex}}" range="{{sex}}">
+          <picker
+            bindchange="bindSexChange"
+            value="{{sexIndex}}"
+            range="{{sex}}"
+          >
             <div class="itemselect itemselect_in-select-after">{{sex[sexIndex]}}</div>
           </picker>
         </div>
@@ -92,7 +103,11 @@ page {
       <div class="item-content">
         <div class="item-label">生日</div>
         <div class="item-right">
-          <picker mode="date" value="{{date}}" bindchange="bindDateChange">
+          <picker
+            mode="date"
+            value="{{date}}"
+            bindchange="bindDateChange"
+          >
             <view class="weui-input">{{date}}</view>
           </picker>
         </div>
@@ -108,7 +123,10 @@ page {
       </div>
     </div>
     <!-- 加入租英台推手 -->
-    <div class="item item-cell__bd" style="margin-top:30rpx;">
+    <div
+      class="item item-cell__bd"
+      style="margin-top:30rpx;"
+    >
       <div class="item-content">
         <div class="item-label">加入租英台推手</div>
         <div class="item-right">
@@ -119,7 +137,10 @@ page {
     <div class="item item-cell__bd">
       <div class="item-content">
         <div class="item-label">当前版本</div>
-        <div class="item-right" style="color:#31313B">
+        <div
+          class="item-right"
+          style="color:#31313B"
+        >
           V1.0.0
         </div>
       </div>
@@ -172,7 +193,7 @@ wepy.page({
               filePath: tempFilePaths[0],
               name: 'file',
               success: res1 => {
-                console.log(res1);
+                console.log(res1)
                 //  更新头像
                 // $http.post('', {
                 //   avatar: JSON.parse(res1.data).data.id
@@ -182,8 +203,8 @@ wepy.page({
           }
         })
         setTimeout(() => {
-          this.preventClick = true;
-        }, 2000);
+          this.preventClick = true
+        }, 2000)
       }
     }
   },

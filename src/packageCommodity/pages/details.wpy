@@ -39,7 +39,10 @@
   <div class="page-container">
     <!-- swiper -->
     <div class="swiper">
-      <my-swiper setStyle="height: 750rpx;" list="{{ details.goodsImages }}" />
+      <my-swiper
+        setStyle="height: 750rpx;"
+        list="{{ details.goodsImages }}"
+      />
     </div>
     <!--  -->
     <div class="container">
@@ -56,7 +59,11 @@
       <div>
         成为VIP本次可节约¥360/天
       </div>
-      <image class="img-icon" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/bofang.png" mode="widthFix"></image>
+      <image
+        class="img-icon"
+        src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/bofang.png"
+        mode="widthFix"
+      ></image>
     </div>
     <!-- 下单 -->
     <xiadan-bar></xiadan-bar>
@@ -74,7 +81,7 @@ wepy.page({
       brandChineseName: String, // 中文名
       brandId: Number, // id
       brandIntro: String, // 介绍；简介
-      brandLogo: String,// Logo
+      brandLogo: String, // Logo
       brandSourceName: String,  // 商品来源名字
       // 商品
       goodsDeposit: '',   // 保证金
@@ -87,9 +94,9 @@ wepy.page({
       goodsPriority: '',  // 权重
       goodsStatus: '', // 状态
       storageId: '', // 厂库id
-      expressFee: '',// 快递费
+      expressFee: '', // 快递费
       dayRent: '', // 租金
-      vipDayRent: '',// 租金
+      vipDayRent: '', // 租金
       vipMembership: ''// 会员资格
     }
   },
@@ -102,8 +109,7 @@ wepy.page({
           if (res.code === 0) {
             res.data.goodsImages = _this.setToArr(res.data.goodsImages)
             _this.details = res.data
-            console.log(_this.details);
-
+            console.log(_this.details)
           }
         })
       })

@@ -61,14 +61,33 @@
 </style>
 
 <template>
-  <div class="container" @tap="on_tapItem">
+  <div
+    class="container"
+    @tap="on_tapItem"
+  >
     <!-- 星星 -->
-    <div class="xinxin" v-if="collect">
-      <image v-if="collect" class="xinxin-yes img-xinxin" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/yishouchang.png" mode="widthFix"></image>
-      <image v-else class="xinxin-no img-xinxin" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouchang.png" mode="widthFix"></image>
+    <div
+      class="xinxin"
+      v-if="collect"
+    >
+      <image
+        v-if="collect"
+        class="xinxin-yes img-xinxin"
+        src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/yishouchang.png"
+        mode="widthFix"
+      ></image>
+      <image
+        v-else
+        class="xinxin-no img-xinxin"
+        src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouchang.png"
+        mode="widthFix"
+      ></image>
     </div>
     <!-- 已租用 -->
-    <div class="leased" v-if="collect">
+    <div
+      class="leased"
+      v-if="collect"
+    >
       <div class="top">
         已租用
       </div>
@@ -77,7 +96,11 @@
       </div>
     </div>
     <!-- 商品 -->
-    <image class="img" src="{{ item.goodsIcon }}" mode="widthFix"></image>
+    <image
+      class="img"
+      src="{{ item.goodsIcon }}"
+      mode="widthFix"
+    ></image>
     <div class="name">{{item.brandSourceName}}</div>
     <div class="money">¥{{ item.dayRent}}/天</div>
     <div class="v-money">VIP:¥{{item.vipDayRent}}/天</div>

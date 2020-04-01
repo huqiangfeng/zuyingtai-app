@@ -14,8 +14,16 @@
 
 <template>
   <div class="container">
-    <div class="arr-item" v-for="(item,index) in list" :key="index">
-      <image class="arr-img" src="{{ item.imageSrc }}" mode="widthFix"></image>
+    <div
+      class="arr-item"
+      v-for="(item,index) in list"
+      :key="index"
+    >
+      <image
+        class="arr-img"
+        src="{{ item.imageSrc }}"
+        mode="widthFix"
+      ></image>
     </div>
   </div>
 </template>
