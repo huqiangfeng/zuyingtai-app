@@ -6,7 +6,6 @@ page {
   .list {
     padding-bottom: 150rpx;
     .item {
-      background-color: #fff;
       margin-bottom: 20rpx;
     }
   }
@@ -27,9 +26,9 @@ page {
 <template>
   <div class="page-container">
     <!-- list -->
-    <div class="list" v-for="(item,index) in pageRows" :key="index">
-      <div class="item">
-        <addr-box></addr-box>
+    <div class="list">
+      <div class="item" v-for="(item,index) in pageRows" :key="index">
+        <addr-box @refresh="on_refresh" item="{{ item }}"></addr-box>
       </div>
     </div>
     <!-- btn -->
@@ -47,6 +46,10 @@ wepy.page({
     pageRows: []
   },
   methods: {
+    // 修改后的刷新
+    on_refresh () {
+      this.getData()
+    },
     // 获取用户地址
     getData () {
       let _this = this

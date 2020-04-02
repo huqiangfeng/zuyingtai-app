@@ -1,10 +1,40 @@
 <style lang="less">
 .addr {
+  .row {
+    .flex {
+      display: flex;
+    }
+    margin-bottom: 20rpx;
+    line-height: 1;
+    font-size: 24rpx;
+    color: rgba(0, 0, 0, 1);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    .name {
+      font-size: 32rpx;
+      color: rgba(0, 0, 0, 1);
+      margin-right: 20rpx;
+    }
+    .tel {
+      margin-top: 4rpx;
+    }
+  }
 }
 </style>
 
 <template>
   <div class="addr">
+    <div class="row">
+      <div class="flex">
+
+        <div class="name">{{ item.addrContact }}</div>
+        <div class="tel">{{ item.addrPhone }}</div>
+      </div>
+    </div>
+    <div class="row">
+      {{ item.addrArea + item.addrAddress}}
+    </div>
   </div>
 </template>
 
@@ -12,25 +42,12 @@
 import wepy from '@wepy/core'
 wepy.component({
   props: {
-    list: {
-      type: [Object, Array],
-      default: []
-    },
-    collect: {
-      type: [Boolean],
-      default: false
+    item: {
+      type: Object,
+      default: {}
     }
   },
   methods: {
-    on_tapItem (e) {
-      let goodsId = e.goodsId
-      wx.navigateTo({
-        url: '/packageCommodity/pages/details',
-        success: function (res) {
-          res.eventChannel.emit('getGoodsId', { goodsId })
-        }
-      })
-    }
   },
   attached () {
   }

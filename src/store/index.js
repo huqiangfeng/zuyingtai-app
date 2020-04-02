@@ -3,7 +3,7 @@ import Vuex from '@wepy/x'
 export default new Vuex.Store({
   state: {
     // tab选项
-    footer: 1,
+    footer: 0,
     // 会员
     member: false,
     // 是否登录

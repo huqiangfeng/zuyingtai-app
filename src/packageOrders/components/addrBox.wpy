@@ -1,36 +1,99 @@
 <style lang="less">
 .addr-box {
+  background-color: #fff;
+  .addr {
+    padding: 0 40rpx;
+    .addr-det {
+      padding: 40rpx 0;
+      border-bottom: 1px solid #f6f6f6;
+    }
+  }
+  .btn-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .left {
+      padding: 0 40rpx;
+    }
+    .right {
+      display: flex;
+      padding: 0 10rpx;
+      .btn {
+        padding: 30rpx;
+        font-size: 26rpx;
+        color: rgba(201, 171, 121, 1);
+      }
+    }
+  }
 }
 </style>
 
 <template>
   <div class="addr-box">
-    <addr></addr>
+    <div class="addr">
+      <div class="addr-det">
+        <addr item="{{ item }}"></addr>
+      </div>
+    </div>
+    <div class="btn-box">
+      <div class="left">
+        <van-checkbox checked-color="#C9AB79" icon-size="30rpx" value="{{ checked }}" bind:change="onChange">默认地址</van-checkbox>
+      </div>
+      <div class="right">
+        <div class="btn" @tap="on_compile">编辑</div>
+        <div class="btn" @tap="on_del">删除</div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import wepy from '@wepy/core'
+import $http from './../../http/http.js'
 wepy.component({
   props: {
-    list: {
-      type: [Object, Array],
-      default: []
-    },
-    collect: {
-      type: [Boolean],
-      default: false
+    item: {
+      type: Object,
+      default: {}
     }
   },
+  computed: {
+    checked () { // 默认地址
+      return this.item.addrDefault == 1
+    }
+  },
+  data: {
+  },
   methods: {
-    on_tapItem (e) {
-      let goodsId = e.goodsId
-      wx.navigateTo({
-        url: '/packageCommodity/pages/details',
-        success: function (res) {
-          res.eventChannel.emit('getGoodsId', { goodsId })
+    // 默认
+    onChange (e) {
+      $http.post('/ma/userAddr/setDefault', { addrId: this.item.addrId }).then(res => {
+        if (res.code === 0) {
+          this.refresh()
         }
       })
+    },
+    // 编辑
+    on_compile () {
+      let _this = this
+      wx.navigateTo({
+        url: '/packageOrders/pages/newAddr',
+        success: function (res) {
+          res.eventChannel.emit('getDefaultData', _this.item)
+        }
+      })
+    },
+    // 删除
+    on_del () {
+      $http.post('/ma/userAddr/delete', { addrId: this.item.addrId }).then(res => {
+        if (res.code === 0) {
+          this.refresh()
+        }
+      })
+    },
+    // 刷新
+    refresh () {
+      this.$emit('refresh')
     }
   },
   attached () {
@@ -40,7 +103,8 @@ wepy.component({
 <config>
 {
     usingComponents: {
-      "addr": "./addr"
+      "addr": "./addr",
+       'van-checkbox':'~@vant/checkbox'
     }
 }
 </config>

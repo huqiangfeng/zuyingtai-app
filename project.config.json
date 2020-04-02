@@ -1,7 +1,7 @@
 {
 	"description": "A WePY project",
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"enhance": false,
 		"postcss": false,
@@ -22,7 +22,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"appid": "wx759047d74588cbba",
+	"appid": "wxcc6001a8290e84f9",
 	"projectname": "zuyingtai",
 	"miniprogramRoot": "weapp/",
 	"simulatorType": "wechat",
