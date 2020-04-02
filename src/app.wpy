@@ -1,5 +1,5 @@
 <style lang="less">
-@import './utils/style/weui.less';
+// @import './utils/style/weui.less';
 </style>
 <script>
 import wepy from '@wepy/core'
@@ -40,6 +40,7 @@ wepy.app({
         // 筛选
         'pages/filtrate',
         'pages/details',
+        'pages/brandDetails',
       ]
     },
     // 我的信息
@@ -60,13 +61,17 @@ wepy.app({
         'pages/leaveUnused'
       ]
     },
-    // 订单统计
+    // 订单
     {
       root: 'packageOrders',
       name: 'orders',
       pages: [
-        // 订单
-        'pages/orders'
+        // 确认下单订单
+        'pages/newOrders',
+        // 地址管理
+        'pages/addrAdmin',
+        // 新增地址
+        'pages/newAddr',
       ]
     },
     // 其他独立分包

@@ -95,10 +95,8 @@ wepy.page({
       $http.post('', {
         tel: this.tel
       }).then(res => {
-        console.log(res);
-
+        console.log(res)
       })
-
     },
     // 返回上一页
     on_back () {
@@ -108,9 +106,8 @@ wepy.page({
     },
     // 登录
     on_loginTel () {
-      console.log(this.code);
-      console.log(this.tel);
-
+      console.log(this.code)
+      console.log(this.tel)
     }
   },
   created () {

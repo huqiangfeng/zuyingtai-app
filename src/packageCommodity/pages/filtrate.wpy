@@ -72,57 +72,25 @@
     <!-- 品牌 -->
     <div class="brand-box">
       <div class="title">品牌</div>
-      <div
-        class="option-item"
-        @tap="on_brandItem(index)"
-        hidden="{{index > 5 && !more}}"
-        v-for="(item, index) in listRows"
-        :key="index"
-      >
-        <option-item
-          text="{{ item.brandSourceName }}"
-          active="{{ checkedRow === item.brandId }}"
-        ></option-item>
+      <div class="option-item" @tap="on_brandItem(index)" hidden="{{index > 5 && !more}}" v-for="(item, index) in listRows" :key="index">
+        <option-item text="{{ item.brandSourceName }}" active="{{ checkedRow === item.brandId }}"></option-item>
       </div>
-      <div
-        class="more"
-        @tap="more = !more"
-      >
+      <div class="more" @tap="more = !more">
         <div>{{ moreText }}</div>
-        <image
-          class="img"
-          :class="{'turn':more}"
-          src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/jiantouxia.png"
-          mode="widthFix"
-        ></image>
+        <image class="img" :class="{'turn':more}" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/jiantouxia.png" mode="widthFix"></image>
       </div>
     </div>
     <!-- 类型 -->
     <div class="type-box">
       <div class="title">类型</div>
-      <div
-        class="option-item"
-        @tap="on_typeItem(index)"
-        v-for="(item, index) in typeList"
-        :key="index"
-      >
-        <option-item
-          text="{{ item.text }}"
-          active="{{ checkedType === item.id }}"
-          bgc="{{ true }}"
-        ></option-item>
+      <div class="option-item" @tap="on_typeItem(index)" v-for="(item, index) in typeList" :key="index">
+        <option-item text="{{ item.text }}" active="{{ checkedType === item.id }}" bgc="{{ true }}"></option-item>
       </div>
     </div>
     <!-- btn -->
     <div class="bon-box">
-      <div
-        class="btn-reset"
-        @tap="on_reset"
-      >重置</div>
-      <div
-        class="btn-affirm"
-        @tap="on_submit"
-      >确认</div>
+      <div class="btn-reset" @tap="on_reset">重置</div>
+      <div class="btn-affirm" @tap="on_submit">确认</div>
     </div>
   </div>
 </template>
@@ -147,7 +115,7 @@ wepy.page({
     listRows: [],
     // 类型
     checkedType: '',
-    //排序,可用值:默认=>priorityDesc,最新=>releaseDesc,价格降序=>rentPriceDesc,价格升序=>rentPriceAsc
+    // 排序,可用值:默认=>priorityDesc,最新=>releaseDesc,价格降序=>rentPriceDesc,价格升序=>rentPriceAsc
     typeList: [{
       text: '默认',
       id: 'priorityDesc'

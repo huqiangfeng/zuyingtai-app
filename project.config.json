@@ -1,60 +1,83 @@
 {
-  "description": "A WePY project",
-  "setting": {
-    "urlCheck": true,
-    "es6": true,
-    "enhance": false,
-    "postcss": false,
-    "minified": false,
-    "newFeature": true,
-    "coverView": true,
-    "nodeModules": true,
-    "autoAudits": false,
-    "showShadowRootInWxmlPanel": true,
-    "scopeDataCheck": false,
-    "checkInvalidKey": true,
-    "checkSiteMap": true,
-    "uploadWithSourceMap": true,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
-    }
-  },
-  "compileType": "miniprogram",
-  "appid": "wx759047d74588cbba",
-  "projectname": "zuyingtai",
-  "miniprogramRoot": "weapp/",
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
-  "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
-    "plugin": {
-      "current": -1,
-      "list": []
-    },
-    "game": {
-      "list": []
-    },
-    "gamePlugin": {
-      "current": -1,
-      "list": []
-    },
-    "miniprogram": {
-      "current": -1,
-      "list": [{
-        "id": -1,
-        "name": "packageCommodity/pages/filtrate",
-        "pathName": "packageCommodity/pages/filtrate",
-        "scene": null
-      }]
-    }
-  }
+	"description": "A WePY project",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"enhance": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true,
+		"coverView": true,
+		"nodeModules": false,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
+	},
+	"compileType": "miniprogram",
+	"appid": "wx759047d74588cbba",
+	"projectname": "zuyingtai",
+	"miniprogramRoot": "weapp/",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "packageCommodity/pages/filtrate",
+					"pathName": "packageCommodity/pages/filtrate",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "packageCommodity/pages/details",
+					"pathName": "packageCommodity/pages/details",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "packageCommodity/pages/brandDetails",
+					"pathName": "packageCommodity/pages/brandDetails",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "packageOrders/pages/addrAdmin",
+					"pathName": "packageOrders/pages/addrAdmin",
+					"scene": null
+				}
+			]
+		}
+	}
 }

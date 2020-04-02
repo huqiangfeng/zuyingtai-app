@@ -1,20 +1,10 @@
 <style lang="less">
-.list {
-  padding: 0 40rpx;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  .commodity-item {
-    width: 325rpx;
-  }
+.addr {
 }
 </style>
 
 <template>
-  <div class="list">
-    <div class="commodity-item" v-for="(item,index) in list" :key="index">
-      <commodity-item @tapitem="on_tapItem" collect="{{ collect }}" item="{{item}}"></commodity-item>
-    </div>
+  <div class="addr">
   </div>
 </template>
 
@@ -49,7 +39,7 @@ wepy.component({
 <config>
 {
     usingComponents: {
-      "commodity-item": "~@components/commodityItem"
+
     }
 }
 </config>

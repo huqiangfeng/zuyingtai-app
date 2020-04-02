@@ -87,43 +87,20 @@
 <template>
   <div class="container">
     <!-- 搜索 -->
-    <van-search
-      @search="on_search"
-      value="{{ goodsName }}"
-      shape="round"
-      placeholder="请输入搜索关键词"
-    />
+    <van-search @search="on_search" value="{{ goodsName }}" shape="round" placeholder="请输入搜索关键词" />
     <!-- 主要内容 -->
     <div class="main">
       <div class="nav">
         <div class="nav-l">
-          <div
-            class="nav-l-item"
-            @tap="onChangeNavActive(0)"
-            :class="{'nav-active': navActive=== 0 }"
-          >全部</div>
-          <div
-            class="nav-l-item"
-            @tap="onChangeNavActive(1)"
-            :class="{'nav-active': navActive=== 1 }"
-          >0元专区</div>
+          <div class="nav-l-item" @tap="onChangeNavActive(0)" :class="{'nav-active': navActive=== 0 }">全部</div>
+          <div class="nav-l-item" @tap="onChangeNavActive(1)" :class="{'nav-active': navActive=== 1 }">0元专区</div>
         </div>
-        <div
-          class="nav-r"
-          @tap="to_filtrate"
-        >
-          <image
-            class="img"
-            src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zu.png"
-            mode="widthFix"
-          ></image>
+        <div class="nav-r" @tap="to_filtrate">
+          <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zu.png" mode="widthFix"></image>
           <div>筛选</div>
         </div>
       </div>
-      <div
-        class="list"
-        v-show="isShowlist"
-      >
+      <div class="list" v-show="isShowlist">
         <commodity-list list="{{ list }}"></commodity-list>
       </div>
       <!-- 非会员 -->
@@ -196,10 +173,10 @@ wepy.component({
     getData () {
       let _this = this
       let data = {
-        brandId: this.filtrate.brandId,// 品牌标识
+        brandId: this.filtrate.brandId, // 品牌标识
         goodsName: this.goodsName, //  商品名称
-        goodsSort: this.filtrate.goodsSort, //排序
-        vip: this.navActive,  // 1会员专享
+        goodsSort: this.filtrate.goodsSort, // 排序
+        vip: this.navActive  // 1会员专享
       }
       $http.post('/ma/goods/listGoods', data).then(res => {
         if (res.code === 0) {
@@ -211,7 +188,7 @@ wepy.component({
   // 在组件实例刚刚被创建时执行
   created () {
     this.getData()
-  },
+  }
 })
 </script>
 <config>

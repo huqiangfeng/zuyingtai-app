@@ -2,31 +2,46 @@
 .page-container {
 }
 </style>
-
 <template>
   <div class="page-container">
+
   </div>
 </template>
-
 <script>
 import wepy from '@wepy/core'
+import $http from './../../http/http.js'
 wepy.page({
-  config: {
-    navigationBarTitleText: '首页'
+  computed: {
   },
   data: {
+    // 用户地址
+    userAddr: ''
   },
   methods: {
-  },
-  created () {
-    wx.getUserInfo({
-      success (res) {
-        console.log(res)
-      }
-    })
+    getData () {
+      // let _this = this
+      const eventChannel = this.$wx.getOpenerEventChannel()
+      eventChannel.on('getOrderData', function (data) {
+        console.log(data)
+      })
+    },
+    // 获取默认用户地址
+    getUserAddr () {
+      // let _this = this
+      $http.post('/ma/userAddr/list').then(res => {
+        if (res.code === 0) {
+          console.log(res)
+          // _this.userAddr = res.data.userAddr
+        }
+      })
+    }
   },
   // 监听页面加载
-  onLoad () { },
+  onLoad () {
+    this.getData()
+    // 获取默认用户地址
+    this.getUserAddr()
+  },
   // 生命周期回调—监听页面显示
   onShow () { },
   // 生命周期回调—监听页面初次渲染完成
@@ -51,8 +66,8 @@ wepy.page({
 </script>
 <config>
 {
+    navigationBarTitleText: '确认下单',
     usingComponents: {
-    },
-    "navigationStyle": "custom",
+    }
 }
 </config>

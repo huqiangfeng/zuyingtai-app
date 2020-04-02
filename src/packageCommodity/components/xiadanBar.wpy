@@ -41,32 +41,25 @@
 
 <template>
   <div class="xiadan-bar">
-    <div
-      class="icon-box"
-      v-for="(item,index) in icons"
-      :key="index"
-    >
-      <image
-        class="img-icon"
-        src="{{ item.imageSrc }}"
-        mode="widthFix"
-      ></image>
+    <div class="icon-box" @tap="on_tapIcon(item)" v-for="(item,index) in icons" :key="index">
+      <block v-if="item.text ==='收藏' && collect">
+        <image class="img-icon" src="{{ item.imageActioveSrc }}" mode="widthFix"></image>
+      </block>
+      <block v-else>
+        <image class="img-icon" src="{{ item.imageSrc }}" mode="widthFix"></image>
+      </block>
       <div class="text">{{ item.text }}</div>
     </div>
-    <div
-      class="btn"
-      @tap="on_xiaDan"
-    >下单试用</div>
+    <div class="btn" @tap="on_xiaDan">下单试用</div>
   </div>
 </template>
-
 <script>
 import wepy from '@wepy/core'
 wepy.component({
   props: {
-    text: {
-      type: [String],
-      default: '全部'
+    collect: {
+      type: [Boolean],
+      default: false
     }
   },
   data: {
@@ -80,17 +73,33 @@ wepy.component({
         text: '客服'
       }, {
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouchang.png',
-        imageActioveSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouchang.png',
+        imageActioveSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/yishouchang.png',
         text: '收藏'
       }
     ]
   },
   methods: {
+    // 点击btn
     on_xiaDan () {
-      // this.$emit('', )
+      this.$emit('xiadan')
+    },
+    // 点击icon
+    on_tapIcon (item) {
+      console.log(item)
+      if (item.text === '收藏') {
+        this.$emit('collect')
+      }
     }
   },
   created () {
   }
 })
 </script>
+
+<config>
+{
+    usingComponents: {
+      "half-screen-dialog": "~@weui/half-screen-dialog/half-screen-dialog"
+    }
+}
+</config>
