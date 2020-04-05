@@ -131,7 +131,7 @@ wepy.page({
       let _this = this
       $http.post('/ma/goods/listGoods', data).then(res => {
         if (res.code === 0) {
-          _this.list = res.data.listRows
+          _this.list = res.data.pageRows
         }
       })
     },

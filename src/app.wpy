@@ -1,5 +1,5 @@
 <style lang="less">
-// @import './utils/style/weui.less';
+@import './utils/style/base.less';
 </style>
 <script>
 import wepy from '@wepy/core'
@@ -66,6 +66,10 @@ wepy.app({
       root: 'packageOrders',
       name: 'orders',
       pages: [
+        // 订单管理
+        'pages/ordersAdmin',
+        // 订单详情
+        'pages/ordersDetails',
         // 确认下单订单
         'pages/newOrders',
         // 地址管理

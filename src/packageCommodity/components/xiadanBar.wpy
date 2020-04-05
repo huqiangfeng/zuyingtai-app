@@ -99,7 +99,6 @@ wepy.component({
 <config>
 {
     usingComponents: {
-      "half-screen-dialog": "~@weui/half-screen-dialog/half-screen-dialog"
     }
 }
 </config>

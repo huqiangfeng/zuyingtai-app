@@ -83,7 +83,7 @@
       </div>
     </div>
     <!-- 订单 -->
-    <nav-box @ontitle="ontitle" @onitem="onitem" list="{{ orders }}" title="全部订单">
+    <nav-box @ontitle="on_toOrdersAdmin" list="{{ orders }}" title="全部订单">
       <div class="title">
         <image class="img-icon" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/bofang1.png" mode="widthFix"></image>
         <div class="text" @tap="to_userAddr">地址管理</div>
@@ -100,6 +100,7 @@
 
 <script>
 import wepy from '@wepy/core'
+import $http from './../http/http.js'
 wepy.component({
   config: {
     navigationBarTitleText: '我的',
@@ -112,19 +113,23 @@ wepy.component({
       {
         text: '待支付',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zhifu.png',
-        pagePath: ''
+        pagePath: '/packageOrders/pages/ordersAdmin',
+        data: '待支付'
       }, {
         text: '待收货',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouhuo.png',
-        pagePath: ''
+        pagePath: '/packageOrders/pages/ordersAdmin',
+        data: '待收货'
       }, {
         text: '待归还',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/daiguihuan.png',
-        pagePath: ''
+        pagePath: '/packageOrders/pages/ordersAdmin',
+        data: '待归还'
       }, {
         text: '归还中',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/huihuanzhong.png',
-        pagePath: ''
+        pagePath: '/packageOrders/pages/ordersAdmin',
+        data: '归还中'
       }, {
         text: '客服售后',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouhouda.png',
@@ -158,18 +163,31 @@ wepy.component({
     ]
   },
   methods: {
-    ontitle () {
-
-    },
-    onitem (item) {
-      console.log(item)
+    on_toOrdersAdmin () {
+      wx.navigateTo({
+        url: '/packageOrders/pages/ordersAdmin',
+        success: function (res) {
+          // 通过eventChannel向被打开页面传送数据
+          res.eventChannel.emit('getPageData', '全部订单')
+        }
+      })
     },
     //  跳转地址管理
     to_userAddr () {
       wx.navigateTo({ url: '/packageOrders/pages/addrAdmin' })
+    },
+    // 获取用户信息
+    getUserInfo () {
+      $http.post('/ma/user/myInfo')
+        .then(res => {
+          if (res.code === 0) {
+            console.log(res)
+          }
+        })
     }
   },
   created () {
+    this.getUserInfo()
   }
 })
 </script>

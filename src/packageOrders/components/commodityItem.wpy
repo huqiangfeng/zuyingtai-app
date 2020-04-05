@@ -1,0 +1,81 @@
+<style lang="less">
+.container {
+  width: 100%;
+  display: flex;
+  position: relative;
+  align-items: center;
+  .img {
+    width: 162rpx;
+    height: 162rpx;
+    display: block;
+    margin-right: 30rpx;
+  }
+  .content {
+    flex: 1;
+    .name {
+      width: 100%;
+      font-size: 28rpx;
+      color: rgba(0, 0, 0, 1);
+      line-height: 42rpx;
+      max-height: 90rpx;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+    .addr {
+      font-size: 24rpx;
+      color: rgba(161, 161, 161, 1);
+      line-height: 42rpx;
+    }
+  }
+}
+</style>
+
+<template>
+  <div class="container" @tap="on_tapItem">
+    <!-- 商品 -->
+    <image class="img" src="{{ item.goodsIcon }}" mode="widthFix"></image>
+    <div class="content">
+      <div class="name">{{item.goodsName }}</div>
+      <div class="addr" v-if="isFaHuo"> 发货地　　{{ item.goodsName }} </div>
+      <div class="addr" v-if="isDinDan||isDetail"> 租用天数　　{{ item.tenancyDays }} </div>
+      <div class="addr" v-if="isDinDan"> 租用费用　　{{ item.rentFee }} </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+wepy.component({
+  props: {
+    item: {
+      type: [Object],
+      default: {}
+    },
+    isDinDan: {
+      type: [Boolean],
+      default: false
+    },
+    isDetail: {
+      type: [Boolean],
+      default: false
+    }
+  },
+  methods: {
+    on_tapItem () {
+      this.$emit('tapitem', this.item)
+    }
+  },
+  attached () {
+    console.log(this.collect)
+  }
+})
+</script>
+<config>
+{
+    usingComponents: {
+    }
+}
+</config>

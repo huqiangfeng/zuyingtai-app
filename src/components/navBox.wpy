@@ -46,26 +46,14 @@
 <template>
   <div class="container">
     <div class="title">
-      <div
-        class="title-left"
-        @tap="on_title"
-      >{{ title }}</div>
+      <div class="title-left" @tap="on_title">{{ title }}</div>
       <div class="title-right">
         <slot></slot>
       </div>
     </div>
     <div class="list-box">
-      <div
-        @tap="on_item(item)"
-        class="list-item"
-        v-for="(item,index) in list"
-        :key="index"
-      >
-        <image
-          class="img"
-          src="{{ item.imageSrc }}"
-          mode="widthFix"
-        ></image>
+      <div @tap="on_item(item)" class="list-item" v-for="(item,index) in list" :key="index">
+        <image class="img" src="{{ item.imageSrc }}" mode="widthFix"></image>
         <div class="text"> {{item.text }} </div>
       </div>
     </div>
@@ -87,6 +75,14 @@ wepy.component({
   },
   methods: {
     on_item (item) {
+      wx.navigateTo({
+        url: item.pagePath,
+        success: function (res) {
+          // 通过eventChannel向被打开页面传送数据
+          res.eventChannel.emit('getPageData', item.data)
+        }
+      })
+
       this.$emit('onitem', item)
     },
     on_title () {

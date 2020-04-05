@@ -51,6 +51,36 @@ page {
     color: rgba(255, 255, 255, 0.7);
   }
 }
+.weui-cell {
+  padding: 16px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.weui-cell_vcode {
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+}
+.weui-cell__bd {
+  flex: 1;
+}
+.weui-cell__ft {
+  text-align: right;
+  color: var(--weui-FG-1);
+}
+.weui-vcode-btn {
+  display: inline-block;
+  height: 56px;
+  margin-left: 5px;
+  padding: 0 0.6em 0 0.7em;
+  line-height: 56px;
+  vertical-align: middle;
+  font-size: 17px;
+  color: var(--weui-LINK);
+  position: relative;
+}
 </style>
 
 <template>
@@ -58,7 +88,6 @@ page {
     <mp-navigation-bar back="{{ false }}" ext-class="navigation" show="{{true}}">
       <!-- <div slot="left"></div> -->
     </mp-navigation-bar>
-
     <image class="img-logo " src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/Logo (1).png" mode="widthFix"></image>
 
     <view class="weui-cell weui-cell_vcode">
@@ -75,7 +104,6 @@ page {
         <view class="weui-vcode-btn" @tap="on_getCode">获取验证码</view>
       </view>
     </view>
-
     <div class="btn" @tap="on_loginTel">登录</div>
     <div class="btn" @tap="on_back">取消</div>
   </div>

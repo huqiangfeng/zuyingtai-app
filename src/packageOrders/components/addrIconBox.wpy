@@ -1,0 +1,86 @@
+<style lang="less">
+@import './../../utils/style/base.less';
+page {
+  background-color: #f6f6f6;
+}
+.addr-box {
+  position: relative;
+  background-color: #fff;
+  padding: 1px;
+  .addr {
+    padding: 0 90rpx 0 40rpx;
+    display: flex;
+    align-items: center;
+    .img-dingwei {
+      width: 28rpx;
+      display: block;
+      margin-right: 24rpx;
+    }
+    .addr-det {
+      flex: 1;
+      padding: 40rpx 0;
+    }
+  }
+  .btn {
+    margin: 55rpx auto;
+    width: 228rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    text-align: center;
+    border: 1px solid rgba(221, 221, 221, 1);
+    border-radius: 8rpx;
+    font-size: 26rpx;
+    color: rgba(0, 0, 0, 1);
+  }
+}
+</style>
+
+<template>
+  <div class="addr-box">
+    <div v-if="item" class="addr right-go" @tap="on_toAddrAdmin">
+      <image class="img-dingwei" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/dingwei.png" mode="widthFix"></image>
+      <div class="addr-det ellipsis">
+        <addr item="{{ item }}"></addr>
+      </div>
+    </div>
+
+    <div v-else class="btn" @tap="on_toAddrAdmin">点击添加地址</div>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+wepy.component({
+  props: {
+    item: {
+      type: Object,
+      default: {}
+    },
+    amend: {
+      type: Boolean,
+      default: true
+    }
+
+  },
+  computed: {
+  },
+  data: {
+  },
+  methods: {
+    on_toAddrAdmin () {
+      if (this.amend) {
+        wx.navigateTo({ url: '/packageOrders/pages/addrAdmin' })
+      }
+    }
+  },
+  attached () {
+  }
+})
+</script>
+<config>
+{
+    usingComponents: {
+      "addr": "./addr"
+    }
+}
+</config>

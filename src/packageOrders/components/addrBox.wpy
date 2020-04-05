@@ -31,17 +31,17 @@
 <template>
   <div class="addr-box">
     <div class="addr">
-      <div class="addr-det">
+      <div class="addr-det" @click="checkedAddr">
         <addr item="{{ item }}"></addr>
       </div>
     </div>
     <div class="btn-box">
-      <div class="left">
-        <van-checkbox checked-color="#C9AB79" icon-size="30rpx" value="{{ checked }}" bind:change="onChange">默认地址</van-checkbox>
+      <div class="left" @tap.stop="onChange">
+        <van-checkbox checked-color="#C9AB79" icon-size="30rpx" value="{{ checked }}">默认地址</van-checkbox>
       </div>
       <div class="right">
-        <div class="btn" @tap="on_compile">编辑</div>
-        <div class="btn" @tap="on_del">删除</div>
+        <div class="btn" @tap.stop="on_compile">编辑</div>
+        <div class="btn" @tap.stop="on_del">删除</div>
       </div>
     </div>
   </div>
@@ -65,6 +65,16 @@ wepy.component({
   data: {
   },
   methods: {
+    // 选中
+    checkedAddr () {
+      let pages = getCurrentPages()
+      if (pages[pages.length - 2].route === 'packageOrders/pages/newOrders') {
+        wx.setStorageSync('checkedAddr', this.item)
+        wx.navigateBack({
+          delta: 1
+        })
+      }
+    },
     // 默认
     onChange (e) {
       $http.post('/ma/userAddr/setDefault', { addrId: this.item.addrId }).then(res => {

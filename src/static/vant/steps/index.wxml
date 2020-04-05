@@ -29,7 +29,7 @@
           />
         </block>
 
-        <van-icon wx:else name="{{ activeIcon }}" color="{{ activeColor }}" custom-class="van-step__icon" />
+        <van-icon  size="20px" wx:else name="{{ activeIcon }}" color="{{ activeColor }}" custom-class="van-step__icon" />
       </view>
       <view
         wx:if="{{ index !== steps.length - 1 }}"

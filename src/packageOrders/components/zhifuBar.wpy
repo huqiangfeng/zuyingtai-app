@@ -1,0 +1,100 @@
+<style lang="less">
+.xiadan-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 40rpx;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 1);
+  .xiao-fei-box {
+    flex: 1;
+    line-height: 1;
+    .xiao-fei {
+      margin-bottom: 10rpx;
+      display: flex;
+      color: rgba(0, 0, 0, 1);
+      .k {
+        line-height: 1;
+        margin-top: 10rpx;
+        width: 60rpx;
+        font-size: 24rpx;
+      }
+      .v {
+        font-size: 40rpx;
+      }
+    }
+    .he-ji {
+      display: flex;
+      font-size: 22rpx;
+      color: rgba(0, 0, 0, 1);
+      .k {
+        width: 60rpx;
+      }
+      .ya-jin {
+        color: #a1a1a1;
+      }
+    }
+  }
+  .btn {
+    width: 240rpx;
+    height: 80rpx;
+    background: rgba(48, 49, 59, 1);
+    border-radius: 12rpx;
+    line-height: 80rpx;
+    text-align: center;
+    font-size: 36rpx;
+    color: rgba(255, 255, 255, 1);
+  }
+}
+</style>
+
+<template>
+  <div class="xiadan-bar">
+    <div class="xiao-fei-box">
+      <div class="xiao-fei">
+        <div class="k">消费 </div>
+        <div class="v"> ¥276</div>
+      </div>
+      <div class="he-ji">
+        <div class="k">合计 </div>
+        <div class="v"> ¥2632 </div>
+        <div class="ya-jin">（含押金¥2356可退）</div>
+      </div>
+    </div>
+    <!-- 支付 -->
+    <div class="btn" @tap="on_zhifu">支付</div>
+  </div>
+</template>
+<script>
+import wepy from '@wepy/core'
+wepy.component({
+  props: {
+    collect: {
+      type: [Boolean],
+      default: false
+    }
+  },
+  data: {
+
+  },
+  methods: {
+    // 点击btn
+    on_zhifu () {
+      this.$emit('zhifu')
+    }
+  },
+  created () {
+  }
+})
+</script>
+
+<config>
+{
+    usingComponents: {
+    }
+}
+</config>

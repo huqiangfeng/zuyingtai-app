@@ -7,35 +7,38 @@
 }
 .block {
   width: 560rpx;
-  height: 600rpx;
+  padding-bottom: 30rpx;
   background: rgba(255, 255, 255, 1);
   border-radius: 20rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   // justify-content: center;
-  .logo {
-    width: 120rpx;
-    height: 120rpx;
+  .img {
+    width: 250rpx;
     display: block;
-    margin: 60rpx 0 30rpx;
+    margin: 90rpx 0 50rpx;
+    margin-left: 20rpx;
   }
   line-height: 1;
   text-align: left;
-  .p {
-    width: 80%;
-    font-size: 30rpx;
-    font-weight: bold;
-    color: rgba(34, 34, 34, 1);
-    padding: 30rpx 0;
-    border-bottom: 1px solid #e6e6e6;
+  .title {
+    line-height: 1;
+    font-size: 36rpx;
+    color: rgba(0, 0, 0, 1);
+    margin-bottom: 30rpx;
   }
-  .p-text {
-    padding: 30rpx 0;
-    width: 80%;
-    font-size: 28rpx;
-    font-weight: bold;
-    color: rgba(153, 153, 153, 1);
+  .subhead {
+    line-height: 1;
+    font-size: 24rpx;
+    color: rgba(0, 0, 0, 1);
+    margin-bottom: 20rpx;
+    margin-top: -10rpx;
+  }
+  .p {
+    font-size: 24rpx;
+    color: rgba(48, 49, 59, 1);
+    line-height: 36rpx;
   }
   .btn {
     width: 480rpx;
@@ -59,16 +62,14 @@
   <van-overlay show="{{ show }}">
     <div class="wrapper">
       <div class="block">
-        <image class="img logo" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/logo3.png" mode="widthFix"></image>
-        <!-- <div class="p">租英台奢侈包包</div>
-        <div class="p">100%正品保证·放心选购</div> -->
-        <div class="p">租英台申请获得以下权限：</div>
-        <div class="p-text">
-          获得你的公开信息（昵称、头像、地
-          区及性别）
-        </div>
-        <button class="btn btn-wx" open-type="getUserInfo" type="primary" @getuserinfo="getTokenLogin">
-          授权信息
+        <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/chengong.png" mode="widthFix"></image>
+        <div class="title" v-if="title">{{ title }}</div>
+        <div class="subhead" v-if="subhead">{{ subhead }}</div>
+        <div class="p" v-if="p1">{{ p1 }}</div>
+        <div class="p" v-if="p2">{{ p2 }}</div>
+        <slot></slot>
+        <button class="btn btn-wx" @tap="affirm">
+          确认
         </button>
       </div>
     </div>
@@ -86,13 +87,28 @@ wepy.component({
     show: {
       type: [Boolean],
       default: false
+    },
+    title: {
+      type: [String],
+      default: ''
+    },
+    subhead: {
+      type: [String],
+      default: ''
+    },
+    p1: {
+      type: [String],
+      default: ''
+    },
+    p2: {
+      type: [String],
+      default: ''
     }
   },
   methods: {
     // 登录获取token
-    getTokenLogin (e) {
-      let data = e.$wx.detail
-      this.$emit('getToken', data)
+    affirm () {
+      this.$emit('affirm')
     }
   }
 })

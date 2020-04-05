@@ -1,0 +1,717 @@
+<style lang="less">
+page {
+  background-color: #f6f6f6;
+}
+.page-container {
+  .header {
+    position: relative;
+    padding-top: 30rpx;
+    background-color: #fff;
+    .order-status {
+      line-height: 1;
+      padding-left: 40rpx;
+      font-size: 30rpx;
+      font-weight: 500;
+      color: #000;
+    }
+    .stay-return {
+      padding: 0 40rpx;
+      font-size: 22px;
+    }
+    margin-bottom: 20rpx;
+  }
+
+  .commodity-box {
+    background-color: #fff;
+    padding: 50rpx 40rpx 0rpx;
+    margin-bottom: 20rpx;
+    //
+    .commodity {
+      padding-bottom: 30rpx;
+    }
+
+    .com-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 20rpx 0;
+      font-size: 26rpx;
+      line-height: 1;
+      .left {
+        color: #a1a1a1;
+      }
+      .right {
+        color: #31313b;
+      }
+    }
+    .heji {
+      padding: 40rpx 0;
+      border-top: 1px solid #f6f6f6;
+
+      .left {
+        font-size: 26rpx;
+        color: rgba(49, 49, 59, 1);
+      }
+      .right {
+        font-size: 36rpx;
+        color: rgba(49, 49, 59, 1);
+      }
+    }
+    // border-bottom: 1px solid #f6f6f6;
+    .row-ext {
+      .left-flex {
+        display: flex;
+        .t1 {
+          color: #000000;
+        }
+      }
+    }
+    .row-box {
+      background-color: #fff;
+      padding: 20rpx 0;
+      line-height: 1;
+      .title {
+        padding: 20rpx 0;
+        font-size: 26rpx;
+        font-weight: 500;
+        color: rgba(49, 49, 59, 1);
+      }
+      .row {
+        padding: 20rpx 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .left {
+          display: flex;
+          font-size: 26rpx;
+          .k {
+            color: #a1a1a1;
+            margin-right: 20rpx;
+          }
+          .v {
+            color: #000000;
+          }
+        }
+        .right {
+          .copy {
+            width: 80rpx;
+            height: 36rpx;
+            line-height: 36rpx;
+            text-align: center;
+            border: 1px solid rgba(221, 221, 221, 1);
+            border-radius: 4rpx;
+            font-size: 24rpx;
+            color: rgba(0, 0, 0, 1);
+          }
+        }
+      }
+    }
+  }
+  // 订单
+  .row-box {
+    background-color: #fff;
+    padding: 20rpx;
+    line-height: 1;
+    .title {
+      padding: 20rpx;
+      font-size: 26rpx;
+      font-weight: 500;
+      color: rgba(49, 49, 59, 1);
+    }
+    .row {
+      padding: 20rpx;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .left {
+        display: flex;
+        font-size: 26rpx;
+        .k {
+          color: #a1a1a1;
+          margin-right: 20rpx;
+        }
+        .v {
+          color: #000000;
+        }
+      }
+      .right {
+        .copy {
+          width: 80rpx;
+          height: 36rpx;
+          line-height: 36rpx;
+          text-align: center;
+          border: 1px solid rgba(221, 221, 221, 1);
+          border-radius: 4rpx;
+          font-size: 24rpx;
+          color: rgba(0, 0, 0, 1);
+        }
+      }
+    }
+  }
+  // 按钮
+  .btn-box {
+    background-color: #fff;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20rpx;
+    padding: 1rpx 40rpx;
+    .btn {
+      margin: 30rpx 0rpx;
+      width: 180rpx;
+      height: 68rpx;
+      border-radius: 12rpx;
+      line-height: 68rpx;
+      text-align: center;
+      font-size: 30rpx;
+      margin-left: 10rpx;
+    }
+    .btn1 {
+      color: #fff;
+      background: #30313b;
+    }
+    .btn2 {
+      color: #30313b;
+      background-color: #fff;
+      border: 1px solid #30313b;
+    }
+  }
+}
+
+.slot-title {
+  color: rgba(49, 49, 59, 1);
+  font-weight: 400;
+  .t1 {
+    font-size: 48rpx;
+  }
+  .t2 {
+    font-size: 24rpx;
+  }
+}
+.slot-conotent {
+  padding-bottom: 80rpx;
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30rpx 0;
+    .left {
+      display: flex;
+      font-size: 28rpx;
+      color: rgba(49, 49, 59, 1);
+      .icon-img {
+        width: 38rpx;
+        height: 38rpx;
+        display: block;
+        margin-right: 18rpx;
+      }
+    }
+  }
+  .btn {
+    margin-top: 40rpx;
+    width: 100%;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    background: rgba(49, 49, 59, 1);
+    font-size: 30rpx;
+    color: rgba(255, 255, 255, 1);
+  }
+}
+// 屏风弹框
+.screen-dialog {
+  padding-bottom: 40rpx;
+  box-sizing: border-box;
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50rpx;
+    font-size: 28rpx;
+    line-height: 1;
+    color: rgba(49, 49, 59, 1);
+    .left {
+    }
+    .right {
+    }
+  }
+  .btn {
+    width: 100%;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    background: rgba(49, 49, 59, 1);
+    font-size: 30rpx;
+    color: #fff;
+  }
+  input {
+    width: 100%;
+  }
+}
+</style>
+<template>
+  <div class="page-container">
+    <!-- 地址 -->
+    <div class="header">
+      <!-- 状态 -->
+      <div class="order-status">{{ orderData.orderStatusDisplay }}</div>
+      <!-- 地址 -->
+      <div v-if="UNPAID||CLOSED||SENDING" class="addr">
+        <addr-icon-box amend="{{ false }}" item="{{ checkedAddr }}"></addr-icon-box>
+      </div>
+
+      <!-- 归还物流信息 -->
+      <div v-else-if="COMPLETE" class="row-box">
+        <!-- 归还物流 -->
+        <div class="row">
+          <div class="left">
+            <div class="k">归还物流</div>
+            <div class="v">{{orderData.backExpressNo}}</div>
+          </div>
+          <div class="right">
+            <div class="copy" @tap="on_copy(orderData.backExpressNo)">复制</div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="row">
+          <div class="left">
+            <div class="k">归还日期</div>
+            <div class="v">{{orderData.backTime}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div v-else-if="USING||RETURNING" class="stay-return">
+        <van-steps active-icon="checked" active-color="#C9AB79" inactive-color="#F6F6F6" steps="{{ steps }}" active="{{ stepsActive }}" />
+      </div>
+
+    </div>
+    <!-- 商品 -->
+    <div class="commodity-box">
+      <div class="commodity">
+        <commodity-item isDetail="{{ true }}" item="{{ orderData }}"></commodity-item>
+      </div>
+      <!-- 归还地址 -->
+      <div v-if="USING" class="row-box">
+        <div class="row">
+          <div class="left title">归还地址</div>
+          <div class="right">
+            <div class="copy" @tap="on_copySite()">复制</div>
+          </div>
+        </div>
+        <!-- 收件人　 -->
+        <div class="row">
+          <div class="left">
+            <div class="k">收件人　</div>
+            <div class="v">{{orderData.storageAddrContact}}</div>
+          </div>
+        </div>
+        <!-- 收件号码 -->
+        <div class="row">
+          <div class="left">
+            <div class="k">收件号码</div>
+            <div class="v">{{orderData.storageAddrPhone}}</div>
+          </div>
+        </div>
+        <!-- 收件地址 -->
+        <div class="row">
+          <div class="left">
+            <div class="k">收件地址</div>
+            <div class="v">{{orderData.storageAddrAddress}}</div>
+          </div>
+        </div>
+      </div>
+      <!-- 归还信息 -->
+      <div v-else-if="RETURNING" class="row-box">
+        <div class="title">归还信息</div>
+        <!-- 订单编号 -->
+        <div class="row">
+          <div class="left">
+            <div class="k">订单编号</div>
+            <div class="v">{{orderData.orderNo}}</div>
+          </div>
+        </div>
+        <!-- 物流公司 -->
+        <div class="row">
+          <div class="left">
+            <div class="k">物流公司</div>
+            <div class="v">{{'顺丰'}}</div>
+          </div>
+        </div>
+        <!-- 物流单号 -->
+        <div class="row">
+          <div class="left">
+            <div class="k">物流单号</div>
+            <div class="v">{{orderData.backExpressNo}}</div>
+          </div>
+          <div class="right">
+            <div class="copy" @tap="on_copy(orderData.backExpressNo)">复制</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 订单信息 -->
+      <block v-else>
+        <!-- 租金 -->
+        <div class="com-row">
+          <div class="left">租金</div>
+          <div class="right">¥{{ orderData.rentFee }}</div>
+        </div>
+        <!-- 加件费 -->
+        <div class="com-row">
+          <div class="left">加件费</div>
+          <div class="right">¥{{ orderData.plusFee }}</div>
+        </div>
+        <!-- 免赔服务 -->
+        <div class="com-row row-ext" v-if="orderData.isInsurance">
+          <div class="left left-flex">免赔服务</div>
+          <div class="right">¥{{ orderData.insuranceFee }}</div>
+        </div>
+        <!-- 商品押金 -->
+        <div class="com-row row-ext">
+          <div class="left">商品押金</div>
+          <div class="right">¥{{ orderData.depositFee }}</div>
+        </div>
+        <!-- 奢护 -->
+        <div class="com-row">
+          <div class="left">奢护
+          </div>
+          <div class="right">¥{{ orderData.maintenanceFee }}</div>
+        </div>
+        <!-- 运费 -->
+        <div class="com-row">
+          <div class="left">运费</div>
+          <div class="right">¥{{ orderData.expressFee }}</div>
+        </div>
+        <!-- 合计 -->
+        <div class="com-row heji">
+          <div class="left">合计</div>
+          <div class="right">¥{{ orderData.expressFee }}</div>
+        </div>
+      </block>
+
+    </div>
+
+    <!-- 订单 -->
+    <div v-if="!USING&&!RETURNING" class="row-box">
+      <div class="title">订单信息</div>
+      <!-- 订单编号 -->
+      <div class="row">
+        <div class="left">
+          <div class="k">订单编号</div>
+          <div class="v">{{orderData.orderNo}}</div>
+        </div>
+        <div class="right">
+          <div class="copy" @tap="on_copy(orderData.orderNo)">复制</div>
+        </div>
+      </div>
+      <!-- 下单时间 -->
+      <div class="row">
+        <div class="left">
+          <div class="k">下单时间</div>
+          <div class="v">{{orderData.createTime}}</div>
+        </div>
+      </div>
+      <!-- 下单时间 -->
+      <div class="row">
+        <div class="left">
+          <div class="k">支付方式</div>
+          <div class="v">{{orderData.orderPaymentDisplay}}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 按钮 btns -->
+    <div class="btn-box">
+      <btns orderData="{{ orderData }}"></btns>
+    </div>
+
+    <!-- 支付弹框 -->
+    <half-screen-dialog @close="on_showZifu" show="{{ isShowZifu }}">
+      <div class="slot-title" slot="title">
+        <div class="t1"> ¥2632.00 </div>
+        <div class="t2"> 应付金额 </div>
+      </div>
+      <div class="slot-conotent" slot="desc">
+        <div class="row" @tap="on_changePaymentMethod('ZYT')">
+          <div class="left">
+            <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/qian-icon.png" mode="widthFix"></image>
+            <div class="text">租英台账户（余额：¥0）</div>
+          </div>
+          <div class="right">
+            <van-checkbox icon-size="40rpx" checked-color="#C9AB79" value="{{ paymentMethod === 'ZYT' }}"></van-checkbox>
+          </div>
+        </div>
+        <div class="row" @tap="on_changePaymentMethod('WX')">
+          <div class="left">
+            <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wx.png" mode="widthFix"></image>
+            <div class="text">微信</div>
+          </div>
+          <div class="right">
+            <van-checkbox icon-size="40rpx" checked-color="#C9AB79" value="{{ paymentMethod === 'WX' }}"></van-checkbox>
+          </div>
+        </div>
+        <div class="btn" @tap="on_zifu">确认支付</div>
+      </div>
+    </half-screen-dialog>
+
+    <!-- 屏风弹框-续租 -->
+    <half-screen-dialog @close="on_showXuZhuDialog" show="{{showXuZhuDialog}}">
+      <div slot="desc" class="screen-dialog">
+        <div class="row">
+          <div class="left">租用天数</div>
+          <div class="right">
+            <stepper value="{{ day }}" integer @change="on_ChangeDay" min="7" max="30" step="7"></stepper>
+          </div>
+        </div>
+        <div class="row">
+          <div class="left">租金</div>
+          <div class="right">10元/天</div>
+        </div>
+        <div class="btn" @tap="on_xuZhu">确认下单</div>
+      </div>
+    </half-screen-dialog>
+    <!-- 屏风弹框-物流 -->
+    <half-screen-dialog @close="on_showWuLiuDialog" show="{{showWuLiuDialog}}">
+      <div slot="desc" class="screen-dialog">
+        <div class="row">
+          <div class="left">物流公司</div>
+          <div class="right">顺丰</div>
+        </div>
+        <div class="row">
+          <!-- @change="onChangEexpressNo"  -->
+          <input class="weui-input" adjust-position="{{true}}" cursor-spacing="15" v-model="expressNo" placeholder="请输入物流单号" />
+        </div>
+        <div class="btn" @tap="on_submitWuLiu">提交</div>
+      </div>
+    </half-screen-dialog>
+    <!-- 弹框 -->
+    <tooltip @affirm="on_affirm" show="{{ tooltipShow }}" title="{{ '支付成功' }}" p1="您的包包正在打包中，可在我的订单中" p2="查看订单状态"></tooltip>
+  </div>
+</template>
+<script>
+import wepy from '@wepy/core'
+import $http from './../../http/http.js'
+wepy.page({
+  computed: {
+    UNPAID () { // 等待付款
+      return this.orderData.orderStatus === 0
+    },
+    PAID () { // 已支付
+      return this.orderData.orderStatus === 1
+    },
+    SENDING () { // 运输中,待收货
+      return this.orderData.orderStatus === 2
+    },
+    USING () { // 使用中,待归还
+      return this.orderData.orderStatus === 3
+    },
+    RETURNING () { // 归还中
+      return this.orderData.orderStatus === 4
+    },
+    CLOSED () { // 交易关闭
+      return this.orderData.orderStatus === 8
+    },
+    COMPLETE () { // 交易完成
+      return this.orderData.orderStatus === 9
+    }
+  },
+  data: {
+    stepsActive: 1, // 步骤条
+    day: '', // 续租天数
+    showXuZhuDialog: false, // 显示续租对话框
+    showWuLiuDialog: false, // 显示物流对话框
+    expressNo: '', // 归还的快递单号
+    steps: [
+      {
+        text: '签收'
+      },
+      {
+        text: '到期'
+      },
+      {
+        text: '归还'
+      }
+    ],
+    tooltipShow: false, // 支付成功弹框
+    // 用户地址
+    checkedAddr: null, // 用户选中地址
+    orderData: {
+      orderStatus: ''
+    }, // 订单详细
+    isShowZifu: false, // 确认支付
+    paymentMethod: 'ZYT'  // ZYT / WX
+  },
+  methods: {
+    // 物流单号
+    onChangEexpressNo (e) {
+      console.log(e)
+    },
+    // 物流对话框
+    on_showWuLiuDialog () {
+      this.showWuLiuDialog = !this.showWuLiuDialog
+    },
+    // 提交物流信息
+    on_submitWuLiu () {
+      let _this = this
+      let parameter = {
+        expressNo: _this.expressNo, // 	快递单号
+        orderId: _this.orderData.orderId //	订单标识
+      }
+      $http.post('/ma/order/sendBack', parameter).then(res => {
+        if (res.code === 0) {
+          console.log(res)
+        }
+      })
+    },
+    // 续租对话框
+    on_showXuZhuDialog () {
+      this.showXuZhuDialog = !this.showXuZhuDialog
+    },
+    // 改变续租天数
+    on_ChangeDay (e) {
+      console.log(e.$wx.detail)
+      this.day = e.$wx.detail
+    },
+    // 确认续租
+    on_xuZhu () {
+      this.on_showXuZhuDialog()
+      // 去支付
+      this.on_pay()
+    },
+    // 复制
+    on_copy (str) {
+      wx.setClipboardData({ data: str })
+    },
+    // 复制地址
+    on_copySite () {
+      let str = '收件人：' + this.orderData.storageAddrContact
+      str = str + '， 收件号码：' + this.orderData.storageAddrPhone
+      str = str + '，  收件地址：' + this.orderData.storageAddrAddress
+
+      wx.setClipboardData({ data: str })
+    },
+    // 联系客服
+    on_service () { },
+    // 晒单
+    on_bask () { },
+    // 续 租
+    on_renewal () {
+      this.on_showXuZhuDialog()
+    },
+    // 预约归还
+    on_appointReturn () {
+      // 显示物流对话框
+      this.on_showWuLiuDialog()
+    },
+    // 查看物流
+    on_logistics () { },
+    // 确认收货
+    on_confirmReceipt () {
+      console.log('确认收货')
+    },
+    // 再次下单
+    on_placeOrder () { },
+    // 去支付 显示支付框
+    on_pay () {
+      this.isShowZifu = !this.isShowZifu
+    },
+    // 支付完成
+    on_affirm () {
+      wx.navigateBack({
+        delta: 1
+      })
+    },
+    // 支付接口
+    on_zifu () {
+      let _this = this
+      let parameter = {
+        addrId: _this.checkedAddr.addrId,
+        goodsId: _this.orderData.goodsId,
+        insure: _this.orderData.isInsurance ? 1 : 0,
+        tenancyDays: _this.orderData.day
+      }
+      $http.post('/ma/order/createOrder', parameter).then(res => {
+        if (res.code === 0) {
+          _this.isShowZifu = false
+          _this.WXzifu(res.data)
+        }
+      })
+    },
+    // 微信支付
+    WXzifu (data) {
+      let _this = this
+      wx.requestPayment({
+        timeStamp: data.tradeInfo.timeStamp,
+        nonceStr: data.tradeInfo.nonceStr,
+        package: data.tradeInfo.package,
+        signType: data.tradeInfo.signType,
+        paySign: data.tradeInfo.paySign,
+        success (res) {
+          _this.tooltipShow = true
+          console.log(res)
+        },
+        fail (res) { }
+      })
+    },
+    // 更改支付方式
+    on_changePaymentMethod (paymentMethod) {
+      this.paymentMethod = paymentMethod
+    },
+    // 获取页面传入数据
+    getData () {
+      let _this = this
+      const eventChannel = this.$wx.getOpenerEventChannel()
+      eventChannel.on('getPageData', function (orderId) {
+        _this.orderId = orderId
+        _this.getDetails()
+      })
+    },
+    // 获取详情信息
+    getDetails () {
+      let _this = this
+      $http.post('/ma/order/detailOrder', { orderId: _this.orderId }).then(res => {
+        if (res.code === 0) {
+          console.log(res)
+          _this.orderData = res.data
+          _this.checkedAddr = {
+            addrContact: res.data.sendAddrContact,
+            addrPhone: res.data.sendAddrPhone,
+            addrArea: res.data.sendAddrArea,
+            addrAddress: res.data.sendAddrAddress
+          }
+        }
+      })
+    }
+  },
+  // 监听页面加载
+  onLoad () {
+    this.getData()
+    // this.getDetails()
+  },
+  // 生命周期回调—监听页面显示
+  onShow () {
+    // let checkedAddr = wx.getStorageSync('checkedAddr')
+    // if (checkedAddr) {
+    //   this.checkedAddr = checkedAddr
+    //   wx.removeStorageSync('checkedAddr')
+    // }
+  },
+  // 生命周期回调—监听页面初次渲染完成
+  onReady () { },
+  // 生命周期回调—监听页面隐藏
+  onHide () { }
+})
+</script>
+<config>
+{
+    navigationBarTitleText: '确认下单',
+    usingComponents: {
+        "addr-icon-box": "./../components/addrIconBox",
+        "btns": "./../components/btns",
+        "commodity-item": "./../components/commodityItem",
+        "half-screen-dialog": "~@weui/half-screen-dialog/half-screen-dialog",
+        "tooltip": "~@components/tooltip",
+        "stepper": "~@vant/stepper",
+        "van-steps": "~@vant/steps/index"
+    }
+}
+</config>

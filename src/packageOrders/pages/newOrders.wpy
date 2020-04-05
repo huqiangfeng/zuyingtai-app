@@ -1,10 +1,230 @@
 <style lang="less">
 .page-container {
+  .addr {
+    margin-bottom: 20rpx;
+  }
+
+  .zhufu {
+    height: 150rpx;
+  }
+  .commodity-box {
+    background-color: #fff;
+    padding: 50rpx 40rpx 30rpx;
+    //
+    .commodity {
+      padding-bottom: 30rpx;
+    }
+
+    .com-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 30rpx 0;
+      font-size: 26rpx;
+      color: rgba(49, 49, 59, 1);
+      line-height: 1;
+      .left {
+        .fei-vip {
+          margin-top: 10rpx;
+          display: flex;
+          font-size: 22rpx;
+          .t1 {
+            color: #a1a1a1;
+          }
+          .t2 {
+            color: #c9ab79;
+          }
+          .t3 {
+            color: #000000;
+          }
+        }
+      }
+      .right {
+        .jia-ge {
+          color: #c9ab79;
+        }
+      }
+    }
+    .row-ext {
+      border-bottom: 1px solid #f6f6f6;
+      .left {
+        .left-ext {
+          padding-top: 12rpx;
+          display: flex;
+          font-size: 22rpx;
+          color: #a1a1a1;
+          padding-bottom: 20rpx;
+          .t2 {
+            color: #c9ab79;
+          }
+          .t3 {
+            color: #000000;
+          }
+        }
+      }
+      .left-flex {
+        display: flex;
+        align-items: center;
+        .icon-img {
+          display: block;
+          width: 28rpx;
+          height: 28rpx;
+          margin: 0 12rpx;
+        }
+        .t1 {
+          font-size: 22rpx;
+          color: #a1a1a1;
+        }
+      }
+      .right {
+        .jia-ge {
+          color: #c9ab79;
+        }
+      }
+    }
+  }
+}
+.slot-title {
+  color: rgba(49, 49, 59, 1);
+  font-weight: 400;
+  .t1 {
+    font-size: 48rpx;
+  }
+  .t2 {
+    font-size: 24rpx;
+  }
+}
+.slot-conotent {
+  padding-bottom: 80rpx;
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30rpx 0;
+    .left {
+      display: flex;
+      font-size: 28rpx;
+      color: rgba(49, 49, 59, 1);
+      .icon-img {
+        width: 38rpx;
+        height: 38rpx;
+        display: block;
+        margin-right: 18rpx;
+      }
+    }
+  }
+  .btn {
+    margin-top: 40rpx;
+    width: 100%;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    background: rgba(49, 49, 59, 1);
+    font-size: 30rpx;
+    color: rgba(255, 255, 255, 1);
+  }
 }
 </style>
 <template>
   <div class="page-container">
-
+    <!-- 地址 -->
+    <div class="addr">
+      <addr-icon-box item="{{ checkedAddr }}"></addr-icon-box>
+    </div>
+    <!-- 商品 -->
+    <div class="commodity-box">
+      <div class="commodity">
+        <commodity-item isFaHuo="{{ true }}" item="{{ orderData }}"></commodity-item>
+      </div>
+      <!-- row -->
+      <div class="com-row">
+        <div class="left">租用天数</div>
+        <div class="right">{{ orderData.day }}天</div>
+      </div>
+      <!-- row -->
+      <div class="com-row row-ext">
+        <div class="left">
+          <div>非会员租金</div>
+          <div class="left-ext">
+            <div class="t1">开通会员本单租金立省</div>
+            <div class="t2">¥{{ spareRent }}</div>
+            <div class="t3">　去开通 》</div>
+          </div>
+        </div>
+        <div class="right jia-ge">¥{{ rent }}</div>
+      </div>
+      <!-- row -->
+      <div class="com-row">
+        <div class="left">加件费</div>
+        <div class="right">¥{{ goods.extra.plusFee }}</div>
+      </div>
+      <!-- row -->
+      <div class="com-row row-ext" v-if="orderData.isInsurance">
+        <div class="left left-flex">
+          <div>免赔服务</div>
+          <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wenhao.png" mode="widthFix"></image>
+          <div class="t1">轻微划痕免赔</div>
+        </div>
+        <div class="right">¥{{ orderData.goodsInsurance }}</div>
+      </div>
+      <!-- row -->
+      <div class="com-row row-ext">
+        <div class="left">
+          <div>商品押金</div>
+          <div class="left-ext">包包归还签收后，1-2个工作日内极速退押金</div>
+        </div>
+        <div class="right">¥{{ orderData.goodsDeposit }}</div>
+      </div>
+      <!-- row -->
+      <div class="com-row">
+        <div class="left">
+          <div>奢护</div>
+          <!-- <div class=""></div> -->
+        </div>
+        <div class="right">¥{{ '空着' }}</div>
+      </div>
+      <!-- row -->
+      <div class="com-row">
+        <div class="left">
+          <div>运费</div>
+          <div class=""></div>
+        </div>
+        <div class="right">¥{{ orderData.expressFee }}</div>
+      </div>
+    </div>
+    <!-- 支付 -->
+    <div class="zhufu">
+      <zhifu-bar @zhifu="on_showZifu" dataObj="{{ orderData }}"></zhifu-bar>
+    </div>
+    <!-- 支付弹框 -->
+    <half-screen-dialog @close="on_showZifu" show="{{ isShowZifu }}">
+      <div class="slot-title" slot="title">
+        <div class="t1"> ¥2632.00 </div>
+        <div class="t2"> 应付金额 </div>
+      </div>
+      <div class="slot-conotent" slot="desc">
+        <div class="row" @tap="on_changePaymentMethod('ZYT')">
+          <div class="left">
+            <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/qian-icon.png" mode="widthFix"></image>
+            <div class="text">租英台账户（余额：¥0）</div>
+          </div>
+          <div class="right">
+            <van-checkbox icon-size="40rpx" checked-color="#C9AB79" value="{{ paymentMethod === 'ZYT' }}"></van-checkbox>
+          </div>
+        </div>
+        <div class="row" @tap="on_changePaymentMethod('WX')">
+          <div class="left">
+            <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wx.png" mode="widthFix"></image>
+            <div class="text">微信</div>
+          </div>
+          <div class="right">
+            <van-checkbox icon-size="40rpx" checked-color="#C9AB79" value="{{ paymentMethod === 'WX' }}"></van-checkbox>
+          </div>
+        </div>
+        <div class="btn" @tap="on_zifu">确认支付</div>
+      </div>
+    </half-screen-dialog>
+    <!-- 弹框 -->
+    <tooltip @affirm="on_affirm" show="{{ tooltipShow }}" title="{{ '¥2360.00' }}" subhead="提现完成" p1="资金将会在1-3个工作日内到达账户，" p2="请注意查收"></tooltip>
   </div>
 </template>
 <script>
@@ -12,26 +232,105 @@ import wepy from '@wepy/core'
 import $http from './../../http/http.js'
 wepy.page({
   computed: {
+    vipRent () { // vip租金
+      return this.orderData.vipDayRent * this.orderData.day
+    },
+    rent () { // 普通人租金
+      return this.orderData.dayRent * this.orderData.day
+    },
+    spareRent () { // vip比普通人节省租金
+      return this.rent - this.vipRent
+    }
   },
   data: {
+    tooltipShow: false, // 支付成功弹框
     // 用户地址
-    userAddr: ''
+    checkedAddr: null, // 用户选中地址
+    orderData: null, // 订单详细
+    goods: null, // 商品
+    coupon: null, // 优惠券
+    isShowZifu: false, // 确认支付
+    paymentMethod: 'ZYT',  // ZYT / WX
+    account: {
+      vipLevel: 0, // 会员等级
+      userPoints: 0, // 账户积分
+      vipBalance: 0 // 会员卡余额
+    }
   },
   methods: {
+    // 支付完成
+    on_affirm () {
+      wx.navigateBack({
+        delta: 1
+      })
+    },
+    // 支付接口
+    on_zifu () {
+      let _this = this
+      let parameter = {
+        addrId: _this.checkedAddr.addrId,
+        goodsId: _this.orderData.goodsId,
+        insure: _this.orderData.isInsurance ? 1 : 0,
+        rentDays: _this.orderData.day
+      }
+      $http.post('/ma/order/createOrder', parameter).then(res => {
+        if (res.code === 0) {
+          _this.isShowZifu = false
+          _this.WXzifu(res.data)
+        }
+      })
+    },
+    // 微信支付
+    WXzifu (data) {
+      let _this = this
+      wx.requestPayment({
+        timeStamp: data.tradeInfo.timeStamp,
+        nonceStr: data.tradeInfo.nonceStr,
+        package: data.tradeInfo.package,
+        signType: data.tradeInfo.signType,
+        paySign: data.tradeInfo.paySign,
+        success (res) {
+          _this.tooltipShow = true
+          console.log(res)
+        },
+        fail (res) { }
+      })
+    },
+    // 更改支付方式
+    on_changePaymentMethod (paymentMethod) {
+      this.paymentMethod = paymentMethod
+    },
+    // 显示支付框
+    on_showZifu () {
+      this.isShowZifu = !this.isShowZifu
+    },
+    // 获取页面传入数据
     getData () {
-      // let _this = this
+      let _this = this
       const eventChannel = this.$wx.getOpenerEventChannel()
       eventChannel.on('getOrderData', function (data) {
-        console.log(data)
+        _this.orderData = data
+        _this.prepayInfo(data.goodsId)
+      })
+    },
+    // 获取预付信息
+    prepayInfo (goodsId) {
+      let _this = this
+      $http.post('/ma/order/prepayInfo', { goodsId: goodsId }).then(res => {
+        if (res.code === 0) {
+          _this.goods = res.data.goods
+          _this.account = res.data.account
+          _this.coupon = res.data.coupon
+        }
       })
     },
     // 获取默认用户地址
     getUserAddr () {
-      // let _this = this
+      let _this = this
       $http.post('/ma/userAddr/list').then(res => {
         if (res.code === 0) {
-          console.log(res)
-          // _this.userAddr = res.data.userAddr
+          let addrs = res.data.pageRows
+          _this.checkedAddr = addrs.find(item => item.addrDefault === 1)
         }
       })
     }
@@ -43,31 +342,29 @@ wepy.page({
     this.getUserAddr()
   },
   // 生命周期回调—监听页面显示
-  onShow () { },
+  onShow () {
+    let checkedAddr = wx.getStorageSync('checkedAddr')
+    if (checkedAddr) {
+      this.checkedAddr = checkedAddr
+      wx.removeStorageSync('checkedAddr')
+    }
+  },
   // 生命周期回调—监听页面初次渲染完成
   onReady () { },
   // 生命周期回调—监听页面隐藏
-  onHide () { },
-  // 生命周期回调—监听页面卸载
-  onUnload () { },
-  // 监听用户下拉动作
-  onPullDownRefresh () { },
-  // 页面上拉触底事件的处理函数
-  onReachBottom () { },
-  // 用户点击右上角转发
-  onShareAppMessage () { },
-  // 页面滚动触发事件的处理函数
-  onPageScroll () { },
-  // 页面尺寸改变时触发，详见 响应显示区域变化
-  onResize () { },
-  // 当前是 tab 页时，点击 tab 时触发
-  onTabItemTap () { }
+  onHide () { }
 })
 </script>
 <config>
 {
     navigationBarTitleText: '确认下单',
     usingComponents: {
+        "addr-icon-box": "./../components/addrIconBox",
+        "zhifu-bar": "./../components/zhifuBar",
+        "commodity-item": "./../components/commodityItem",
+        "half-screen-dialog": "~@weui/half-screen-dialog/half-screen-dialog",
+        "van-checkbox": "~@vant/checkbox/index",
+        "tooltip": "~@components/tooltip"
     }
 }
 </config>

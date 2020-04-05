@@ -1,0 +1,136 @@
+<style lang="less">
+// 按钮
+.btn-box {
+  background-color: #fff;
+  display: flex;
+  justify-content: flex-end;
+  .btn {
+    // margin: 30rpx 0rpx;
+    width: 180rpx;
+    height: 68rpx;
+    border-radius: 12rpx;
+    line-height: 68rpx;
+    text-align: center;
+    font-size: 30rpx;
+    margin-left: 10rpx;
+  }
+  .btn1 {
+    color: #fff;
+    background: #30313b;
+  }
+  .btn2 {
+    color: #30313b;
+    background-color: #fff;
+    border: 1px solid #30313b;
+  }
+}
+</style>
+
+<template>
+  <!-- 按钮 btns -->
+  <div class="btn-box">
+    <div class="btn btn2" @tap="on_del" v-if="CLOSED">删除订单</div>
+    <div class="btn btn2" @tap="on_service" v-if="UNPAID||CLOSED">联系客服</div>
+    <div class="btn btn2" @tap="on_bask" v-if="COMPLETE||USING">晒单</div>
+    <div class="btn btn2" @tap="on_renewal" v-if="USING">续 租</div>
+    <div class="btn btn1" @tap="on_appointReturn" v-if="USING">归还</div>
+    <div class="btn btn1" @tap="on_logistics" v-if="SENDING||RETURNING">查看物流</div>
+    <div class="btn btn1" @tap="on_confirmReceipt" v-if="SENDING">确认收货</div>
+    <div class="btn btn1" @tap="on_placeOrder" v-if="CLOSED||COMPLETE">再次下单</div>
+    <div class="btn btn1" @tap="on_pay" v-if="UNPAID">去支付</div>
+  </div>
+
+</template>
+
+<script>
+import wepy from '@wepy/core'
+import $http from './../../http/http.js'
+wepy.component({
+  computed: {
+    UNPAID () { // 等待付款
+      return this.orderData.orderStatus === 0
+    },
+    PAID () { // 已支付
+      return this.orderData.orderStatus === 1
+    },
+    SENDING () { // 运输中,待收货
+      return this.orderData.orderStatus === 2
+    },
+    USING () { // 使用中,待归还
+      return this.orderData.orderStatus === 3
+    },
+    RETURNING () { // 归还中
+      return this.orderData.orderStatus === 4
+    },
+    CLOSED () { // 交易关闭
+      return this.orderData.orderStatus === 8
+    },
+    COMPLETE () { // 交易完成
+      return this.orderData.orderStatus === 9
+    }
+  },
+  props: {
+    orderData: {
+      type: Object,
+      default: {}
+    }
+  },
+  data: {
+    day: '', // 续租天数
+    showXuZhuDialog: false, // 显示续租对话框
+    showWuLiuDialog: false, // 显示物流对话框
+    expressNo: '', // 归还的快递单号
+    tooltipShow: false, // 支付成功弹框
+    // 用户地址
+    checkedAddr: null, // 用户选中地址
+    isShowZifu: false, // 确认支付
+    paymentMethod: 'ZYT'  // ZYT / WX
+  },
+  methods: {
+    // 删除订单
+    on_del () {
+      let _this = this
+      let orderId = this.orderData.orderId
+      $http.post('/ma/order/deleteOrder', { orderId }).then(res => {
+        if (res.code === 0) {
+          console.log(res)
+          _this.$emit('refresh')
+        }
+      })
+    },
+    // 联系客服
+    on_service () { },
+    // 晒单
+    on_bask () { },
+    // 续 租
+    on_renewal () {
+      this.on_showXuZhuDialog()
+    },
+    // 预约归还
+    on_appointReturn () {
+      // 显示物流对话框
+      this.on_showWuLiuDialog()
+    },
+    // 查看物流
+    on_logistics () { },
+    // 确认收货
+    on_confirmReceipt () {
+      console.log('确认收货')
+    },
+    // 再次下单
+    on_placeOrder () { },
+    // 去支付 显示支付框
+    on_pay () {
+      this.isShowZifu = !this.isShowZifu
+    }
+  },
+  attached () {
+  }
+})
+</script>
+<config>
+{
+    usingComponents: {
+    }
+}
+</config>

@@ -1,7 +1,7 @@
 {
 	"description": "A WePY project",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"enhance": false,
 		"postcss": false,
@@ -22,7 +22,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"appid": "wxcc6001a8290e84f9",
+	"appid": "wx759047d74588cbba",
 	"projectname": "zuyingtai",
 	"miniprogramRoot": "weapp/",
 	"simulatorType": "wechat",
@@ -52,13 +52,6 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "packageCommodity/pages/filtrate",
-					"pathName": "packageCommodity/pages/filtrate",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
 					"name": "packageCommodity/pages/details",
 					"pathName": "packageCommodity/pages/details",
 					"query": "",
@@ -66,15 +59,16 @@
 				},
 				{
 					"id": -1,
-					"name": "packageCommodity/pages/brandDetails",
-					"pathName": "packageCommodity/pages/brandDetails",
+					"name": "packageOrders/pages/newOrders",
+					"pathName": "packageOrders/pages/newOrders",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "packageOrders/pages/addrAdmin",
-					"pathName": "packageOrders/pages/addrAdmin",
+					"name": "packageOrders/pages/ordersAdmin",
+					"pathName": "packageOrders/pages/ordersAdmin",
+					"query": "",
 					"scene": null
 				}
 			]

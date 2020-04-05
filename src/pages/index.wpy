@@ -25,21 +25,9 @@
 
 <template>
   <div class="page-container">
-    <mp-navigation-bar
-      back="{{ false }}"
-      ext-class="navigation"
-      show="{{show}}"
-      background="{{ navBackground }}"
-    >
-      <div
-        slot="left"
-        v-show="footer===0"
-      >
-        <image
-          class="logo"
-          src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/logo.png"
-          mode="widthFix"
-        ></image>
+    <mp-navigation-bar back="{{ false }}" ext-class="navigation" show="{{show}}" background="{{ navBackground }}">
+      <div slot="left" v-show="footer===0">
+        <image class="logo" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/logo.png" mode="widthFix"></image>
       </div>
     </mp-navigation-bar>
     <div class="container">
@@ -51,10 +39,7 @@
     </div>
     <flooter></flooter>
 
-    <info-login
-      show="{{ loginShow }}"
-      bind:onClickHide="onClickHide"
-    />
+    <info-login @getToken="getTokenLogin" show="{{ loginShow }}" />
   </div>
 </template>
 
@@ -62,6 +47,7 @@
 import wepy from '@wepy/core'
 import { mapState, mapActions } from '@wepy/x'
 import store from '../store'
+import $http from './../http/http.js'
 wepy.page({
   store,
   data: {
@@ -72,7 +58,7 @@ wepy.page({
     animated: false
   },
   computed: {
-    ...mapState(['footer', 'login']),
+    ...mapState(['footer', 'login', 'code']),
     navBackground () {
       return this.footer === 4 ? '#000' : '#fff'
     },
@@ -82,24 +68,43 @@ wepy.page({
 
   },
   methods: {
-    ...mapActions(['setLogin', 'setCode'])
+    ...mapActions(['setLogin', 'setCode']),
+    // 获取token
+    getTokenLogin (data) {
+      console.log(data)
+      let _this = this
+      $http.post('/ma/public/login', {
+        encryptedData: JSON.stringify(data.encryptedData),
+        iv: JSON.stringify(data.iv),
+        signature: data.signature,
+        code: _this.code
+      })
+        .then(res => {
+          if (res.code === 0) {
+            wx.setStorageSync('token', res.data.token)
+          }
+          _this.setLogin({ isLogin: true })
+        })
+    },
+    initPage () {
+      let _this = this
+      wx.login({}).then((code) => {
+        _this.setCode({ code: code.code })
+        wx.getUserInfo({
+          success (res) {
+            _this.getTokenLogin(res)
+          },
+          fail () {
+            _this.setLogin({ isLogin: false })
+          }
+        })
+      })
+    }
   },
   created () {
-    let _this = this
-    wx.getUserInfo({
-      success (res) {
-        _this.setLogin({ isLogin: true })
-        console.log(res)
-      },
-      fail (err) {
-        console.log(err)
-        wx.login({}).then((data) => {
-          console.log(data.code)
-          _this.setCode({ code: data.code })
-          _this.setLogin({ isLogin: false })
-        })
-      }
-    })
+    if (!wx.getStorageSync('token')) {
+      this.initPage()
+    }
   },
   // 监听页面加载
   onLoad () { },
