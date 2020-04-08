@@ -56,7 +56,7 @@
 }
 </style>
 <template>
-  <van-overlay show="{{ show }}">
+  <van-overlay show="{{ isShowLogin }}">
     <div class="wrapper">
       <div class="block">
         <image class="img logo" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/logo3.png" mode="widthFix"></image>
@@ -77,8 +77,13 @@
 
 <script>
 import wepy from '@wepy/core'
+import { mapState, mapActions } from '@wepy/x'
+import store from '../store'
+import $http from './../http/http.js'
 wepy.component({
+  store,
   computed: {
+    ...mapState(['code', 'isShowLogin'])
   },
   data: {
   },
@@ -89,10 +94,25 @@ wepy.component({
     }
   },
   methods: {
-    // 登录获取token
+    ...mapActions(['setLogin', 'setShowLogin']),
+    // 获取token
     getTokenLogin (e) {
       let data = e.$wx.detail
-      this.$emit('getToken', data)
+      let _this = this
+      $http.post('/ma/public/login', {
+        encryptedData: JSON.stringify(data.encryptedData),
+        iv: JSON.stringify(data.iv),
+        signature: data.signature,
+        code: _this.code
+      })
+        .then(res => {
+          if (res.code === 0) {
+            wx.setStorageSync('token', res.data.token)
+          }
+          _this.setLogin({ isLogin: true })
+          _this.setShowLogin({ isShowLogin: false })
+          _this.$emit('success')
+        })
     }
   }
 })

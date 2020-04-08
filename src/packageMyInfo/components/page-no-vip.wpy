@@ -1,0 +1,299 @@
+<style lang="less">
+@import './../../utils/style/base.less';
+.page-no-vip {
+  // logo
+  .page-logo {
+    padding: 40rpx;
+    display: flex;
+    justify-content: center;
+    .img {
+      width: 307rpx;
+      display: block;
+      height: 101rpx;
+    }
+  }
+  // swiper
+  .vip-card {
+    .img-swiper {
+      width: 540rpx;
+    }
+  }
+  // 会员权益
+  .rights {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 40rpx;
+    .rights-item {
+      padding-bottom: 40rpx;
+      width: 30%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1;
+      .img {
+        width: 60rpx;
+        display: block;
+      }
+      .title {
+        margin-top: 20rpx;
+        font-size: 28rpx;
+        color: rgba(0, 0, 0, 1);
+      }
+      .explain-text {
+        margin-top: 10rpx;
+        font-size: 22rpx;
+        color: rgba(0, 0, 0, 1);
+      }
+    }
+  }
+  // btn
+  .my-btn {
+    width: 670rpx;
+    margin: 0 auto;
+  }
+  // 协议
+  .checkbox-group {
+    padding: 40rpx;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    .t1 {
+      margin-left: 10rpx;
+      font-size: 28rpx;
+      color: rgba(48, 49, 59, 1);
+    }
+
+    .t2 {
+      color: #c9ab79;
+    }
+  }
+
+  // 说明
+  .explain-box {
+    padding: 0 40rpx 40rpx;
+    .title {
+      text-align: center;
+      font-size: 32rpx;
+      color: rgba(0, 0, 0, 1);
+      line-height: 90rpx;
+    }
+    .p {
+      padding-left: 22rpx;
+      text-indent: -22rpx;
+      font-size: 24rpx;
+      color: rgba(0, 0, 0, 1);
+      line-height: 48rpx;
+    }
+  }
+  // 推荐码
+  .referral-code {
+    margin: 30rpx auto 0;
+    width: 480rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    padding-left: 20rpx;
+    border: 1px solid rgba(210, 211, 213, 1);
+    border-radius: 12rpx;
+  }
+}
+</style>
+
+<template>
+  <div class="page-no-vip">
+    <!-- logo -->
+    <div class="page-logo">
+      <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip-logo.png" mode="widthFix"></image>
+    </div>
+    <!-- vip-card -->
+    <div class="vip-card">
+      <swiper @change="on_changeVIP" previous-margin="85rpx" next-margin="85rpx" style="height: 340rpx;" autoplay="{{false}}" indicator-dots="{{ false }}">
+        <block wx:for="{{swiper}}" wx:key="*this">
+          <swiper-item>
+            <image class="img-swiper" src="{{ item.imageSrc }}" mode="widthFix"></image>
+          </swiper-item>
+        </block>
+      </swiper>
+    </div>
+    <!-- 会员权益 -->
+    <div class="rights">
+      <div class="rights-item" v-for="(item,index) in rights" :key="index">
+        <image class="img" src="{{ item.imageSrc }}" mode="widthFix"></image>
+        <div class="title">{{ item.title }}</div>
+        <div class="explain-text">{{ item.explain }}</div>
+      </div>
+    </div>
+
+    <div class="my-btn" @tap="on_getMembership">¥3999 立即开通</div>
+    <!-- 协议 -->
+    <div class="checkbox-group" @tap="onChange">
+      <van-checkbox icon-size="30rpx" checked-color="#C9AB79" value="{{ checkedProtocol }}"></van-checkbox>
+      <div class="t1">我已阅读并同意</div>
+      <div class="t2">《会员卡购买协议》</div>
+      <div class="t2">《用户指南》</div>
+    </div>
+
+    <!-- 购/卡/说明 -->
+    <div class="explain-box">
+      <div class="title">购/卡/说/明</div>
+      <div class="p"> 1.用户须在租英台小程序中参与活动，包括APP客户端和WAP网
+        页端；</div>
+      <div class="p">2.用户需注册/登录租英台账号（VIP）才可参与活动，普通用户
+        不参加本次活动；</div>
+      <div class="p">3.多个分享者邀请同一好友，被邀请者通过分享链接（或二维码）
+        注册或购买，系统只给被邀请者最终点击链接（或二维码）的
+        分享者发放积分奖励；</div>
+      <div class="p">4.经官方认定为通过不正当手段(如恶意刷单等)获得积分奖励的，
+        租英台有权撤销奖励，并冻结账户积分，如有相关疑问，请致
+        电客服400-800-8956。</div>
+    </div>
+
+    <!-- 弹框 推荐码 -->
+    <van-dialog use-slot title="推荐码" show="{{ showDialog }}" show-cancel-button cancelButtonText="跳过" confirm-button-color="#C9AB79" @cancel="refresh" @confirm="on_referralCode">
+      <input class="referral-code" v-model="referralCode" placeholder="输入推荐人推荐码" type="text" />
+    </van-dialog>
+
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+import $http from './../../http/http.js'
+wepy.component({
+  props: {
+  },
+  data: {
+    showDialog: false, //  推荐码显示
+    referralCode: '', // 推荐码
+    vipIndex: 0,
+    checkedProtocol: false,  // 协议
+    //
+    listRows: [],
+    // 轮播图
+    swiper: [
+      {
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip-cord1.png'
+      },
+      {
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip-cord2.png'
+      }, {
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip-cord1.png'
+      }
+    ],
+    rights: [
+      {
+        title: '0元体验',
+        explain: '打牌包包0元租',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip1.png',
+        actioveImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip1.png'
+      },
+      {
+        title: '专项折扣',
+        explain: '数款包包折扣租',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip2.png',
+        actioveImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip2-act.png'
+      },
+      {
+        title: '专享包包',
+        explain: '数款包包优先租',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip3.png',
+        actioveImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip3-act.png'
+      },
+      {
+        title: '5次延长',
+        explain: '会员最高延长150天',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip4.png',
+        actioveImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip4-act.png'
+      },
+      {
+        title: '6次包邮',
+        explain: '往返包邮',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip5.png',
+        actioveImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip5-act.png'
+      },
+      {
+        title: '3次免费鉴定',
+        explain: '鉴定您的自有包包',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip6.png',
+        actioveImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip6-act.png'
+      }
+    ]
+  },
+  methods: {
+    // 选vip类型
+    on_changeVIP (e) {
+      this.vipIndex = e.$wx.detail.current
+      console.log(e.$wx.detail.current)
+    },
+    // 刷新
+    refresh () {
+      this.$emit('refresh')
+    },
+    // 填写推荐码
+    on_referralCode () {
+      let _this = this
+      _this.refresh()
+      console.log(this.referralCode)
+    },
+    // 协议
+    onChange () {
+      this.checkedProtocol = !this.checkedProtocol
+    },
+    // 开通会员
+    on_getMembership () {
+      let _this = this
+      if (!_this.checkedProtocol) {
+        wx.showModal({
+          title: '提示',
+          content: '请阅读并同意寄卖协议',
+          success (res) {
+            if (res.confirm) {
+              console.log('用户点击确定')
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
+      } else {
+        _this.showDialog = true
+        let vipId = _this.listRows[_this.vipIndex].vipId
+        $http.post('/ma/vip/payVip', { vipId }).then(res => {
+          if (res.code === 0) {
+            console.log(res)
+          }
+        })
+      }
+    },
+    // 获取页面数据
+    getDataInfo () {
+      let _this = this
+      $http.post('/ma/vip/listVip').then(res => {
+        if (res.code === 0) {
+          console.log(res.data.listRows)
+          _this.listRows = res.data.listRows
+        }
+      })
+    }
+  },
+  // 在组件实例刚刚被创建时执行
+  created () {
+    // 获取页面数据
+    this.getDataInfo()
+  },
+  // 在组件实例进入页面节点树时执行
+  attached () {
+  },
+  // 组件生命周期函数-在组件布局完成后执行
+  ready () {
+  }
+})
+</script>
+<config>
+{
+    usingComponents: {
+      "van-checkbox": "~@vant/checkbox/index",
+      "my-swiper": "~@components/mySwiper",
+      "van-dialog": "~@vant/dialog/index"
+    }
+}
+</config>

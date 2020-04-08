@@ -52,22 +52,15 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "packageCommodity/pages/details",
-					"pathName": "packageCommodity/pages/details",
+					"name": "packageMyInfo/pages/pushingHands",
+					"pathName": "packageMyInfo/pages/pushingHands",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "packageOrders/pages/newOrders",
-					"pathName": "packageOrders/pages/newOrders",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "packageOrders/pages/ordersAdmin",
-					"pathName": "packageOrders/pages/ordersAdmin",
+					"name": "packageMyInfo/pages/pushingRecord",
+					"pathName": "packageMyInfo/pages/pushingRecord",
 					"query": "",
 					"scene": null
 				}

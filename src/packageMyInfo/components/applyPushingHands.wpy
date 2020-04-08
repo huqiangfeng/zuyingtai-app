@@ -1,0 +1,209 @@
+<style lang="less">
+@import './../../utils/style/base.less';
+.apply {
+  // 背景
+  .img-bg {
+    position: absolute;
+    top: 0;
+    width: 750rpx;
+    height: 682rpx;
+    display: block;
+    .text-box {
+      position: absolute;
+      bottom: 30rpx;
+      width: 100%;
+      text-align: center;
+      font-size: 72rpx;
+      font-weight: 400;
+      line-height: 1;
+      .text1 {
+        color: rgba(255, 255, 255, 1);
+      }
+      .text2 {
+        margin-top: 40rpx;
+        font-weight: 200;
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+  }
+  // 主要内容
+  .apply-main {
+    margin-top: -64px;
+    padding-top: 682rpx;
+    .title {
+      font-size: 36rpx;
+      color: rgba(0, 0, 0, 1);
+      line-height: 1;
+      padding: 40rpx;
+      text-align: center;
+    }
+    .p-box {
+      margin-bottom: 40rpx;
+      text-align: center;
+      font-size: 24rpx;
+      color: rgba(0, 0, 0, 1);
+      line-height: 36rpx;
+    }
+    // 输入框
+    .input-box {
+      padding: 0 40rpx;
+      .input-group {
+        box-sizing: border-box;
+        margin-bottom: 20rpx;
+        width: 670rpx;
+        background: rgba(255, 255, 255, 1);
+        border: 1px solid rgba(221, 221, 221, 1);
+        border-radius: 12rpx;
+        display: flex;
+        justify-content: space-between;
+        padding: 30rpx 26rpx;
+        .key {
+          font-size: 28rpx;
+          color: rgba(0, 0, 0, 1);
+          margin-right: 20rpx;
+        }
+        .input {
+          flex: 1;
+          font-size: 28rpx;
+        }
+      }
+    }
+    // 协议
+    .checkbox-group {
+      padding: 40rpx;
+      padding-top: 10rpx;
+      display: flex;
+      align-items: center;
+
+      .t1 {
+        margin-left: 10rpx;
+        font-size: 28rpx;
+        color: rgba(48, 49, 59, 1);
+      }
+
+      .t2 {
+        color: #c9ab79;
+      }
+    }
+    // btn
+    .my-btn {
+      width: 670rpx;
+      margin: 0 auto;
+    }
+    .footer {
+      padding: 40rpx;
+      text-align: center;
+      font-size: 24rpx;
+      color: rgba(48, 49, 59, 1);
+    }
+  }
+}
+</style>
+
+<template>
+  <div class="apply">
+    <!-- 背景 -->
+    <image class="img-bg" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/tuishou-bg.png" mode="widthFix">
+      <div class="text-box">
+        <div class="text1">成为推手达人</div>
+        <div class="text2">轻松赚奖励金</div>
+      </div>
+    </image>
+    <div class="apply-main">
+
+      <div class="title">-租英台-</div>
+      <div class="p-box">
+        <div>如果您是时尚小达人，行走种草机，品味独特的时尚精</div>
+        <div>拥有至少一个100人以上的种草群</div>
+        <div>能将时尚好物分享给身边的时尚小伙伴们</div>
+        <div>欢迎您加入租英台</div>
+      </div>
+      <div class="title">-申请表-</div>
+      <!-- 输入框 -->
+      <div class="input-box">
+        <div class="name input-group">
+          <div class="key">姓　　 名</div>
+          <input class="input" v-model="name" placeholder="请输入姓名" />
+        </div>
+        <div class="wx-te input-group">
+          <div class="key">电话/微信</div>
+          <input class="input" v-model="tel" placeholder="请输入电话/微信" />
+        </div>
+      </div>
+      <!-- 协议 -->
+      <div class="checkbox-group" @tap="onChange">
+        <van-checkbox icon-size="30rpx" checked-color="#C9AB79" value="{{ checkedProtocol }}"></van-checkbox>
+        <div class="t1">我已阅读并同意</div>
+        <div class="t2">《推手协议》</div>
+      </div>
+      <!-- btn -->
+      <div class="my-btn" @tap="on_submit">提交</div>
+      <!--  -->
+      <div class="footer">客服电话：400-800-8976</div>
+    </div>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+import $http from './../../http/http.js'
+wepy.component({
+  props: {
+    list: {
+      type: [Object, Array],
+      default: []
+    }
+  },
+  data: {
+    name: '',
+    tel: '',
+    checkedProtocol: false  // 协议
+  },
+  methods: {
+    // 刷新
+    refresh () {
+      this.$emit('refresh')
+    },
+    // 协议
+    onChange () {
+      this.checkedProtocol = !this.checkedProtocol
+    },
+    // 开通会员
+    on_submit () {
+      let _this = this
+      console.log(this.name, this.tel)
+      console.log(_this.checkedProtocol)
+
+      // if (!_this.checkedProtocol) {
+      //   wx.showModal({
+      //     title: '提示',
+      //     content: '请阅读并同意寄卖协议',
+      //     success (res) {
+      //       if (res.confirm) {
+      //         console.log('用户点击确定')
+      //       } else if (res.cancel) {
+      //         console.log('用户点击取消')
+      //       }
+      //     }
+      //   })
+      // } else {
+      //   _this.showDialog = true
+      //   // let vipId = _this.list[_this.vipIndex].vipId
+      //   // $http.post('/ma/vip/rechargeVip', { vipId }).then(res => {
+      //   //   if (res.code === 0) {
+      //   //   }
+      //   // })
+      // }
+    }
+  },
+  attached () {
+  }
+})
+</script>
+<config>
+{
+    usingComponents: {
+      "van-checkbox": "~@vant/checkbox/index"
+    }
+}
+</config>

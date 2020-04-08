@@ -75,13 +75,26 @@ wepy.component({
   },
   methods: {
     on_item (item) {
-      wx.navigateTo({
-        url: item.pagePath,
-        success: function (res) {
-          // 通过eventChannel向被打开页面传送数据
-          res.eventChannel.emit('getPageData', item.data)
-        }
-      })
+      if (item.pagePath) {
+        wx.navigateTo({
+          url: item.pagePath,
+          success: function (res) {
+            // 通过eventChannel向被打开页面传送数据
+            res.eventChannel.emit('getPageData', item.data)
+          }
+        })
+      } else if (item.copy) {
+        wx.setClipboardData({
+          data: item.copy,
+          success (res) {
+            wx.showToast({
+              title: '客服微信已复制',
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        })
+      }
 
       this.$emit('onitem', item)
     },

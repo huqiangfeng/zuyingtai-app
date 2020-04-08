@@ -1,0 +1,188 @@
+<style lang="less">
+page {
+}
+.page-container {
+  .header {
+    position: relative;
+    background-color: #fff;
+    .row-box {
+      background-color: #fff;
+      padding: 20rpx;
+      line-height: 1;
+      .title {
+        padding: 20rpx 0;
+        font-size: 26rpx;
+        font-weight: 500;
+        color: rgba(49, 49, 59, 1);
+      }
+      .row {
+        padding: 20rpx;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .left {
+          display: flex;
+          font-size: 26rpx;
+          .k {
+            color: #a1a1a1;
+            margin-right: 20rpx;
+          }
+          .v {
+            color: #000000;
+          }
+        }
+        .right {
+          .copy {
+            width: 80rpx;
+            height: 36rpx;
+            line-height: 36rpx;
+            text-align: center;
+            border: 1px solid rgba(221, 221, 221, 1);
+            border-radius: 4rpx;
+            font-size: 24rpx;
+            color: rgba(0, 0, 0, 1);
+          }
+        }
+      }
+    }
+  }
+  .bg-gg {
+    height: 20rpx;
+    background-color: #f6f6f6;
+  }
+
+  .express-box {
+    padding-top: 30rpx;
+  }
+
+  .not {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    justify-content: center;
+    align-items: center;
+    .icon-img {
+      margin-top: 50rpx;
+      width: 212rpx;
+      height: 221rpx;
+      display: block;
+    }
+    .p1 {
+      margin: 40rpx 0 20rpx;
+      font-size: 26rpx;
+      color: rgba(51, 51, 51, 1);
+    }
+    .p2 {
+      font-size: 24rpx;
+      color: rgba(161, 161, 161, 1);
+    }
+  }
+}
+</style>
+<template>
+  <div class="page-container">
+    <!-- 物流编号 -->
+    <div class="header">
+      <!-- 归还物流信息 -->
+      <div class="row-box">
+        <!-- 归还物流 -->
+        <div class="row">
+          <div class="left">
+            <div class="k">物流单号</div>
+            <div class="v">{{'ZYT202001221236571234'}}</div>
+          </div>
+          <div class="right">
+            <div class="copy" @tap="on_copy('ZYT202001221236571234')">复制</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-gg"></div>
+    <!-- 物流信息 -->
+    <div v-if="isShowSteps" class="express-box">
+      <van-steps direction="vertical" active-icon="checked" active-color="#C9AB79" inactive-color="#999999" steps="{{ steps }}" active="{{ stepsActive }}" />
+    </div>
+    <div v-else class="not">
+      <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/huoche.png" mode="widthFix"></image>
+      <div class="p1">暂无物流，商家未发货，请联系客服催单</div>
+      <div class="p2">售后微信：zhuyingtai99</div>
+    </div>
+  </div>
+</template>
+<script>
+import wepy from '@wepy/core'
+import $http from './../../http/http.js'
+wepy.page({
+  computed: {
+    isShowSteps () {
+      return this.steps.length > 0
+    }
+  },
+  data: {
+    stepsActive: 0, // 步骤条
+    steps: [
+      {
+        text: '【武汉市】您的订单已签收(已在配送员处采用无纸化方式签收订单) 。感谢您在美购购物，欢迎再次光临。感谢您在美购购物，欢迎再次光临！'
+      },
+      {
+        text: '【武汉市】您的订单正在配送途中，请您准备签收(配送员：李锐027-86241232)，感谢您的耐心等待。'
+      },
+      {
+        text: '【武汉市】您的订单已到达【武汉西北湖站】',
+        desc: '2017-12-08 10:23:34'
+      },
+      {
+        text: '【武汉市】您的订单正在配送途中，请您准备签收(配送员：李锐），感谢您的耐心等待。',
+        desc: '2017-12-08 10:23:34'
+      }
+    ],
+    expressData: null // 物流详细
+  },
+  methods: {
+    // 复制
+    on_copy (str) {
+      wx.setClipboardData({ data: str })
+    },
+    // 获取页面传入数据
+    getData () {
+      let _this = this
+      const eventChannel = this.$wx.getOpenerEventChannel()
+      eventChannel.on('getPageData', function (expressNo) {
+        _this.expressNo = expressNo.expressNo
+        _this.getDetails()
+      })
+    },
+    // 获取详情信息
+    getDetails () {
+      let _this = this
+      $http.post('/ma/express/detail', { expressNo: _this.expressNo }).then(res => {
+        if (res.code === 0) {
+          console.log(res)
+          _this.expressData = res.data
+        }
+      })
+    }
+  },
+  // 监听页面加载
+  onLoad () {
+    this.getData()
+    // this.getDetails()
+  },
+  // 生命周期回调—监听页面显示
+  onShow () {
+
+  },
+  // 生命周期回调—监听页面初次渲染完成
+  onReady () { },
+  // 生命周期回调—监听页面隐藏
+  onHide () { }
+})
+</script>
+<config>
+{
+    navigationBarTitleText: '确认下单',
+    usingComponents: {
+        "van-steps": "~@vant/steps/index"
+    }
+}
+</config>

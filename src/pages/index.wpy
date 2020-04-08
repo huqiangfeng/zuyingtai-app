@@ -9,16 +9,19 @@
   .container {
     margin-bottom: 98rpx;
   }
-  flooter {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 98rpx;
-    width: 750rpx;
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 0px -6rpx 12rpx 0px rgba(77, 77, 77, 0.12);
-    z-index: 9999;
+}
+.flooter {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 98rpx;
+  width: 750rpx;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px -6rpx 12rpx 0px rgba(77, 77, 77, 0.12);
+  z-index: 9999;
+  .f {
+    display: flex;
   }
 }
 </style>
@@ -37,15 +40,17 @@
       <collect v-if="footer===3"></collect>
       <my-index v-if="footer===4"></my-index>
     </div>
-    <flooter></flooter>
-
-    <info-login @getToken="getTokenLogin" show="{{ loginShow }}" />
   </div>
+  <div class="flooter">
+    <flooter></flooter>
+  </div>
+  <!-- 登录弹框 -->
+  <info-login />
 </template>
 
 <script>
 import wepy from '@wepy/core'
-import { mapState, mapActions } from '@wepy/x'
+import { mapState } from '@wepy/x'
 import store from '../store'
 import $http from './../http/http.js'
 wepy.page({
@@ -58,53 +63,18 @@ wepy.page({
     animated: false
   },
   computed: {
-    ...mapState(['footer', 'login', 'code']),
+    ...mapState(['footer']),
     navBackground () {
       return this.footer === 4 ? '#000' : '#fff'
-    },
-    loginShow () {
-      return !this.login
     }
-
   },
   methods: {
-    ...mapActions(['setLogin', 'setCode']),
-    // 获取token
-    getTokenLogin (data) {
-      console.log(data)
-      let _this = this
-      $http.post('/ma/public/login', {
-        encryptedData: JSON.stringify(data.encryptedData),
-        iv: JSON.stringify(data.iv),
-        signature: data.signature,
-        code: _this.code
-      })
-        .then(res => {
-          if (res.code === 0) {
-            wx.setStorageSync('token', res.data.token)
-          }
-          _this.setLogin({ isLogin: true })
-        })
-    },
-    initPage () {
-      let _this = this
-      wx.login({}).then((code) => {
-        _this.setCode({ code: code.code })
-        wx.getUserInfo({
-          success (res) {
-            _this.getTokenLogin(res)
-          },
-          fail () {
-            _this.setLogin({ isLogin: false })
-          }
-        })
-      })
-    }
   },
   created () {
-    if (!wx.getStorageSync('token')) {
-      this.initPage()
-    }
+    // if (!wx.getStorageSync('token')) {
+    //   // 判断是否授权
+    //   $http.isAuthorization()
+    // }
   },
   // 监听页面加载
   onLoad () { },

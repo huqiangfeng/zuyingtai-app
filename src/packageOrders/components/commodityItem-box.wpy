@@ -25,28 +25,7 @@
 
   // 按钮
   .btn-box {
-    display: flex;
-    justify-content: flex-end;
-    // padding-top: 30rpx;
-    .btn {
-      margin-top: 30rpx;
-      width: 180rpx;
-      height: 68rpx;
-      border-radius: 12rpx;
-      line-height: 68rpx;
-      text-align: center;
-      font-size: 30rpx;
-      margin-left: 10rpx;
-    }
-    .btn1 {
-      color: #fff;
-      background: #30313b;
-    }
-    .btn2 {
-      color: #30313b;
-      background-color: #fff;
-      border: 1px solid #30313b;
-    }
+    padding-top: 30rpx;
   }
 }
 </style>
@@ -66,7 +45,7 @@
     </div>
     <!-- btn-box -->
     <div class="btn-box">
-      <btns orderData="{{ item }}"></btns>
+      <btns @refresh="on_refresh" orderData="{{ item }}"></btns>
     </div>
   </div>
 </template>
@@ -97,6 +76,10 @@ wepy.component({
           res.eventChannel.emit('getPageData', orderId)
         }
       })
+    },
+    // 刷新数据
+    on_refresh () {
+      this.$emit('refresh')
     }
   },
   attached () {

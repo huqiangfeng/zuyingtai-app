@@ -74,10 +74,10 @@
       </div>
       <!-- 消息/推 -->
       <div class="icons">
-        <div class="tui-icon icon">
+        <div class="tui-icon icon" @tap="on_toPushingHands">
           <image class="img-icon" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/tui.png" mode="widthFix"></image>
         </div>
-        <div class="ling-icon icon" :class="{'active':true}">
+        <div class="ling-icon icon" @tap="on_toInformation" :class="{'active':true}">
           <image class="img-icon" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi.png" mode="widthFix"></image>
         </div>
       </div>
@@ -100,11 +100,13 @@
 
 <script>
 import wepy from '@wepy/core'
+import store from '../store'
+import { mapState, mapActions } from '@wepy/x'
 import $http from './../http/http.js'
 wepy.component({
-  config: {
-    navigationBarTitleText: '我的',
-    usingComponents: {}
+  store,
+  computed: {
+    ...mapState(['userInfo'])
   },
   data: {
     // 订单nav
@@ -114,7 +116,7 @@ wepy.component({
         text: '待支付',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zhifu.png',
         pagePath: '/packageOrders/pages/ordersAdmin',
-        data: '待支付'
+        data: '待付款'
       }, {
         text: '待收货',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouhuo.png',
@@ -133,7 +135,7 @@ wepy.component({
       }, {
         text: '客服售后',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouhouda.png',
-        pagePath: ''
+        copy: '客服售后'
       }],
     // 服务nav
     serve: [
@@ -141,11 +143,11 @@ wepy.component({
       {
         text: '我要鉴定',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/jianding.png',
-        pagePath: ''
+        pagePath: '/packageLeaveUnused/pages/authenticate'
       }, {
         text: '我要养护',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/yanghu.png',
-        pagePath: ''
+        pagePath: '/packageLeaveUnused/pages/maintain'
       }, {
         text: '我要晒单',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zhifu.png',
@@ -153,7 +155,7 @@ wepy.component({
       }, {
         text: '常见问题',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zhifu.png',
-        pagePath: ''
+        pagePath: '/packageElse/pages/problem'
       }],
     // 轮播图
     swiper: [
@@ -163,6 +165,16 @@ wepy.component({
     ]
   },
   methods: {
+    ...mapActions(['setUserInfo']),
+    // 推手
+    on_toPushingHands () {
+      wx.navigateTo({ url: '/packageMyInfo/pages/pushingHands' })
+    },
+    // 消息
+    on_toInformation () {
+      wx.navigateTo({ url: '/packageMyInfo/pages/information' })
+    },
+    // 订单管理
     on_toOrdersAdmin () {
       wx.navigateTo({
         url: '/packageOrders/pages/ordersAdmin',
@@ -178,9 +190,11 @@ wepy.component({
     },
     // 获取用户信息
     getUserInfo () {
+      let _this = this
       $http.post('/ma/user/myInfo')
         .then(res => {
           if (res.code === 0) {
+            _this.setUserInfo({ userInfo: res.data })
             console.log(res)
           }
         })

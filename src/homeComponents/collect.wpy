@@ -13,18 +13,11 @@
 <template>
   <div class="container">
     <block v-if="not">
-      <image
-        class="img-not"
-        src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/meiyouo.png"
-        mode="widthFix"
-      ></image>
+      <image class="img-not" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/meiyouo.png" mode="widthFix"></image>
     </block>
     <block v-else>
       <div class="list">
-        <commodity-list
-          collect="{{ true }}"
-          list="{{ list }}"
-        ></commodity-list>
+        <commodity-list collect="{{ true }}" list="{{ list }}"></commodity-list>
       </div>
     </block>
   </div>
@@ -32,43 +25,14 @@
 
 <script>
 import wepy from '@wepy/core'
+import $http from './../http/http.js'
 wepy.component({
   config: {
     navigationBarTitleText: '收藏'
   },
   data: {
     // 商品列表
-    list: [
-      //
-      {
-        text1: 'CUCCI古驰',
-        text2: 100,
-        text3: 20
-      }, {
-        text1: 'CUCCI古驰',
-        text2: 100,
-        text3: 20
-      }, {
-        text1: 'CUCCI古驰',
-        text2: 100,
-        text3: 20
-      }, {
-        text1: 'CUCCI古驰',
-        text2: 100,
-        text3: 20
-      }, {
-        text1: 'CUCCI古驰',
-        text2: 100,
-        text3: 20
-      }, {
-        text1: 'CUCCI古驰',
-        text2: 100,
-        text3: 20
-      }, {
-        text1: 'CUCCI古驰',
-        text2: 100,
-        text3: 20
-      }]
+    list: []
   },
   computed: {
     not () {
@@ -76,9 +40,17 @@ wepy.component({
     }
   },
   methods: {
+    getData () {
+      let _this = this
+      $http.post('/ma/goods/listFavorites').then(res => {
+        if (res.code === 0) {
+          _this.list = res.data.pageRows
+        }
+      })
+    }
   },
   created () {
-
+    this.getData()
   }
 })
 </script>

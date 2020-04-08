@@ -8,7 +8,7 @@ import 'wepy-async-function'
 wepy.use(vuex)
 wepy.app({
   globalData: {
-    userInfo: null
+    baseImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/'
   },
   onLaunch () {
   },
@@ -49,7 +49,25 @@ wepy.app({
       name: 'myInfo',
       pages: [
         // 编辑个人信息
-        'pages/setMyInfo'
+        'pages/setMyInfo',
+        // 消息
+        'pages/information',
+        // 我的积分
+        'pages/myIntegral',
+        // 我的账户
+        'pages/myAccount',
+        // 添加账户
+        'pages/addAccount',
+        // 提现
+        'pages/withdraw',
+        // 推手
+        'pages/pushingHands',
+        // 推广记录
+        'pages/pushingRecord',
+        // 消费记录
+        'pages/consumptionRecord',
+        // 会员
+        'pages/vipMember'
       ]
     },
     // 闲置
@@ -58,7 +76,13 @@ wepy.app({
       name: 'LeaveUnused',
       pages: [
         // 闲置
-        'pages/leaveUnused'
+        'pages/leaveUnused',
+        // 养护
+        'pages/maintain',
+        // 选择服务
+        'pages/selectServe',
+        // 鉴定
+        'pages/authenticate'
       ]
     },
     // 订单
@@ -70,6 +94,8 @@ wepy.app({
         'pages/ordersAdmin',
         // 订单详情
         'pages/ordersDetails',
+        // 物流详情
+        'pages/expressDetails',
         // 确认下单订单
         'pages/newOrders',
         // 地址管理

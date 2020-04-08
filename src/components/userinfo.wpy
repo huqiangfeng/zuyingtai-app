@@ -36,38 +36,18 @@
 </style>
 
 <template>
-  <div
-    class="container"
-    @tap="on_setOrLogin"
-  >
+  <div class="container" @tap="on_setOrLogin">
     <div class="left">
-      <image
-        class="img-head"
-        v-if="login&&userInfo.headImg"
-        src="{{ userInfo.headImg }}"
-        mode="widthFix"
-      ></image>
-      <image
-        class="img-head"
-        v-else
-        src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/touxiang.png"
-        mode="widthFix"
-      ></image>
-      <image
-        class="set-img"
-        src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/sezhi.png"
-        mode="widthFix"
-      ></image>
+      <image class="img-head" v-if="userInfo.userAvatar" src="{{ userInfo.userAvatar }}" mode="widthFix"></image>
+      <image class="img-head" v-else src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/touxiang.png" mode="widthFix"></image>
+      <image class="set-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/sezhi.png" mode="widthFix"></image>
     </div>
     <div class="right">
       <div class="name">{{ name }}</div>
       <div class="tel">{{ tel }}</div>
     </div>
   </div>
-  <tel-login
-    show="{{ show }}"
-    @onClickHide="onClickHide"
-  />
+  <tel-login show="{{ show }}" @onClickHide="onClickHide" />
 </template>
 <script>
 import wepy from '@wepy/core'
@@ -78,10 +58,16 @@ wepy.component({
   computed: {
     ...mapState(['userInfo', 'bindTel']),
     name () {
-      return this.bindTel ? this.userInfo.name : '登录/注册'
+      return this.userInfo.userNickname ? this.userInfo.userNickname : '登录/注册'
     },
     tel () {
-      return this.bindTel ? this.userInfo.tel : '登录后成为会员0元用包'
+      let src = ''
+      if (this.userInfo.userMobile) {
+        src = this.userInfo.userMobile
+      } else {
+        src = '未绑定手机号'
+      }
+      return src
     }
   },
   data: {
@@ -94,7 +80,7 @@ wepy.component({
       this.show = false
     },
     on_setOrLogin () {
-      if (this.bindTel) {
+      if (this.userInfo.userMobile) {
         wx.navigateTo({
           url: '/packageMyInfo/pages/setMyInfo'
         })

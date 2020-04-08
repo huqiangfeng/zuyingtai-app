@@ -1,0 +1,102 @@
+<style lang="less">
+@import './../../utils/style/base.less';
+.wrapper {
+  padding: 0 40rpx;
+  .img-main {
+    width: 670rpx;
+    height: 894rpx;
+  }
+  .promotion-record {
+    display: flex;
+    justify-content: center;
+    padding: 40rpx;
+    font-size: 24rpx;
+    color: rgba(0, 0, 0, 1);
+    line-height: 1;
+    .img-icon {
+      width: 20rpx;
+      height: 20rpx;
+      display: block;
+      margin-left: 10rpx;
+    }
+  }
+
+  .data-valbox {
+    display: flex;
+    .item {
+      flex: 1;
+      color: rgba(0, 0, 0, 1);
+      line-height: 1;
+      text-align: center;
+      .val {
+        font-size: 36rpx;
+      }
+      .key {
+        margin-top: 20rpx;
+        font-size: 24rpx;
+      }
+    }
+  }
+
+  .my-btn {
+    margin: 60rpx auto;
+    width: 420rpx;
+    background: rgba(48, 49, 59, 1);
+  }
+}
+</style>
+<template>
+  <div class="wrapper">
+    <!-- img -->
+    <image class="img-main" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zuyingtai.png" mode="widthFix"></image>
+    <!-- 推广记录 -->
+    <div class="promotion-record" @tap="on_toPushingRecord">
+      <div>推广记录</div>
+      <image class="img-icon" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/bofang2.png" mode="widthFix"></image>
+    </div>
+    <!--  -->
+    <div class="data-valbox">
+      <div class="item">
+        <div class="val">1589</div>
+        <div class="key">邀请人数</div>
+      </div>
+      <div class="item">
+        <div class="val">589895.00</div>
+        <div class="key">奖励金（元）</div>
+      </div>
+    </div>
+    <!-- btn -->
+    <div class="my-btn" @tap="on_save">保存图片</div>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+wepy.component({
+  computed: {
+
+  },
+  data: {
+    type: 'audit' // audit  defeated
+  },
+  props: {
+
+  },
+  methods: {
+    // 推广记录
+    on_toPushingRecord () {
+      wx.navigateTo({ url: '/packageMyInfo/pages/pushingRecord' })
+    },
+    // 保存
+    on_save () {
+    }
+  }
+})
+</script>
+<config>
+{
+    navigationBarTitleText: '我的推广',
+    usingComponents: {
+    }
+}
+</config>

@@ -1,22 +1,57 @@
 <style lang="less">
+@import './../../utils/style/base.less';
+page {
+  background-color: #f6f6f6;
+}
 .page-container {
+  .row {
+    background-color: #fff;
+    padding: 0 40rpx;
+    .item {
+      height: 100rpx;
+      line-height: 100rpx;
+      border-bottom: 1px solid #f6f6f6;
+      font-size: 26rpx;
+      color: rgba(49, 49, 59, 1);
+    }
+  }
+
+  .x-g {
+    font-size: 26rpx;
+    color: rgba(161, 161, 161, 1);
+    text-align: center;
+    line-height: 200rpx;
+  }
 }
 </style>
 
 <template>
   <div class="page-container">
+    <div @tap="on_toDetails" v-for="(item,index) in problems" :key="index" class="row right-go ">
+      <div class="item">
+        {{ item }}
+      </div>
+    </div>
+
+    <div class="x-g">关于租英台</div>
   </div>
 </template>
 
 <script>
 import wepy from '@wepy/core'
 wepy.page({
-  config: {
-    navigationBarTitleText: '首页'
-  },
+
   data: {
+    problems: ['VIP会员问题', '如何租包', '商品相关', '租期相关', '如何还包', '更多问题']
   },
   methods: {
+    on_toDetails () {
+      wx.showToast({
+        title: '不你没问题',
+        icon: 'none',
+        duration: 1000
+      })
+    }
   },
   created () {
     wx.getUserInfo({
@@ -51,8 +86,8 @@ wepy.page({
 </script>
 <config>
 {
+    navigationBarTitleText: '常见问题',
     usingComponents: {
     },
-    "navigationStyle": "custom",
 }
 </config>

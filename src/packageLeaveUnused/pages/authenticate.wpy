@@ -15,11 +15,22 @@
         </picker>
       </div>
     </div>
+    <!-- 鉴定服务 -->
+    <div class="group right-down">
+      <div class="brand ">
+        <picker bindchange="changeCheckedAuthenticate"  value="{{authenticateIndex}}" range="{{authenticate}}">
+          <view class="input-group ">
+            <div class="title">鉴定服务</div>
+            <input class="input" value="{{authenticate[authenticateIndex]}}" disabled="{{true}}" placeholder="请选择服务" />
+          </view>
+        </picker>
+      </div>
+    </div>
     <!-- 图片 -->
     <div class="group ">
       <div class="images">
         <div class="input-group">
-          <div class="title">添加产品照片</div>
+          <div class="title">添加奢护产品照片</div>
           <div class="title-ext">（最多上传6张）</div>
         </div>
         <div class="images-group">
@@ -31,10 +42,8 @@
     <div class="group ">
       <div class="price">
         <view class="input-group ">
-          <div class="title">我 要 卖</div>
-          <input class="input" type="number" v-model="price" placeholder="请输入期望价格" />
-          <div class="yuan">元</div>
-          <div class="zixun">咨询</div>
+          <div class="title">物主姓名</div>
+          <input class="input" type="number" v-model="userName" placeholder="请输入您的姓名" />
         </view>
       </div>
     </div>
@@ -47,23 +56,22 @@
         </view>
       </div>
     </div>
-    <!-- 描述 -->
-    <div class="group ">
-      <div class="describe">
-        <textarea maxlength="9999" v-model="describe" auto-height placeholder="请描述您包包的成色等详情" />
-        </div>
-      </div>
     <!-- 协议 -->
     <div class="checkbox-group" @tap="onChange">
       <van-checkbox icon-size="30rpx" checked-color="#C9AB79" value="{{ checkedProtocol }}"></van-checkbox>
       <div class="t1">我已阅读并同意租英台</div>
-      <div class="t2">《寄卖协议》</div>
+      <div class="t2">《鉴定协议》</div>
     </div>
     <!-- btn -->
     <div class="btn" @tap="submit">提交</div>
+
+    <div class="footer">
+      <div>微信号：iyavic</div>
+      <div class="copy" @tap="on_copy">复制</div>
+    </div>
   </div>
 
-    <!-- 弹框 -->
+  <!-- 弹框 -->
   <tooltip @affirm="on_affirm" show="{{ tooltipShow }}" title="{{ '提交成功' }}" p1="您的资料已提交成功，我们会尽快联系您" p2="注意留意电话或微信 !!!"></tooltip>
 </template>
 <script>
@@ -76,17 +84,35 @@ wepy.page({
   data: {
     index: undefined, // 选中的品牌下标
     brands: [], // 品牌
+    authenticateIndex: '', // 鉴定服务
+    authenticate: ['线上', '线下'], // 鉴定服务
     images: [], // 图片
-    price: '', // 价格
+    userName: '', // 物主姓名
     contact: '', // 联系方式
-    describe: '', // 描述
     checkedProtocol: false,  // 协议
     tooltipShow: false
   },
   methods: {
+    // 复制
+    on_copy() {
+      wx.setClipboardData({
+        data: 'iyavic',
+        success (res) {
+          wx.showToast({
+            title: '微信号已复制',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      })
+    },
     // 品牌
     changeCheckedBrand: function (e) {
       this.index = e.$wx.detail.value
+    },
+    // 鉴定
+    changeCheckedAuthenticate: function (e) {
+      this.authenticateIndex = e.$wx.detail.value
     },
     // 协议
     onChange () {
@@ -181,7 +207,7 @@ wepy.page({
 </script>
 <config>
 {
-    navigationBarTitleText: '闲置发布',
+    navigationBarTitleText: '鉴定',
     usingComponents: {
        "van-checkbox": "~@vant/checkbox/index",
         "van-uploader": "~@vant/uploader/index",

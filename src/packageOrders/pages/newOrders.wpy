@@ -224,7 +224,7 @@
       </div>
     </half-screen-dialog>
     <!-- 弹框 -->
-    <tooltip @affirm="on_affirm" show="{{ tooltipShow }}" title="{{ '¥2360.00' }}" subhead="提现完成" p1="资金将会在1-3个工作日内到达账户，" p2="请注意查收"></tooltip>
+    <tooltip @affirm="on_affirm" show="{{ tooltipShow }}" title="支付成功" p1="您的包包正在打包中，可在我的订单中" p2="查看订单状态"></tooltip>
   </div>
 </template>
 <script>

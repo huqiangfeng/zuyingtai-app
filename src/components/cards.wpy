@@ -39,30 +39,24 @@
 
 <template>
   <div class="container">
-    <div class="vip card">
-      <image
-        class="img"
-        src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/v.png"
-        mode="widthFix"
-      ></image>
-      <div class="k">Member</div>
-      <div class="v">开通VIP</div>
+    <div @tap="on_changePage('vip')" class="vip card">
+      <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/v.png" mode="widthFix"></image>
+      <block v-if="userInfo.vipLevel === 0">
+        <div class="k">Member</div>
+        <div class="v">开通VIP</div>
+      </block>
+      <block v-else>
+        <div class="k">{{ time }}</div>
+        <div class="v">{{ userInfo.vipLevelDisplay }}</div>
+      </block>
     </div>
-    <div class="integral card">
-      <image
-        class="img"
-        src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/yuanxinxing.png"
-        mode="widthFix"
-      ></image>
+    <div @tap="on_changePage('jifen')" class="integral card">
+      <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/yuanxinxing.png" mode="widthFix"></image>
       <div class="k">积分</div>
-      <div class="v">99999</div>
+      <div class="v">{{ userInfo.userPoints }}</div>
     </div>
-    <div class="balance card">
-      <image
-        class="img"
-        src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/qian.png"
-        mode="widthFix"
-      ></image>
+    <div @tap="on_changePage('yue')" class="balance card">
+      <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/qian.png" mode="widthFix"></image>
       <div class="k">余额</div>
       <div class="v">¥999999.00</div>
     </div>
@@ -75,9 +69,31 @@ import store from '../store'
 import { mapState } from '@wepy/x'
 wepy.component({
   store,
-  computed: mapState(['userInfo', 'login']),
+  computed: {
+    ...mapState(['userInfo']),
+    // 会员剩余时间
+    time () {
+      if (this.userInfo.vipExpireDate) {
+        let date = Math.ceil(new Date(this.userInfo.vipExpireDate) / 1000 / 60 / 60 / 24)
+        return date
+      }
+    }
+  },
   props: {},
   methods: {
+    on_changePage (type) {
+      switch (type) {
+        case 'jifen':
+          wx.navigateTo({ url: '/packageMyInfo/pages/myIntegral' })
+          break
+        case 'vip':
+          wx.navigateTo({ url: '/packageMyInfo/pages/vipMember' })
+          break
+        case 'yue':
+          wx.navigateTo({ url: '/packageMyInfo/pages/myAccount' })
+          break
+      }
+    }
   }
 })
 </script>

@@ -285,7 +285,7 @@
       </div>
     </div>
     <!-- 下单 -->
-    <xiadan-bar @xiadan="on_showDialog" collect="{{ collect }}" @collect="on_collect"></xiadan-bar>
+    <xiadan-bar @xiadan="on_showDialog" collect="{{ details.isLike === 1 }}" @collect="on_collect"></xiadan-bar>
     <!-- 屏风弹框 -->
     <half-screen-dialog @close="on_showDialog" show="{{showDialog}}">
       <div slot="desc" class="screen-dialog">
@@ -313,15 +313,22 @@
         <div class="btn" @tap="on_xiadan">确认下单</div>
       </div>
     </half-screen-dialog>
+
+    <!-- 登录 -->
+    <info-login @success="on_refresh" />
   </div>
 </template>
 <script>
 import wepy from '@wepy/core'
+import { mapActions } from '@wepy/x'
+import store from '../../store'
 import $http from './../../http/http.js'
 wepy.page({
+  store,
   computed: {
   },
   data: {
+    goodsId: '',
     details: {
       // 品牌
       brandChineseName: String, // 中文名
@@ -338,7 +345,8 @@ wepy.page({
       goodsName: '', // 商品名字
       goodsPrice: '', // 价格
       goodsPriority: '',  // 权重
-      goodsStatus: '', // 状态
+      goodsStatus: '', // 状态  1是可以出售的大于一就已租用
+      expectSaleDate: '', // 预计归还日期  小于二天就等于两天
       storageId: '', // 厂库id
       expressFee: '', // 快递费
       dayRent: '', // 租金
@@ -348,21 +356,31 @@ wepy.page({
     list: [1, 2, 3], // 推荐
     showDialog: false, // 显示下单弹框
     day: 7, // 租用天数
-    collect: false, // 收藏
     isInsurance: false // 免赔险
   },
   methods: {
+    ...mapActions(['setShowLogin']),
+    // 更新
+    on_refresh () {
+      // this.on_collect()
+      this.getPageData()
+    },
     getData () {
       let _this = this
       const eventChannel = this.$wx.getOpenerEventChannel()
       eventChannel.on('getGoodsId', function (data) {
-        $http.post('/ma/goods/detailGoods', data).then(res => {
-          if (res.code === 0) {
-            res.data.goodsImages = _this.strToArr(res.data.goodsImages)
-            _this.details = res.data
-            console.log(_this.details)
-          }
-        })
+        _this.goodsId = data.goodsId
+        _this.getPageData()
+      })
+    },
+    getPageData () {
+      let _this = this
+      $http.post('/ma/goods/detailGoods', { goodsId: _this.goodsId }).then(res => {
+        if (res.code === 0) {
+          res.data.goodsImages = _this.strToArr(res.data.goodsImages)
+          _this.details = res.data
+          console.log(_this.details)
+        }
       })
     },
     // 下单
@@ -383,7 +401,18 @@ wepy.page({
     },
     // 收藏
     on_collect () {
-      this.collect = !this.collect
+      let _this = this
+      let url = '/ma/goods/like'
+      if (_this.details.isLike === 1) {
+        url = '/ma/goods/unlike'
+      }
+      let goodsId = _this.details.goodsId
+      $http.post(url, { goodsId }).then(res => {
+        if (res.code === 0) {
+          console.log(res)
+          _this.getPageData()
+        }
+      })
     },
     // 去品牌详情
     on_toPinpai () {
@@ -462,6 +491,7 @@ wepy.page({
       "stepper": "~@vant/stepper",
       "switch": "~@vant/switch",
       "half-screen-dialog": "~@weui/half-screen-dialog/half-screen-dialog",
+      "info-login": "~@components/infoLogin"
     }
 }
 </config>

@@ -1,7 +1,6 @@
 <style lang="less">
 // 按钮
 .btn-box {
-  background-color: #fff;
   display: flex;
   justify-content: flex-end;
   .btn {
@@ -24,6 +23,77 @@
     border: 1px solid #30313b;
   }
 }
+
+.slot-title {
+  color: rgba(49, 49, 59, 1);
+  font-weight: 400;
+  .t1 {
+    font-size: 48rpx;
+  }
+  .t2 {
+    font-size: 24rpx;
+  }
+}
+.slot-conotent {
+  padding-bottom: 80rpx;
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30rpx 0;
+    .left {
+      display: flex;
+      font-size: 28rpx;
+      color: rgba(49, 49, 59, 1);
+      .icon-img {
+        width: 38rpx;
+        height: 38rpx;
+        display: block;
+        margin-right: 18rpx;
+      }
+    }
+  }
+  .btn {
+    margin-top: 40rpx;
+    width: 100%;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    background: rgba(49, 49, 59, 1);
+    font-size: 30rpx;
+    color: rgba(255, 255, 255, 1);
+  }
+}
+// 屏风弹框
+.screen-dialog {
+  padding-bottom: 40rpx;
+  box-sizing: border-box;
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50rpx;
+    font-size: 28rpx;
+    line-height: 1;
+    color: rgba(49, 49, 59, 1);
+    .left {
+    }
+    .right {
+    }
+  }
+  .btn {
+    width: 100%;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    background: rgba(49, 49, 59, 1);
+    font-size: 30rpx;
+    color: #fff;
+  }
+  .express-input {
+    width: 100%;
+  }
+}
 </style>
 
 <template>
@@ -39,6 +109,67 @@
     <div class="btn btn1" @tap="on_placeOrder" v-if="CLOSED||COMPLETE">再次下单</div>
     <div class="btn btn1" @tap="on_pay" v-if="UNPAID">去支付</div>
   </div>
+
+  <!-- 支付弹框 -->
+  <half-screen-dialog @close="on_showZifu" show="{{ isShowZifu }}">
+    <div class="slot-title" slot="title">
+      <div class="t1"> ¥2632.00 </div>
+      <div class="t2"> 应付金额 </div>
+    </div>
+    <div class="slot-conotent" slot="desc">
+      <div class="row" @tap="on_changePaymentMethod('ZYT')">
+        <div class="left">
+          <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/qian-icon.png" mode="widthFix"></image>
+          <div class="text">租英台账户（余额：¥0）</div>
+        </div>
+        <div class="right">
+          <van-checkbox icon-size="40rpx" checked-color="#C9AB79" value="{{ paymentMethod === 'ZYT' }}"></van-checkbox>
+        </div>
+      </div>
+      <div class="row" @tap="on_changePaymentMethod('WX')">
+        <div class="left">
+          <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wx.png" mode="widthFix"></image>
+          <div class="text">微信</div>
+        </div>
+        <div class="right">
+          <van-checkbox icon-size="40rpx" checked-color="#C9AB79" value="{{ paymentMethod === 'WX' }}"></van-checkbox>
+        </div>
+      </div>
+      <div class="btn" @tap="on_zifu">确认支付</div>
+    </div>
+  </half-screen-dialog>
+
+  <!-- 屏风弹框-续租 -->
+  <half-screen-dialog @close="on_showXuZhuDialog" show="{{showXuZhuDialog}}">
+    <div slot="desc" class="screen-dialog">
+      <div class="row">
+        <div class="left">租用天数</div>
+        <div class="right">
+          <stepper value="{{ day }}" integer @change="on_ChangeDay" min="7" max="30" step="7"></stepper>
+        </div>
+      </div>
+      <div class="row">
+        <div class="left">租金</div>
+        <div class="right">10元/天</div>
+      </div>
+      <div class="btn" @tap="on_xuZhu">确认下单</div>
+    </div>
+  </half-screen-dialog>
+  <!-- 屏风弹框-物流 -->
+  <half-screen-dialog @close="on_showWuLiuDialog" show="{{showWuLiuDialog}}">
+    <div slot="desc" class="screen-dialog">
+      <div class="row">
+        <div class="left">物流公司</div>
+        <div class="right">顺丰</div>
+      </div>
+      <div class="row">
+        <input class="express-input" adjust-position="{{true}}" cursor-spacing="15" v-model="expressNo" placeholder="请输入物流单号" />
+      </div>
+      <div class="btn" @tap="on_submitWuLiu">提交</div>
+    </div>
+  </half-screen-dialog>
+  <!-- 弹框 -->
+  <tooltip @affirm="on_affirm" show="{{ tooltipShow }}" title="{{ '支付成功' }}" p1="您的包包正在打包中，可在我的订单中" p2="查看订单状态"></tooltip>
 
 </template>
 
@@ -82,7 +213,6 @@ wepy.component({
     expressNo: '', // 归还的快递单号
     tooltipShow: false, // 支付成功弹框
     // 用户地址
-    checkedAddr: null, // 用户选中地址
     isShowZifu: false, // 确认支付
     paymentMethod: 'ZYT'  // ZYT / WX
   },
@@ -99,7 +229,18 @@ wepy.component({
       })
     },
     // 联系客服
-    on_service () { },
+    on_service () {
+      wx.setClipboardData({
+        data: '客服微信',
+        success (res) {
+          wx.showToast({
+            title: '客服微信已复制',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      })
+    },
     // 晒单
     on_bask () { },
     // 续 租
@@ -112,16 +253,113 @@ wepy.component({
       this.on_showWuLiuDialog()
     },
     // 查看物流
-    on_logistics () { },
+    on_logistics () {
+      let _this = this
+      wx.navigateTo({
+        url: '/packageOrders/pages/expressDetails',
+        success: function (res) {
+          // 通过eventChannel向被打开页面传送数据
+          res.eventChannel.emit('getPageData', { expressNo: _this.orderData.sendExpressNo })
+        }
+      })
+    },
     // 确认收货
     on_confirmReceipt () {
-      console.log('确认收货')
+      let _this = this
+      let orderId = this.orderData.orderId
+      $http.post('/ma/order/received', { orderId }).then(res => {
+        if (res.code === 0) {
+          console.log(res)
+          _this.$emit('refresh')
+        }
+      })
     },
     // 再次下单
-    on_placeOrder () { },
+    on_placeOrder () {
+      let goodsId = this.orderData.goodsId
+      wx.navigateTo({
+        url: '/packageCommodity/pages/details',
+        success: function (res) {
+          res.eventChannel.emit('getGoodsId', { goodsId })
+        }
+      })
+    },
     // 去支付 显示支付框
     on_pay () {
       this.isShowZifu = !this.isShowZifu
+    },
+    // -----------------------------------------------
+    // 物流对话框
+    on_showWuLiuDialog () {
+      this.showWuLiuDialog = !this.showWuLiuDialog
+    },
+    // 提交物流信息
+    on_submitWuLiu () {
+      let _this = this
+      let parameter = {
+        expressNo: _this.expressNo, // 快递单号
+        orderId: _this.orderData.orderId // 订单标识
+      }
+      $http.post('/ma/order/sendBack', parameter).then(res => {
+        if (res.code === 0) {
+          _this.$emit('refresh')
+        }
+      })
+    },
+    // 续租对话框
+    on_showXuZhuDialog () {
+      this.showXuZhuDialog = !this.showXuZhuDialog
+    },
+    // 改变续租天数
+    on_ChangeDay (e) {
+      console.log(e.$wx.detail)
+      this.day = e.$wx.detail
+    },
+    // 确认续租
+    on_xuZhu () {
+      this.on_showXuZhuDialog()
+      // 去支付
+      this.on_pay()
+    },
+    // 支付完成
+    on_affirm () {
+      this.$emit('refresh')
+      // wx.navigateBack({
+      //   delta: 1
+      // })
+    },
+    // 支付接口
+    on_zifu () {
+      let _this = this
+      let parameter = {
+        orderId: _this.orderData.orderId
+      }
+      $http.post('/ma/order/payOrder', parameter).then(res => {
+        if (res.code === 0) {
+          _this.isShowZifu = false
+          _this.WXzifu(res.data)
+        }
+      })
+    },
+    // 微信支付
+    WXzifu (data) {
+      let _this = this
+      wx.requestPayment({
+        timeStamp: data.tradeInfo.timeStamp,
+        nonceStr: data.tradeInfo.nonceStr,
+        package: data.tradeInfo.package,
+        signType: data.tradeInfo.signType,
+        paySign: data.tradeInfo.paySign,
+        success (res) {
+          _this.tooltipShow = true
+          console.log(res)
+        },
+        fail (res) { }
+      })
+    },
+    // 更改支付方式
+    on_changePaymentMethod (paymentMethod) {
+      this.paymentMethod = paymentMethod
     }
   },
   attached () {
@@ -131,6 +369,9 @@ wepy.component({
 <config>
 {
     usingComponents: {
+      "half-screen-dialog": "~@weui/half-screen-dialog/half-screen-dialog",
+      "tooltip": "~@components/tooltip",
+      "stepper": "~@vant/stepper",
     }
 }
 </config>

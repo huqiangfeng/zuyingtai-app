@@ -14,12 +14,12 @@
   flex-direction: column;
 }
 
-.tab-bar-item cover-image {
+.tab-bar-item image {
   width: 44rpx;
   height: 44rpx;
 }
 
-.tab-bar-item cover-view {
+.tab-bar-item view {
   font-size: 22rpx;
   font-family: PingFang SC;
   font-weight: 400;
@@ -29,14 +29,14 @@
 </style>
 <template>
   <!--miniprogram/custom-tab-bar/index.wxml-->
-  <cover-view class="tab-bar">
-    <cover-view wx:for="{{list}}" wx:key="index" class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
-      <cover-image v-show="footer === index" src="{{item.selectedIconPath }}"></cover-image>
-      <cover-image v-show="footer !== index" src="{{ item.iconPath}}"></cover-image>
-      <cover-view v-show="footer === index" style="color: {{selectedColor }}">{{item.text}}</cover-view>
-      <cover-view v-show="footer !== index" style="color: {{ color}}">{{item.text}}</cover-view>
-    </cover-view>
-  </cover-view>
+  <view class="tab-bar">
+    <view wx:for="{{list}}" wx:key="index" class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
+      <image v-show="footer === index" src="{{item.selectedIconPath }}"></image>
+      <image v-show="footer !== index" src="{{ item.iconPath}}"></image>
+      <view v-show="footer === index" style="color: {{selectedColor }}">{{item.text}}</view>
+      <view v-show="footer !== index" style="color: {{ color}}">{{item.text}}</view>
+    </view>
+  </view>
 </template>
 <script>
 import wepy from '@wepy/core'

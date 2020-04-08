@@ -61,46 +61,23 @@
 </style>
 
 <template>
-  <div
-    class="container"
-    @tap="on_tapItem"
-  >
+  <div class="container" @tap="on_tapItem">
     <!-- 星星 -->
-    <div
-      class="xinxin"
-      v-if="collect"
-    >
-      <image
-        v-if="collect"
-        class="xinxin-yes img-xinxin"
-        src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/yishouchang.png"
-        mode="widthFix"
-      ></image>
-      <image
-        v-else
-        class="xinxin-no img-xinxin"
-        src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouchang.png"
-        mode="widthFix"
-      ></image>
+    <div class="xinxin" v-if="collect">
+      <image v-if="collect" class="xinxin-yes img-xinxin" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/yishouchang.png" mode="widthFix"></image>
+      <image v-else class="xinxin-no img-xinxin" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouchang.png" mode="widthFix"></image>
     </div>
     <!-- 已租用 -->
-    <div
-      class="leased"
-      v-if="collect"
-    >
+    <div class="leased" v-if="item.goodsStatus>1">
       <div class="top">
         已租用
       </div>
       <div class="bottom">
-        还剩35天
+        预计还剩{{ dey }}天
       </div>
     </div>
     <!-- 商品 -->
-    <image
-      class="img"
-      src="{{ item.goodsIcon }}"
-      mode="widthFix"
-    ></image>
+    <image class="img" src="{{ item.goodsIcon }}" mode="widthFix"></image>
     <div class="name">{{item.brandSourceName}}</div>
     <div class="money">¥{{ item.dayRent}}/天</div>
     <div class="v-money">VIP:¥{{item.vipDayRent}}/天</div>
@@ -120,13 +97,24 @@ wepy.component({
       default: false
     }
   },
+  dey: {
+    not () {
+      try {
+        let tiem = new Date(this.item.expectSaleDate) - new Date()
+        let day = tiem / 1000 / 60 / 60 / 24
+        day = day > 2 ? day : 2
+        return day
+      } catch (err) {
+        return 2
+      }
+    }
+  },
   methods: {
     on_tapItem () {
       this.$emit('tapitem', this.item)
     }
   },
   attached () {
-    console.log(this.collect)
   }
 })
 </script>

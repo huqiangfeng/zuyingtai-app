@@ -128,7 +128,6 @@ wepy.page({
     sexIndex: 0,
     date: '2016-09-01',
     // 生日
-    date: '',
     preventClick: true
   },
   methods: {

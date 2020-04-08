@@ -1,0 +1,111 @@
+<style lang="less">
+@import './../../utils/style/base.less';
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.block {
+  width: 560rpx;
+  padding-bottom: 30rpx;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // justify-content: center;
+  .img {
+    width: 250rpx;
+    display: block;
+    margin: 90rpx 0 50rpx;
+    margin-left: 20rpx;
+  }
+  line-height: 1;
+  text-align: left;
+  .title {
+    line-height: 1;
+    font-size: 36rpx;
+    color: rgba(0, 0, 0, 1);
+    margin-bottom: 30rpx;
+  }
+  .subhead {
+    line-height: 1;
+    font-size: 24rpx;
+    color: rgba(0, 0, 0, 1);
+    margin-bottom: 20rpx;
+    margin-top: -10rpx;
+  }
+  .p {
+    font-size: 24rpx;
+    color: rgba(48, 49, 59, 1);
+    line-height: 36rpx;
+  }
+  .my-btn {
+    margin-top: 60rpx;
+    width: 420rpx;
+    height: 88rpx;
+    background: rgba(48, 49, 59, 1);
+    border-radius: 12rpx;
+  }
+  .text {
+    padding: 39rpx;
+    font-size: 24rpx;
+    color: rgba(48, 49, 59, 1);
+  }
+}
+</style>
+<template>
+  <div class="wrapper">
+    <div class="block">
+      <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/{{ imageSrc }}" mode="widthFix"></image>
+      <div class="title" v-if="title">{{ title }}</div>
+      <div class="subhead" v-if="subhead">{{ subhead }}</div>
+      <div class="p" v-if="p1">{{ p1 }}</div>
+      <div class="p" v-if="p2">{{ p2 }}</div>
+      <slot></slot>
+      <button v-if="type==='defeated'" class="my-btn" @tap="reset">
+        重新申请
+      </button>
+      <div class="text" v-if="type==='defeated'">前往消息 》</div>
+    </div>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+wepy.component({
+  computed: {
+    imageSrc () {
+      return this.type === 'audit' ? 'shalou.png' : 'chengong.png'
+    },
+    title () {
+      return this.type === 'audit' ? '审核中' : '审核失败'
+    },
+    p1 () {
+      return this.type === 'audit' ? '您的资料正在审核中，请耐心等待' : '您的资料已审核，未能通过成为推手'
+    },
+    p2 () {
+      return this.type === 'audit' ? '1~3个工作日审核完成' : '具体原因可在消息中查看'
+    }
+  },
+  data: {
+    type: 'audit' // audit  defeated
+  },
+  props: {
+
+  },
+  methods: {
+    // reset
+    reset () {
+      this.$emit('affirm')
+    }
+  }
+})
+</script>
+<config>
+{
+    usingComponents: {
+    }
+}
+</config>

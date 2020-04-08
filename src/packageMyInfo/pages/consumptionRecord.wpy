@@ -1,0 +1,146 @@
+<style lang="less">
+page {
+  background-color: #f6f6f6;
+}
+.page-container {
+  background-color: #fff;
+  .row {
+    border-bottom: 1px solid #f6f6f6;
+    padding: 40rpx;
+    display: flex;
+    justify-content: space-between;
+
+    .icon-img {
+      width: 72rpx;
+      height: 72rpx;
+      display: block;
+      margin-right: 20rpx;
+    }
+    .row-info {
+      flex: 1;
+      .header {
+        display: flex;
+        justify-content: space-between;
+        line-height: 40rpx;
+        .title {
+          font-size: 32rpx;
+          color: rgba(0, 0, 0, 1);
+        }
+        .time {
+          font-size: 24rpx;
+          color: rgba(161, 161, 161, 1);
+        }
+      }
+      .body {
+        word-wrap: break-word;
+        word-break: break-all;
+        margin-top: 18rpx;
+        font-size: 24rpx;
+        color: rgba(0, 0, 0, 1);
+        line-height: 36rpx;
+      }
+    }
+  }
+}
+</style>
+
+<template>
+  <div class="page-container">
+    <div class="row">
+      <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi-huoche.png" mode="widthFix"></image>
+      <div class="row-info">
+        <div class="header">
+          <div class="title">物流信息</div>
+          <div class="time">2012-10-10 14:23:26</div>
+        </div>
+        <div class="body">
+          您的商品
+          ZYT201212121428891236
+          已到达无锡中转 站，请耐心等候。
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi-xin.png" mode="widthFix"></image>
+      <div class="row-info">
+        <div class="header">
+          <div class="title">消息通知</div>
+          <div class="time">2012-10-10 14:23:26</div>
+        </div>
+        <div class="body">
+          您的闲置商品已经发布成功，我们会及时联系您，请注
+          意查看消息
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi-jiaoyi.png" mode="widthFix"></image>
+      <div class="row-info">
+        <div class="header">
+          <div class="title">账户交易信息</div>
+          <div class="time">2012-10-10 14:23:26</div>
+        </div>
+        <div class="body">
+          您有一笔¥3000.00的资金从您的租英台账户提出，请
+          注意查收
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core'
+import $http from './../../http/http.js'
+wepy.page({
+
+  data: {
+    info: ''
+  },
+  methods: {
+    getDataInfo () {
+      let _this = this
+      $http.post('').then(res => {
+        if (res.code === 0) {
+          console.log(res)
+          _this.info = res
+        }
+      })
+    }
+  },
+  created () {
+
+  },
+  // 监听页面加载
+  onLoad () {
+
+  },
+  // 生命周期回调—监听页面显示
+  onShow () { },
+  // 生命周期回调—监听页面初次渲染完成
+  onReady () { },
+  // 生命周期回调—监听页面隐藏
+  onHide () { },
+  // 生命周期回调—监听页面卸载
+  onUnload () { },
+  // 监听用户下拉动作
+  onPullDownRefresh () { },
+  // 页面上拉触底事件的处理函数
+  onReachBottom () { },
+  // 用户点击右上角转发
+  onShareAppMessage () { },
+  // 页面滚动触发事件的处理函数
+  onPageScroll () { },
+  // 页面尺寸改变时触发，详见 响应显示区域变化
+  onResize () { },
+  // 当前是 tab 页时，点击 tab 时触发
+  onTabItemTap () { }
+})
+</script>
+<config>
+{
+    navigationBarTitleText: '消息',
+    usingComponents: {
+    }
+}
+</config>
