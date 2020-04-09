@@ -105,7 +105,7 @@
 </template>
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { detailBrand, listGoods } from './../../http/api.js'
 wepy.page({
   computed: {
   },
@@ -119,7 +119,7 @@ wepy.page({
     // 品牌详情
     getBrandData (data) {
       let _this = this
-      $http.post('/ma/brand/detailBrand', data).then(res => {
+      detailBrand(data).then(res => {
         if (res.code === 0) {
           _this.details = res.data
           console.log(_this.details)
@@ -129,7 +129,7 @@ wepy.page({
     // 商品列表
     getDatalist (data) {
       let _this = this
-      $http.post('/ma/goods/listGoods', data).then(res => {
+      listGoods(data).then(res => {
         if (res.code === 0) {
           _this.list = res.data.pageRows
         }

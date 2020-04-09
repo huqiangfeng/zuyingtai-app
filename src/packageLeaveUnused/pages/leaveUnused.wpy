@@ -68,7 +68,7 @@
 </template>
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { listBrand } from './../../http/api.js'
 wepy.page({
   config: {
     navigationBarTitleText: '闲置'
@@ -94,11 +94,10 @@ wepy.page({
     },
     // 获取品牌数据
     getBrandData () {
-      $http.post('/ma/brand/listBrand', {}).then(res => {
+      listBrand().then(res => {
         if (res.code === 0) {
           this.brands = res.data.listRows
         }
-        console.log(res)
       })
     },
     // 图片

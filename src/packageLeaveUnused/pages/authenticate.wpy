@@ -18,7 +18,7 @@
     <!-- 鉴定服务 -->
     <div class="group right-down">
       <div class="brand ">
-        <picker bindchange="changeCheckedAuthenticate"  value="{{authenticateIndex}}" range="{{authenticate}}">
+        <picker bindchange="changeCheckedAuthenticate" value="{{authenticateIndex}}" range="{{authenticate}}">
           <view class="input-group ">
             <div class="title">鉴定服务</div>
             <input class="input" value="{{authenticate[authenticateIndex]}}" disabled="{{true}}" placeholder="请选择服务" />
@@ -76,7 +76,7 @@
 </template>
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { listBrand } from './../../http/api.js'
 wepy.page({
   config: {
     navigationBarTitleText: '闲置'
@@ -94,7 +94,7 @@ wepy.page({
   },
   methods: {
     // 复制
-    on_copy() {
+    on_copy () {
       wx.setClipboardData({
         data: 'iyavic',
         success (res) {
@@ -120,11 +120,10 @@ wepy.page({
     },
     // 获取品牌数据
     getBrandData () {
-      $http.post('/ma/brand/listBrand', {}).then(res => {
+      listBrand().then(res => {
         if (res.code === 0) {
           this.brands = res.data.listRows
         }
-        console.log(res)
       })
     },
     // 图片

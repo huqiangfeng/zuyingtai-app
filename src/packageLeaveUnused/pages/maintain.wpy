@@ -65,7 +65,7 @@
 
     <div class="footer">
       <div>微信号：iyavic</div>
-      <div class="copy"  @tap="on_copy">复制</div>
+      <div class="copy" @tap="on_copy">复制</div>
     </div>
   </div>
 
@@ -74,7 +74,7 @@
 </template>
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { listBrand } from './../../http/api.js'
 wepy.page({
   config: {
     navigationBarTitleText: '闲置'
@@ -91,20 +91,20 @@ wepy.page({
   },
   methods: {
     // 去选择服务
-    on_toSelectServe() {
+    on_toSelectServe () {
       let _this = this
       wx.navigateTo({
         url: '/packageLeaveUnused/pages/selectServe',
         events: {
-          getMaintain: function(data) {
+          getMaintain: function (data) {
             _this.maintain = data
             console.log(data)
           }
         }
       })
     },
-      // 复制
-    on_copy() {
+    // 复制
+    on_copy () {
       wx.setClipboardData({
         data: 'iyavic',
         success (res) {
@@ -126,11 +126,10 @@ wepy.page({
     },
     // 获取品牌数据
     getBrandData () {
-      $http.post('/ma/brand/listBrand', {}).then(res => {
+      listBrand().then(res => {
         if (res.code === 0) {
           this.brands = res.data.listRows
         }
-        console.log(res)
       })
     },
     // 图片

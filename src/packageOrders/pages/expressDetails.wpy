@@ -111,7 +111,7 @@ page {
 </template>
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { expressDetail } from './../../http/api.js'
 wepy.page({
   computed: {
     isShowSteps () {
@@ -155,7 +155,7 @@ wepy.page({
     // 获取详情信息
     getDetails () {
       let _this = this
-      $http.post('/ma/express/detail', { expressNo: _this.expressNo }).then(res => {
+      expressDetail({ expressNo: _this.expressNo }).then(res => {
         if (res.code === 0) {
           console.log(res)
           _this.expressData = res.data

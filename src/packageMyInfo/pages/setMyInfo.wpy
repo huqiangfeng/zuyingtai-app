@@ -115,7 +115,7 @@ page {
 
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { } from './../../http/api.js'
 wepy.page({
   config: {
     navigationBarTitleText: '首页'
@@ -158,9 +158,6 @@ wepy.page({
               success: res1 => {
                 console.log(res1)
                 //  更新头像
-                // $http.post('', {
-                //   avatar: JSON.parse(res1.data).data.id
-                // })
               }
             })
           }

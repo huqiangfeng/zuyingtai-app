@@ -118,7 +118,7 @@
 import wepy from '@wepy/core'
 import store from '../store'
 import { mapState } from '@wepy/x'
-import $http from './../http/http.js'
+import { listGoods } from './../http/api.js'
 wepy.component({
   store,
   config: {
@@ -178,7 +178,7 @@ wepy.component({
         goodsSort: this.filtrate.goodsSort, // 排序
         vip: this.navActive  // 1会员专享
       }
-      $http.post('/ma/goods/listGoods', data).then(res => {
+      listGoods(data).then(res => {
         if (res.code === 0) {
           _this.list = res.data.pageRows
         }

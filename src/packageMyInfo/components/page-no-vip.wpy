@@ -58,9 +58,9 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    font-size: 28rpx;
     .t1 {
       margin-left: 10rpx;
-      font-size: 28rpx;
       color: rgba(48, 49, 59, 1);
     }
 
@@ -149,7 +149,7 @@
     </div>
 
     <!-- 弹框 推荐码 -->
-    <van-dialog use-slot title="推荐码" show="{{ showDialog }}" show-cancel-button cancelButtonText="跳过" confirm-button-color="#C9AB79" @cancel="refresh" @confirm="on_referralCode">
+    <van-dialog use-slot title="推荐码" show="{{ showDialog }}" show-cancel-button cancelButtonText="跳过" confirm-button-color="#C9AB79" @cancel="on_getMembership" @confirm="on_referralCode">
       <input class="referral-code" v-model="referralCode" placeholder="输入推荐人推荐码" type="text" />
     </van-dialog>
 
@@ -158,7 +158,7 @@
 
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { payVip, listVip } from './../../http/api.js'
 wepy.component({
   props: {
   },
@@ -232,8 +232,7 @@ wepy.component({
     // 填写推荐码
     on_referralCode () {
       let _this = this
-      _this.refresh()
-      console.log(this.referralCode)
+      _this.on_getMembership()
     },
     // 协议
     onChange () {
@@ -257,17 +256,33 @@ wepy.component({
       } else {
         _this.showDialog = true
         let vipId = _this.listRows[_this.vipIndex].vipId
-        $http.post('/ma/vip/payVip', { vipId }).then(res => {
+        payVip({ vipId }).then(res => {
           if (res.code === 0) {
-            console.log(res)
+            //  _this.WXzifu() console.log(res)
           }
         })
       }
     },
+    // 微信支付
+    WXzifu (data) {
+      let _this = this
+      wx.requestPayment({
+        timeStamp: data.tradeInfo.timeStamp,
+        nonceStr: data.tradeInfo.nonceStr,
+        package: data.tradeInfo.package,
+        signType: data.tradeInfo.signType,
+        paySign: data.tradeInfo.paySign,
+        success (res) {
+          _this.tooltipShow = true
+          console.log(res)
+        },
+        fail (res) { }
+      })
+    },
     // 获取页面数据
     getDataInfo () {
       let _this = this
-      $http.post('/ma/vip/listVip').then(res => {
+      listVip().then(res => {
         if (res.code === 0) {
           console.log(res.data.listRows)
           _this.listRows = res.data.listRows
@@ -277,11 +292,11 @@ wepy.component({
   },
   // 在组件实例刚刚被创建时执行
   created () {
-    // 获取页面数据
-    this.getDataInfo()
   },
   // 在组件实例进入页面节点树时执行
   attached () {
+    // 获取页面数据
+    this.getDataInfo()
   },
   // 组件生命周期函数-在组件布局完成后执行
   ready () {

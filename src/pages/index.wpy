@@ -71,10 +71,7 @@ wepy.page({
   methods: {
   },
   created () {
-    // if (!wx.getStorageSync('token')) {
-    //   // 判断是否授权
-    //   $http.isAuthorization()
-    // }
+
   },
   // 监听页面加载
   onLoad () { },

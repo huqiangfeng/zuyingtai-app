@@ -115,7 +115,7 @@ page {
 
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { } from './../../http/api.js'
 wepy.page({
 
   data: {
@@ -145,12 +145,6 @@ wepy.page({
     on_submint () {
       let _this = this
       _this.tooltipShow = true
-      // $http.post('').then(res => {
-      //   if (res.code === 0) {
-      //     console.log(res)
-      //     _this.info = res
-      //   }
-      // })
     }
   },
   created () {

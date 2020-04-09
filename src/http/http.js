@@ -1,13 +1,13 @@
 import baseUrl from './baseUrl'
 import store from '../store'
 // 获取token
-function gitToken(data, code) {
+function gitToken(data) {
   return new Promise((resolve, reject) => {
     post('/ma/public/login', {
         encryptedData: JSON.stringify(data.encryptedData),
         iv: JSON.stringify(data.iv),
         signature: data.signature,
-        code: code
+        code: data.code
       })
       .then(res => {
         if (res.code === 0) {
@@ -35,7 +35,8 @@ function isAuthorization(url, data) {
           wx.login({}).then((code) => {
             wx.getUserInfo({
               success(res1) {
-                gitToken(res1, code.code).then(res => {
+                res1.code = code.code
+                gitToken(res1).then(res => {
                   if (url) {
                     post(url, data).then((res) => {
                       resolve(res)
@@ -58,7 +59,7 @@ function isAuthorization(url, data) {
   })
 }
 
-const post = (url, data) => {
+export const post = (url, data) => {
   if (data) {
     initDataK(data)
   }
@@ -120,8 +121,4 @@ function initDataK(data) {
       }
     }
   }
-}
-export default {
-  post,
-  isAuthorization
 }

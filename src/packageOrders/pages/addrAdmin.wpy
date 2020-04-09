@@ -37,7 +37,7 @@ page {
 </template>
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { getAddrList } from './../../http/api.js'
 wepy.page({
   computed: {
   },
@@ -53,7 +53,7 @@ wepy.page({
     // 获取用户地址
     getData () {
       let _this = this
-      $http.post('/ma/userAddr/list').then(res => {
+      getAddrList().then(res => {
         if (res.code === 0) {
           console.log(res)
           _this.pageRows = res.data.pageRows

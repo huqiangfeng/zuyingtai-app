@@ -59,7 +59,7 @@ page {
 </template>
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { listBrand } from './../../http/api.js'
 wepy.page({
   data: {
     list: [
@@ -93,11 +93,10 @@ wepy.page({
     },
     // 获取品牌数据
     getListData () {
-      $http.post('/ma/brand/listBrand', {}).then(res => {
+      listBrand().then(res => {
         if (res.code === 0) {
           this.list = res.data.listRows
         }
-        console.log(res)
       })
     },
     // 确认

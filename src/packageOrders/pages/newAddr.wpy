@@ -39,7 +39,7 @@
 </template>
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { addUserAddr, updateAddr } from './../../http/api.js'
 wepy.page({
   computed: {
     addrArea () { // 收货人地区
@@ -70,17 +70,23 @@ wepy.page({
         addrId: _this.addrId
       }
 
-      let url = '/ma/userAddr/add'
       if (data.addrId) {
-        url = '/ma/userAddr/update'
+        updateAddr(data).then(res => {
+          if (res.code === 0) {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+        })
+      } else {
+        addUserAddr(data).then(res => {
+          if (res.code === 0) {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+        })
       }
-      $http.post(url, data).then(res => {
-        if (res.code === 0) {
-          wx.navigateBack({
-            delta: 1
-          })
-        }
-      })
     },
     bindRegionChange (e) {
       console.log(e.$wx.detail)

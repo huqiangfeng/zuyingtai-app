@@ -175,7 +175,7 @@
 
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { deleteOrder, received, sendBack, payOrder } from './../../http/api.js'
 wepy.component({
   computed: {
     UNPAID () { // 等待付款
@@ -221,7 +221,7 @@ wepy.component({
     on_del () {
       let _this = this
       let orderId = this.orderData.orderId
-      $http.post('/ma/order/deleteOrder', { orderId }).then(res => {
+      deleteOrder({ orderId }).then(res => {
         if (res.code === 0) {
           console.log(res)
           _this.$emit('refresh')
@@ -267,7 +267,7 @@ wepy.component({
     on_confirmReceipt () {
       let _this = this
       let orderId = this.orderData.orderId
-      $http.post('/ma/order/received', { orderId }).then(res => {
+      received({ orderId }).then(res => {
         if (res.code === 0) {
           console.log(res)
           _this.$emit('refresh')
@@ -300,7 +300,7 @@ wepy.component({
         expressNo: _this.expressNo, // 快递单号
         orderId: _this.orderData.orderId // 订单标识
       }
-      $http.post('/ma/order/sendBack', parameter).then(res => {
+      sendBack(parameter).then(res => {
         if (res.code === 0) {
           _this.$emit('refresh')
         }
@@ -334,7 +334,7 @@ wepy.component({
       let parameter = {
         orderId: _this.orderData.orderId
       }
-      $http.post('/ma/order/payOrder', parameter).then(res => {
+      payOrder(parameter).then(res => {
         if (res.code === 0) {
           _this.isShowZifu = false
           _this.WXzifu(res.data)

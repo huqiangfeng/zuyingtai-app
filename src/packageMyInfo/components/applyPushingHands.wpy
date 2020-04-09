@@ -146,7 +146,7 @@
 
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { } from './../../http/api.js'
 wepy.component({
   props: {
     list: {
@@ -171,29 +171,22 @@ wepy.component({
     // 开通会员
     on_submit () {
       let _this = this
-      console.log(this.name, this.tel)
-      console.log(_this.checkedProtocol)
-
-      // if (!_this.checkedProtocol) {
-      //   wx.showModal({
-      //     title: '提示',
-      //     content: '请阅读并同意寄卖协议',
-      //     success (res) {
-      //       if (res.confirm) {
-      //         console.log('用户点击确定')
-      //       } else if (res.cancel) {
-      //         console.log('用户点击取消')
-      //       }
-      //     }
-      //   })
-      // } else {
-      //   _this.showDialog = true
-      //   // let vipId = _this.list[_this.vipIndex].vipId
-      //   // $http.post('/ma/vip/rechargeVip', { vipId }).then(res => {
-      //   //   if (res.code === 0) {
-      //   //   }
-      //   // })
-      // }
+      if (!_this.checkedProtocol) {
+        wx.showModal({
+          title: '提示',
+          content: '请阅读并同意寄卖协议',
+          success (res) {
+            if (res.confirm) {
+              console.log('用户点击确定')
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
+      } else {
+        _this.showDialog = true
+        // let vipId = _this.list[_this.vipIndex].vipId
+      }
     }
   },
   attached () {

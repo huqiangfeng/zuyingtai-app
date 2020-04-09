@@ -111,7 +111,7 @@ page {
 
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { } from './../../http/api.js'
 wepy.page({
   data: {
     code: '',
@@ -120,11 +120,7 @@ wepy.page({
   methods: {
     // 获取验证码
     on_getCode () {
-      $http.post('', {
-        tel: this.tel
-      }).then(res => {
-        console.log(res)
-      })
+
     },
     // 返回上一页
     on_back () {

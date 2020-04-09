@@ -33,7 +33,7 @@
 
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { } from './../../http/api.js'
 wepy.page({
 
   data: {
@@ -42,24 +42,8 @@ wepy.page({
   },
   methods: {
     getDataInfo () {
-      let _this = this
-      // 想调接口先判断节流阀是否开了
-      if (_this.throttle) {
-        // 发送接口的时候关闭阀门
-        _this.throttle = false
-        $http.post('').then(res => {
-          // 接口发送完了打开阀门
-          _this.throttle = true
-          if (res.code === 0) {
-            console.log(res)
-            _this.info = res
-          }
-        }).catch(err => {
-          // 接口发送完了打开阀门
-          _this.throttle = true
-          console.log(err)
-        })
-      }
+      // let _this = this
+
     }
   },
   created () {

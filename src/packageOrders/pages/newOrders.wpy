@@ -229,7 +229,7 @@
 </template>
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { createOrder, goodsPrepayInfo, getAddrList } from './../../http/api.js'
 wepy.page({
   computed: {
     vipRent () { // vip租金
@@ -273,7 +273,7 @@ wepy.page({
         insure: _this.orderData.isInsurance ? 1 : 0,
         rentDays: _this.orderData.day
       }
-      $http.post('/ma/order/createOrder', parameter).then(res => {
+      createOrder(parameter).then(res => {
         if (res.code === 0) {
           _this.isShowZifu = false
           _this.WXzifu(res.data)
@@ -316,7 +316,7 @@ wepy.page({
     // 获取预付信息
     prepayInfo (goodsId) {
       let _this = this
-      $http.post('/ma/order/prepayInfo', { goodsId: goodsId }).then(res => {
+      goodsPrepayInfo({ goodsId: goodsId }).then(res => {
         if (res.code === 0) {
           _this.goods = res.data.goods
           _this.account = res.data.account
@@ -327,7 +327,7 @@ wepy.page({
     // 获取默认用户地址
     getUserAddr () {
       let _this = this
-      $http.post('/ma/userAddr/list').then(res => {
+      getAddrList().then(res => {
         if (res.code === 0) {
           let addrs = res.data.pageRows
           _this.checkedAddr = addrs.find(item => item.addrDefault === 1)

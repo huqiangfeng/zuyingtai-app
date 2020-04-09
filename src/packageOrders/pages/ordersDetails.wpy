@@ -335,7 +335,7 @@ page {
 </template>
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { detailOrder } from './../../http/api.js'
 wepy.page({
   computed: {
     UNPAID () { // 等待付款
@@ -403,7 +403,7 @@ wepy.page({
     // 获取详情信息
     getDetails () {
       let _this = this
-      $http.post('/ma/order/detailOrder', { orderId: _this.orderId }).then(res => {
+      detailOrder({ orderId: _this.orderId }).then(res => {
         if (res.code === 0) {
           console.log(res)
           _this.orderData = res.data

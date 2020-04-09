@@ -40,7 +40,7 @@
 
 <script>
 import wepy from '@wepy/core'
-import $http from './../http/http.js'
+import { getImagePage } from './../http/api.js'
 wepy.component({
   config: {
     navigationBarTitleText: '首页'
@@ -55,13 +55,13 @@ wepy.component({
   // 在组件实例刚刚被创建时执行
   created () {
     let _this = this
-    $http.post('/ma/page/getImagePage', { pageKey: 'miniapp_home' }).then(res => {
+    getImagePage({ pageKey: 'miniapp_home' }).then(res => {
       if (res.code === 0) {
-        console.log(res);
+        console.log(res)
         _this.images = res.data.images
       }
     })
-  },
+  }
 })
 </script>
 

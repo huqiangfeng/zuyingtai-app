@@ -97,7 +97,7 @@
 
 <script>
 import wepy from '@wepy/core'
-import $http from './../../http/http.js'
+import { listBrand } from './../../http/api.js'
 wepy.page({
   config: {
     navigationBarTitleText: '筛选'
@@ -161,14 +161,13 @@ wepy.page({
       })
     },
     getData () {
-      $http.post('/ma/brand/listBrand', {}).then(res => {
+      listBrand().then(res => {
         if (res.code === 0) {
           this.listRows = res.data.listRows.map(item => {
             item.checkde = false
             return item
           })
         }
-        console.log(res)
       })
     }
   },
