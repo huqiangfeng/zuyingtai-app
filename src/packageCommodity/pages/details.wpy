@@ -247,7 +247,7 @@
       </div>
       <div class="x-q">
         <div class="left">发货地</div>
-        <div class="right">上海黄浦区</div>
+        <div class="right">{{ details.storageCity }}</div>
       </div>
       <div class="x-q">
         <div class="left">详 情</div>
@@ -322,7 +322,7 @@
 import wepy from '@wepy/core'
 import { mapActions } from '@wepy/x'
 import store from '../../store'
-import { detailGoods, likeGoods, unlike } from './../../http/api.js'
+import { detailGoods, likeGoods, unlike, GoodsSuggest } from './../../http/api.js'
 wepy.page({
   store,
   computed: {
@@ -373,6 +373,7 @@ wepy.page({
         _this.getPageData()
       })
     },
+    //
     getPageData () {
       let _this = this
       detailGoods({ goodsId: _this.goodsId }).then(res => {
@@ -380,6 +381,12 @@ wepy.page({
           res.data.goodsImages = _this.strToArr(res.data.goodsImages)
           _this.details = res.data
           console.log(_this.details)
+        }
+      })
+      // 推荐商品
+      GoodsSuggest({ pageSize: 3 }).then(res => {
+        if (res.code === 0) {
+          _this.list = res.data.listRows
         }
       })
     },
@@ -402,7 +409,6 @@ wepy.page({
     // 收藏
     on_collect () {
       let _this = this
-      let url = '/ma/goods/like'
       let data = {
         goodsId: _this.details.goodsId
       }

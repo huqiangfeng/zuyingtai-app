@@ -18,15 +18,15 @@ export default {
     spreaderRole: null, // 推手角色
     userAvatar: '', // 头像
     userGender: 1, // 性别
-    userGenderDisplay: '男', // 性别
-    userId: 14, // id
+    userGenderDisplay: '', // 性别
+    userId: null, // id
     userMobile: null, // 手机
-    userNickname: '胡强锋', // 名字
+    userNickname: '', // 名字
     userPoints: 0, // 积分
-    vipBalance: 0, // vip余额
-    vipExpireDate: null, // vip终止时间
-    vipLevel: '0', // vip级别
-    vipLevelDisplay: null, //  vip级别名称
-    vipSpreaderId: null // vip推广id
+    memberBalance: 0, // member余额
+    memberExpireDate: null, // member终止时间
+    memberLevel: '0', // member级别
+    memberLevelDisplay: null, //  member级别名称
+    memberSpreaderId: null // member推广id
   }
 }

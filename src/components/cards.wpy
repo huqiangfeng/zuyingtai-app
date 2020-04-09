@@ -41,13 +41,13 @@
   <div class="container">
     <div @tap="on_changePage('vip')" class="vip card">
       <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/v.png" mode="widthFix"></image>
-      <block v-if="userInfo.vipLevel === 0">
+      <block v-if="userInfo.memberLevel === 0">
         <div class="k">Member</div>
         <div class="v">开通VIP</div>
       </block>
       <block v-else>
         <div class="k">{{ time }}</div>
-        <div class="v">{{ userInfo.vipLevelDisplay }}</div>
+        <div class="v">{{ userInfo.memberLevelDisplay }}</div>
       </block>
     </div>
     <div @tap="on_changePage('jifen')" class="integral card">
@@ -73,8 +73,8 @@ wepy.component({
     ...mapState(['userInfo']),
     // 会员剩余时间
     time () {
-      if (this.userInfo.vipExpireDate) {
-        let date = Math.ceil(new Date(this.userInfo.vipExpireDate) / 1000 / 60 / 60 / 24)
+      if (this.userInfo.memberExpireDate) {
+        let date = Math.ceil(new Date(this.userInfo.memberExpireDate) / 1000 / 60 / 60 / 24)
         return date
       }
     }

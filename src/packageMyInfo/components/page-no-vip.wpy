@@ -108,9 +108,9 @@
     <!-- vip-card -->
     <div class="vip-card">
       <swiper @change="on_changeVIP" previous-margin="85rpx" next-margin="85rpx" style="height: 340rpx;" autoplay="{{false}}" indicator-dots="{{ false }}">
-        <block wx:for="{{swiper}}" wx:key="*this">
+        <block wx:for="{{listRows}}" wx:key="*this">
           <swiper-item>
-            <image class="img-swiper" src="{{ item.imageSrc }}" mode="widthFix"></image>
+            <image class="img-swiper" src="{{ item.cardImage }}" mode="widthFix"></image>
           </swiper-item>
         </block>
       </swiper>
@@ -124,7 +124,7 @@
       </div>
     </div>
 
-    <div class="my-btn" @tap="on_getMembership">¥3999 立即开通</div>
+    <div class="my-btn" @tap="on_getMembership">¥{{ listRows[vipIndex].cardPrice }} 立即开通</div>
     <!-- 协议 -->
     <div class="checkbox-group" @tap="onChange">
       <van-checkbox icon-size="30rpx" checked-color="#C9AB79" value="{{ checkedProtocol }}"></van-checkbox>
@@ -149,7 +149,7 @@
     </div>
 
     <!-- 弹框 推荐码 -->
-    <van-dialog use-slot title="推荐码" show="{{ showDialog }}" show-cancel-button cancelButtonText="跳过" confirm-button-color="#C9AB79" @cancel="on_getMembership" @confirm="on_referralCode">
+    <van-dialog use-slot title="推荐码" show="{{ showDialog }}" show-cancel-button cancelButtonText="跳过" confirm-button-color="#C9AB79" @cancel="payVip" @confirm="payVip">
       <input class="referral-code" v-model="referralCode" placeholder="输入推荐人推荐码" type="text" />
     </van-dialog>
 
@@ -158,7 +158,7 @@
 
 <script>
 import wepy from '@wepy/core'
-import { payVip, listVip } from './../../http/api.js'
+import { payVip, listVip, getUserInfo } from './../../http/api.js'
 wepy.component({
   props: {
   },
@@ -169,17 +169,6 @@ wepy.component({
     checkedProtocol: false,  // 协议
     //
     listRows: [],
-    // 轮播图
-    swiper: [
-      {
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip-cord1.png'
-      },
-      {
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip-cord2.png'
-      }, {
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip-cord1.png'
-      }
-    ],
     rights: [
       {
         title: '0元体验',
@@ -229,14 +218,25 @@ wepy.component({
     refresh () {
       this.$emit('refresh')
     },
-    // 填写推荐码
-    on_referralCode () {
-      let _this = this
-      _this.on_getMembership()
-    },
     // 协议
     onChange () {
       this.checkedProtocol = !this.checkedProtocol
+    },
+    // 购买会员
+    payVip () {
+      let _this = this
+      _this.referralCode = ''
+      _this.showDialog = false
+      let parameter = {
+        cardId: _this.listRows[_this.vipIndex].cardId,
+        spreaderCode: _this.referralCode
+      }
+      payVip(parameter).then(res => {
+        if (res.code === 0) {
+          _this.WXzifu(res.data)
+          console.log(res)
+        }
+      })
     },
     // 开通会员
     on_getMembership () {
@@ -255,12 +255,6 @@ wepy.component({
         })
       } else {
         _this.showDialog = true
-        let vipId = _this.listRows[_this.vipIndex].vipId
-        payVip({ vipId }).then(res => {
-          if (res.code === 0) {
-            //  _this.WXzifu() console.log(res)
-          }
-        })
       }
     },
     // 微信支付
@@ -274,6 +268,9 @@ wepy.component({
         paySign: data.tradeInfo.paySign,
         success (res) {
           _this.tooltipShow = true
+          if (res.errMsg === 'requestPayment:ok') {
+            getUserInfo()
+          }
           console.log(res)
         },
         fail (res) { }
@@ -282,9 +279,8 @@ wepy.component({
     // 获取页面数据
     getDataInfo () {
       let _this = this
-      listVip().then(res => {
+      listVip({ filter: 'sale' }).then(res => {
         if (res.code === 0) {
-          console.log(res.data.listRows)
           _this.listRows = res.data.listRows
         }
       })

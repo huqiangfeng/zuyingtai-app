@@ -21,6 +21,8 @@
       </div>
     </block>
   </div>
+  <!-- 登录弹框 -->
+  <info-login @success="getData" />
 </template>
 
 <script>
@@ -57,7 +59,8 @@ wepy.component({
 <config>
 {
     usingComponents: {
-       "commodity-list": "~@components/commodityList"
+      "commodity-list": "~@components/commodityList",
+      "info-login": "~@components/infoLogin"
     }
 }
 </config>

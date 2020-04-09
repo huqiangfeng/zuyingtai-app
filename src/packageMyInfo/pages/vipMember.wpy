@@ -4,26 +4,22 @@
 <template>
   <!-- 头 -->
   <mp-navigation-bar back="{{ true }}" title="开通会员" ext-class="navigation" color="{{navBackground?'#fff': '' }}" background="{{ navBackground }}" />
-  <div v-if="userInfo.vipLevel===0">
-    <page-no-vip @refresh="on_refresh"></page-no-vip>
-  </div>
-  <div v-else>
-    <page-yes-vip></page-yes-vip>
-  </div>
+  <page-no-vip v-if="!userInfo.memberLevel" id="noVip" @refresh="on_refresh"></page-no-vip>
+  <page-yes-vip v-else id="yesVip"></page-yes-vip>
 </template>
 
 <script>
 import wepy from '@wepy/core'
 import store from './../../store'
-import { mapState, mapActions } from '@wepy/x'
-import $http from './../../http/http.js'
+import { mapState } from '@wepy/x'
+import { } from './../../http/api.js'
 wepy.page({
   store,
   computed: {
     ...mapState(['userInfo']),
     // 头部背景
     navBackground () {
-      if (this.userInfo.vipLevel === 0) {
+      if (this.userInfo.memberLevel === 0) {
         return '#fff'
       } else {
         return '#30313B'
@@ -48,7 +44,8 @@ wepy.page({
   // 生命周期回调—监听页面显示
   onShow () { },
   // 生命周期回调—监听页面初次渲染完成
-  onReady () { },
+  onReady () {
+  },
   // 生命周期回调—监听页面隐藏
   onHide () { },
   // 生命周期回调—监听页面卸载

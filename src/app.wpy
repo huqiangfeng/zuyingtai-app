@@ -39,7 +39,9 @@ wepy.app({
       pages: [
         // 筛选
         'pages/filtrate',
+        // 详情
         'pages/details',
+        // 品牌详情
         'pages/brandDetails',
       ]
     },

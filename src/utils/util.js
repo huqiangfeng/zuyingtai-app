@@ -129,19 +129,7 @@ function sTrim(text) {
   return text.replace(/\s/g, '')
 }
 
-function isLogin() {
-  // 判断是否有token , 没有token 则去登录页面授权登录；
-  let token = wx.getStorageSync('token')
-  if (!token) {
-    wx.clearStorage()
-    // wx.redirectTo({
-    wx.navigateTo({
-      url: '/packageLogin/pages/loginIndex'
-    })
-  }
-}
 module.exports = {
   sTrim,
-  vailPhone,
-  isLogin
+  vailPhone
 }

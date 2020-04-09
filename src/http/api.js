@@ -107,6 +107,10 @@ export const listGoods = (parameter) => post('/ma/goods/listGoods', parameter)
 goodsId	商品标识
 */
 export const detailGoods = (parameter) => post('/ma/goods/detailGoods', parameter)
+/*
+   获取推荐商品
+*/
+export const GoodsSuggest = (parameter) => post('/ma/goods/suggest', parameter)
 
 // 获取收藏商品列表
 export const listFavorites = (parameter) => post('/ma/goods/listFavorites', parameter)
@@ -194,15 +198,15 @@ export const applySpreader = (parameter) => post('/ma/form/spreader', parameter)
 /*
 会员中心
 */
-export const vipInfo = (parameter) => post('/ma/vip/info', parameter)
+export const vipInfo = (parameter) => post('/ma/user/memberInfo', parameter)
 /*
 查看所有会员
 */
-export const listVip = (parameter) => post('/ma/vip/listVip', parameter)
+export const listVip = (parameter) => post('/ma/memberCard/list', parameter)
 /*
 购买VIP会员
 */
-export const payVip = (parameter) => post('/ma/vip/payVip', parameter)
+export const payVip = (parameter) => post('/ma/memberCard/pay', parameter)
 /*
 获取订单列表
 orderFilter  订单状态.待支付:unpaid,待收货:sending,待归还:using,归还中:returning

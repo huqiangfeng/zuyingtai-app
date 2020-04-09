@@ -96,6 +96,9 @@
       <my-swiper setStyle="height: 200rpx;" indicator="{{ false }}" list="{{ swiper }}"></my-swiper>
     </div>
   </div>
+
+  <!-- 登录弹框 -->
+  <info-login @success="getUserInfo" />
 </template>
 
 <script>
@@ -204,7 +207,8 @@ wepy.component({
       "user-info": "~@components/userinfo",
       "cards": "~@components/cards",
       "nav-box": "~@components/navBox",
-      "my-swiper": "~@components/mySwiper"
+      "my-swiper": "~@components/mySwiper",
+      "info-login": "~@components/infoLogin"
     }
 }
 </config>
