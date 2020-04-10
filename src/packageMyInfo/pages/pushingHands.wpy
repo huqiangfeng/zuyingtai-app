@@ -10,35 +10,44 @@
 </style>
 <template>
   <!-- 头 -->
-  <mp-navigation-bar back="{{ true }}" title="{{   navBackground !=='#fff'?'':'成为推手'  }}" ext-class="navigation" color="{{navBackground !=='#fff'?'': '#000' }}" background="{{ navBackground }}" />
+  <mp-navigation-bar back="{{ true }}" title="{{   navBackground !=='#fff'?'':'我的推广'  }}" ext-class="navigation" color="{{navBackground !=='#fff'?'': '#000' }}" background="{{ navBackground }}" />
   <!-- 申请 -->
-  <div class="apply" v-if="showType==='apply'">
-    <apply-pushing-hands></apply-pushing-hands>
-  </div>
+  <apply-pushing-hands v-if="showType==='apply'"></apply-pushing-hands>
   <!-- 审核中 -->
-  <div class="audit" v-if="showType==='audit'">
-    <audit-pushing-hands></audit-pushing-hands>
+  <audit-pushing-hands v-if="showType==='audit'"></audit-pushing-hands>
   </div>
   <!-- 推广码 -->
-  <div class="promotion-code" v-if="showType==='promotion-code'">
-    <promotion-code></promotion-code>
-  </div>
+  <promotion-code v-if="showType==='promotion-code'"></promotion-code>
 </template>
 <script>
 import wepy from '@wepy/core'
-import { } from './../../http/api.js'
+import store from '../../store'
+import { mapState } from '@wepy/x'
 wepy.page({
-
+  store,
+  computed: {
+    ...mapState(['userInfo']),
+    navBackground () {
+      let str = 'transparency'
+      if (this.userInfo.spreaderRole > 0) {
+        str = '#fff'
+      }
+      return str
+    },
+    showType () {
+      let str = 'apply'
+      if (this.userInfo.spreaderRole > 0) {
+        str = 'promotion-code'
+      }
+      return str
+    }
+  },
   data: {
-    navBackground: '#fff', // transparent
-    showType: 'promotion-code' //
   },
   methods: {
     // 刷新页面数据
     on_refresh () {
-      this.navBackground = ''
-      this.showType = 'audit'
-      // this.getDataInfo()
+
     },
     //
     getDataInfo () {

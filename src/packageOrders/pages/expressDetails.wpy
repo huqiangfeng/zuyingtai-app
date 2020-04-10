@@ -89,10 +89,10 @@ page {
         <div class="row">
           <div class="left">
             <div class="k">物流单号</div>
-            <div class="v">{{'ZYT202001221236571234'}}</div>
+            <div class="v">{{expressNo}}</div>
           </div>
           <div class="right">
-            <div class="copy" @tap="on_copy('ZYT202001221236571234')">复制</div>
+            <div class="copy" @tap="on_copy(expressNo)">复制</div>
           </div>
         </div>
       </div>
@@ -100,7 +100,7 @@ page {
     <div class="bg-gg"></div>
     <!-- 物流信息 -->
     <div v-if="isShowSteps" class="express-box">
-      <van-steps direction="vertical" active-icon="checked" active-color="#C9AB79" inactive-color="#999999" steps="{{ steps }}" active="{{ stepsActive }}" />
+      <van-steps textKey="status" descKey="time" direction="vertical" active-icon="checked" active-color="#C9AB79" inactive-color="#999999" steps="{{ steps }}" active="{{ stepsActive }}" />
     </div>
     <div v-else class="not">
       <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/huoche.png" mode="widthFix"></image>
@@ -120,23 +120,9 @@ wepy.page({
   },
   data: {
     stepsActive: 0, // 步骤条
-    steps: [
-      {
-        text: '【武汉市】您的订单已签收(已在配送员处采用无纸化方式签收订单) 。感谢您在美购购物，欢迎再次光临。感谢您在美购购物，欢迎再次光临！'
-      },
-      {
-        text: '【武汉市】您的订单正在配送途中，请您准备签收(配送员：李锐027-86241232)，感谢您的耐心等待。'
-      },
-      {
-        text: '【武汉市】您的订单已到达【武汉西北湖站】',
-        desc: '2017-12-08 10:23:34'
-      },
-      {
-        text: '【武汉市】您的订单正在配送途中，请您准备签收(配送员：李锐），感谢您的耐心等待。',
-        desc: '2017-12-08 10:23:34'
-      }
-    ],
-    expressData: null // 物流详细
+    steps: [],
+    AddrPhone: '', // 手机
+    expressNo: null // 物流号
   },
   methods: {
     // 复制
@@ -147,18 +133,24 @@ wepy.page({
     getData () {
       let _this = this
       const eventChannel = this.$wx.getOpenerEventChannel()
-      eventChannel.on('getPageData', function (expressNo) {
-        _this.expressNo = expressNo.expressNo
+      eventChannel.on('getPageData', function (pageData) {
+        _this.expressNo = pageData.expressNo
+        _this.AddrPhone = pageData.AddrPhone
         _this.getDetails()
       })
     },
     // 获取详情信息
     getDetails () {
       let _this = this
-      expressDetail({ expressNo: _this.expressNo }).then(res => {
+      let parameter = {
+        expressNo: _this.expressNo, // 快递单号
+        receiverPhone: _this.AddrPhone  // 收件人
+      }
+
+      expressDetail(parameter).then(res => {
         if (res.code === 0) {
           console.log(res)
-          _this.expressData = res.data
+          _this.steps = res.data.recordList
         }
       })
     }

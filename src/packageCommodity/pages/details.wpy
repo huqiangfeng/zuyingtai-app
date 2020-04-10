@@ -227,15 +227,15 @@
         <div class="left">
           <div class="day">¥{{ details.dayRent }}/天</div>
           <div class="vip-hh">VIP</div>
-          <div class="vip-day"> ¥{{ details.vipDayRent }}/天</div>
+          <div class="vip-day"> ¥{{ details.memberDayRent }}/天</div>
         </div>
         <div class="right"> 下单流程 </div>
       </div>
     </div>
     <!-- vip -->
-    <div class="vip-tt">
+    <div class="vip-tt" @tap="on_toVip">
       <div>
-        成为VIP本次可节约¥360/天
+        成为VIP本次可节约¥{{ details.dayRent - details.memberDayRent }}/天
       </div>
       <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/bofang.png" mode="widthFix"></image>
     </div>
@@ -350,8 +350,8 @@ wepy.page({
       storageId: '', // 厂库id
       expressFee: '', // 快递费
       dayRent: '', // 租金
-      vipDayRent: '', // 租金
-      vipMembership: ''// 会员资格
+      memberDayRent: '', // 租金
+      memberEnjoy: 0 // 会员专享
     },
     list: [1, 2, 3], // 推荐
     showDialog: false, // 显示下单弹框
@@ -365,6 +365,11 @@ wepy.page({
       // this.on_collect()
       this.getPageData()
     },
+    // 跳去vip页
+    on_toVip () {
+      wx.navigateTo({ url: '/packageMyInfo/pages/vipMember' })
+    },
+    // 获取上页面传入数据
     getData () {
       let _this = this
       const eventChannel = this.$wx.getOpenerEventChannel()
@@ -393,9 +398,9 @@ wepy.page({
     // 下单
     on_xiadan () {
       let data = {
-        ...this.details,
+        goodsId: this.details.goodsId,
         isInsurance: this.isInsurance,
-        day: this.day
+        tenancyDays: this.day
       }
       wx.navigateTo({
         url: '/packageOrders/pages/newOrders',

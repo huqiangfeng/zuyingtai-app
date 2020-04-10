@@ -57,11 +57,11 @@
     <!--  -->
     <div class="data-valbox">
       <div class="item">
-        <div class="val">1589</div>
+        <div class="val">{{ invited }}</div>
         <div class="key">邀请人数</div>
       </div>
       <div class="item">
-        <div class="val">589895.00</div>
+        <div class="val">{{ totalIncome }}</div>
         <div class="key">奖励金（元）</div>
       </div>
     </div>
@@ -72,12 +72,21 @@
 
 <script>
 import wepy from '@wepy/core'
+// import store from '../../store'
+// import { mapState } from '@wepy/x'
+import { spreaderInfo } from './../../http/api.js'
 wepy.component({
-  computed: {
-
-  },
+  // store,
+  // computed: {
+  //   ...mapState(['userInfo'])
+  // },
   data: {
-    type: 'audit' // audit  defeated
+    invited: 0, // 邀请(
+    lastWeekIncome: 0, // 周收益
+    totalIncome: 0,  // 总收益
+    spreaderCode: '',  // 推荐码
+    userNickname: '', // 推荐人名字
+    userPhone: '' // 推荐手机
   },
   props: {
 
@@ -89,7 +98,28 @@ wepy.component({
     },
     // 保存
     on_save () {
+    },
+    getDataInfo () {
+      let _this = this
+      spreaderInfo().then(res => {
+        _this.invited = res.data.invited
+        _this.lastWeekIncome = res.data.lastWeekIncome
+        _this.totalIncome = res.data.totalIncome
+        _this.spreaderCode = res.data.spreaderCode
+        _this.userNickname = res.data.userNickname
+        _this.userPhone = res.data.userPhone
+      })
     }
+  },
+  // 在组件实例刚刚被创建时执行
+  created () {
+  },
+  // 在组件实例进入页面节点树时执行
+  attached () {
+    this.getDataInfo()
+  },
+  // 组件生命周期函数-在组件布局完成后执行
+  ready () {
   }
 })
 </script>

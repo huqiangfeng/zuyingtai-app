@@ -39,7 +39,7 @@
     <image class="img" src="{{ item.goodsIcon }}" mode="widthFix"></image>
     <div class="content">
       <div class="name">{{item.goodsName }}</div>
-      <div class="addr" v-if="isFaHuo"> 发货地　　{{ item.goodsName }} </div>
+      <div class="addr" v-if="isFaHuo"> 发货地　　{{ item.storageCity }} </div>
       <div class="addr" v-if="isDinDan||isDetail"> 租用天数　　{{ item.tenancyDays }} </div>
       <div class="addr" v-if="isDinDan"> 租用费用　　{{ item.rentFee }} </div>
     </div>
@@ -59,6 +59,10 @@ wepy.component({
       default: false
     },
     isDetail: {
+      type: [Boolean],
+      default: false
+    },
+    isFaHuo: {
       type: [Boolean],
       default: false
     }

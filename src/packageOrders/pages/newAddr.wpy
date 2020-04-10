@@ -55,7 +55,8 @@ wepy.page({
     checked: false,  // addrDefault
     addrPhone: '', // 收货人手机
     addrId: undefined,  // 地址标识
-    region: ['', '', '']
+    region: ['', '', ''],
+    regionCode: '' // 地区码
   },
   methods: {
     // 确认
@@ -67,7 +68,8 @@ wepy.page({
         addrContact: _this.addrContact,
         addrDefault: _this.addrDefault,
         addrPhone: _this.addrPhone,
-        addrId: _this.addrId
+        addrId: _this.addrId,
+        addrAreaCode: _this.regionCode
       }
 
       if (data.addrId) {
@@ -91,6 +93,7 @@ wepy.page({
     bindRegionChange (e) {
       console.log(e.$wx.detail)
       this.region = e.$wx.detail.value
+      this.regionCode = e.$wx.detail.code[e.$wx.detail.code.length - 1]
     },
     // 默认
     onChange (e) {
@@ -119,6 +122,7 @@ wepy.page({
       _this.addrPhone = data.addrPhone
       _this.addrId = data.addrId
       _this.region = data.addrArea.split(' ')
+      _this.regionCode = data.addrAreaCode
     })
   }
 })

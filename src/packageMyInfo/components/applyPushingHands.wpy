@@ -146,7 +146,7 @@
 
 <script>
 import wepy from '@wepy/core'
-import { } from './../../http/api.js'
+import { applySpreader, getUserInfo } from './../../http/api.js'
 wepy.component({
   props: {
     list: {
@@ -185,7 +185,19 @@ wepy.component({
         })
       } else {
         _this.showDialog = true
-        // let vipId = _this.list[_this.vipIndex].vipId
+        console.log(_this.name, _this.tel)
+        applySpreader({
+          formMobile: _this.tel,
+          formName: _this.name
+        }).then(res => {
+          wx.showModal({
+            title: '提示',
+            content: '申请已提交',
+            success (res) {
+            }
+          })
+          getUserInfo()
+        })
       }
     }
   },

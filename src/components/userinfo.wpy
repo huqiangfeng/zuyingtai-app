@@ -62,8 +62,8 @@ wepy.component({
     },
     tel () {
       let src = ''
-      if (this.userInfo.userMobile) {
-        src = this.userInfo.userMobile
+      if (this.userInfo.userPhone) {
+        src = this.userInfo.userPhone
       } else {
         src = '未绑定手机号'
       }
@@ -80,7 +80,7 @@ wepy.component({
       this.show = false
     },
     on_setOrLogin () {
-      if (this.userInfo.userMobile) {
+      if (this.userInfo.userPhone) {
         wx.navigateTo({
           url: '/packageMyInfo/pages/setMyInfo'
         })

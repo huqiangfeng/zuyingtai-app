@@ -259,7 +259,23 @@ wepy.component({
         url: '/packageOrders/pages/expressDetails',
         success: function (res) {
           // 通过eventChannel向被打开页面传送数据
-          res.eventChannel.emit('getPageData', { expressNo: _this.orderData.sendExpressNo })
+          // sendAddrPhone  发的人手机
+          // sendExpressNo  发的单号
+          // backAddrPhone  收的人手机
+          // backExpressNo  收的单号
+          let obj
+          if (_this.SENDING) {
+            obj = {
+              expressNo: _this.orderData.sendExpressNo,
+              AddrPhone: _this.orderData.sendAddrPhone
+            }
+          } else if (_this.RETURNING) {
+            obj = {
+              expressNo: _this.orderData.backExpressNo,
+              AddrPhone: _this.orderData.backAddrPhone
+            }
+          }
+          res.eventChannel.emit('getPageData', obj)
         }
       })
     },

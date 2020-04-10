@@ -95,10 +95,10 @@
     <div class="page-card">
       <div class="bgc"></div>
       <div class="card">
-        <div class="title">VIP至尊卡</div>
+        <div class="title">{{ memberTitle}}</div>
         <div class="row">
           <div class="left">365天年卡</div>
-          <div class="right">剩余：216天</div>
+          <div class="right">剩余：{{ time }}天</div>
         </div>
       </div>
     </div>
@@ -109,15 +109,15 @@
 
     <!-- list -->
     <div class="list">
-      <div class="item" v-for="(item,index) in arr" :key="index">
+      <div class="item" v-for="(item,index) in itemList" :key="index">
         <div class="left">
           <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/cishu12.png" mode="widthFix"></image>
           <div class="text-box">
-            <div class="title">奢护次数</div>
-            <div class="p">每一次都是全新健康的体验</div>
+            <div class="title">{{ item.itemTitle }}</div>
+            <div class="p">{{ item.itemDesc }}</div>
           </div>
         </div>
-        <div class="right">剩余12次</div>
+        <div class="right">剩余{{item.itemSurplus}}次</div>
       </div>
     </div>
   </div>
@@ -127,14 +127,17 @@
 import wepy from '@wepy/core'
 import { vipInfo } from './../../http/api.js'
 wepy.component({
-  props: {
-    list: {
-      type: [Object, Array],
-      default: []
-    }
-  },
   data: {
-    arr: [1, 2, 3, 4]
+    itemList: [],
+    memberDesc: '',
+    memberExpireDate: '',
+    memberLevel: 0,
+    memberTitle: ''
+  },
+  computed: {
+    time () {
+      return Math.ceil((new Date(this.memberExpireDate) - new Date()) / 1000 / 60 / 60 / 24)
+    }
   },
   methods: {
     // 刷新
@@ -143,11 +146,14 @@ wepy.component({
     },
     // 获取页面数据
     getDataInfo () {
-      // let _this = this
+      let _this = this
       vipInfo().then(res => {
         if (res.code === 0) {
-          console.log(res.data.listRows)
-          // _this.listRows = res.data.listRows
+          _this.itemList = res.data.itemList
+          _this.memberDesc = res.data.memberDesc
+          _this.memberExpireDate = res.data.memberExpireDate
+          _this.memberLevel = res.data.memberLevel
+          _this.memberTitle = res.data.memberTitle
         }
       })
     }
@@ -158,11 +164,9 @@ wepy.component({
   // 在组件实例进入页面节点树时执行
   attached () {
     this.getDataInfo()
-    console.log('attached')
   },
   // 组件生命周期函数-在组件布局完成后执行
   ready () {
-    console.log('ready')
   }
 })
 </script>

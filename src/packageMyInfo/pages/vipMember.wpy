@@ -27,7 +27,6 @@ wepy.page({
     }
   },
   data: {
-    listRows: []
   },
   methods: {
     // 刷新页面数据

@@ -101,7 +101,7 @@ wepy.component({
     not () {
       try {
         let tiem = new Date(this.item.expectSaleDate) - new Date()
-        let day = tiem / 1000 / 60 / 60 / 24
+        let day = Math.ceil(tiem / 1000 / 60 / 60 / 24)
         day = day > 2 ? day : 2
         return day
       } catch (err) {

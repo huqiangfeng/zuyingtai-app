@@ -46,8 +46,8 @@
         <div class="v">开通VIP</div>
       </block>
       <block v-else>
-        <div class="k">{{ time }}</div>
-        <div class="v">{{ userInfo.memberLevelDisplay }}</div>
+        <div class="k">{{ userInfo.memberTitle }}</div>
+        <div class="v">剩余{{ time }}天</div>
       </block>
     </div>
     <div @tap="on_changePage('jifen')" class="integral card">
@@ -57,8 +57,8 @@
     </div>
     <div @tap="on_changePage('yue')" class="balance card">
       <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/qian.png" mode="widthFix"></image>
-      <div class="k">余额</div>
-      <div class="v">¥999999.00</div>
+      <div class="k">流水</div>
+      <!-- <div class="v">¥999999.00</div> -->
     </div>
   </div>
 </template>
@@ -74,7 +74,8 @@ wepy.component({
     // 会员剩余时间
     time () {
       if (this.userInfo.memberExpireDate) {
-        let date = Math.ceil(new Date(this.userInfo.memberExpireDate) / 1000 / 60 / 60 / 24)
+        let date = new Date(this.userInfo.memberExpireDate) - new Date()
+        date = Math.ceil(date / 1000 / 60 / 60 / 24)
         return date
       }
     }

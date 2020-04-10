@@ -8,7 +8,48 @@
     background-image: url('https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/tggl-bg.png');
     background-size: 100%;
     width: 750rpx;
-    height: 388rpx;
+    height: 528rpx;
+    color: rgba(255, 255, 255, 1);
+    .title-key {
+      margin-top: 150rpx;
+      font-size: 26rpx;
+      padding-left: 40rpx;
+    }
+    .title-val {
+      padding-left: 40rpx;
+      margin-top: 40rpx;
+      font-size: 98rpx;
+      font-weight: 500;
+    }
+    .bottom-box {
+      display: flex;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+      .item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 150rpx;
+        flex: 1;
+        line-height: 1;
+        .val {
+          font-size: 36rpx;
+        }
+        .key {
+          margin-top: 20rpx;
+          font-size: 24rpx;
+        }
+        .left-border {
+          width: 1px;
+          height: 92rpx;
+          background: rgba(255, 255, 255, 1);
+          opacity: 0.4;
+        }
+      }
+    }
   }
   .page-list {
     padding: 388rpx 0 40rpx;
@@ -23,7 +64,20 @@
 
   <div class="page-container">
     <div class="page-cord">
-      <!-- <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/tggl-bg.png" mode="widthFix"></image> -->
+      <div class="title-key">累计收益（元）</div>
+      <div class="title-val">{{ totalIncome }}</div>
+      <div class="bottom-box">
+        <div class="item">
+          <div class="val">{{invited }}</div>
+          <div class="key">邀请人数</div>
+        </div>
+        <div class="left-border">
+        </div>
+        <div class="item">
+          <div class="val">{{lastWeekIncome }}</div>
+          <div class="key">上周佣金（元）</div>
+        </div>
+      </div>
     </div>
     <div class="page-list">
       <journal-account list="{{ list }}"></journal-account>
@@ -33,21 +87,44 @@
 
 <script>
 import wepy from '@wepy/core'
-import { } from './../../http/api.js'
+import { spreaderListReward, spreaderInfo } from './../../http/api.js'
 wepy.page({
 
   data: {
     navBackground: '',
-    list: [1, 1, 2, 2]
+    invited: 0, // 邀请(
+    lastWeekIncome: 0, // 周收益
+    totalIncome: 0,  // 总收益
+    list: []
   },
   methods: {
     getDataInfo () {
-      // let _this = this
+      let _this = this
+      spreaderListReward().then(res => {
+        if (res.code === 0) {
+          _this.list = res.data.pageRows.map(item => {
+            let obj = {
+              title: item.userNickname,
+              time: item.createTime,
+              value: '¥' + item.flowAmount,
+              extText: '',
+              valueActive: false,
+              extTextActive: false
+            }
+            return obj
+          })
+        }
+      })
 
+      spreaderInfo().then(res => {
+        _this.invited = res.data.invited
+        _this.lastWeekIncome = res.data.lastWeekIncome
+        _this.totalIncome = res.data.totalIncome
+      })
     }
   },
   created () {
-
+    this.getDataInfo()
   },
   // 监听页面加载
   onLoad () {

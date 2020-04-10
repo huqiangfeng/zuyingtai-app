@@ -39,6 +39,7 @@
         }
       }
       .right {
+        position: relative;
         .jia-ge {
           color: #c9ab79;
         }
@@ -133,15 +134,21 @@
     <!-- 商品 -->
     <div class="commodity-box">
       <div class="commodity">
-        <commodity-item isFaHuo="{{ true }}" item="{{ orderData }}"></commodity-item>
+        <commodity-item isFaHuo="{{ true }}" item="{{ goods }}"></commodity-item>
       </div>
       <!-- row -->
       <div class="com-row">
         <div class="left">租用天数</div>
-        <div class="right">{{ orderData.day }}天</div>
+        <div class="right">{{ tenancyDays }}天</div>
       </div>
       <!-- row -->
-      <div class="com-row row-ext">
+      <div class="com-row row-ext" v-if="account.memberLevel > 0">
+        <div class="left">
+          <div>会员租金</div>
+        </div>
+        <div class="right jia-ge">¥{{ vipRent }}</div>
+      </div>
+      <div v-else class="com-row row-ext">
         <div class="left">
           <div>非会员租金</div>
           <div class="left-ext">
@@ -155,16 +162,16 @@
       <!-- row -->
       <div class="com-row">
         <div class="left">加件费</div>
-        <div class="right">¥{{ goods.extra.plusFee }}</div>
+        <div class="right">¥{{ goods.moreGoodsFee }}</div>
       </div>
       <!-- row -->
-      <div class="com-row row-ext" v-if="orderData.isInsurance">
+      <div class="com-row row-ext" v-if="isInsurance">
         <div class="left left-flex">
           <div>免赔服务</div>
           <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wenhao.png" mode="widthFix"></image>
           <div class="t1">轻微划痕免赔</div>
         </div>
-        <div class="right">¥{{ orderData.goodsInsurance }}</div>
+        <div class="right">¥{{ goods.dirtyInsureFee }}</div>
       </div>
       <!-- row -->
       <div class="com-row row-ext">
@@ -172,15 +179,15 @@
           <div>商品押金</div>
           <div class="left-ext">包包归还签收后，1-2个工作日内极速退押金</div>
         </div>
-        <div class="right">¥{{ orderData.goodsDeposit }}</div>
+        <div class="right">¥{{ goods.goodsDeposit }}</div>
       </div>
       <!-- row -->
       <div class="com-row">
         <div class="left">
-          <div>奢护</div>
+          <div>奢护服务</div>
           <!-- <div class=""></div> -->
         </div>
-        <div class="right">¥{{ '空着' }}</div>
+        <div class="right" :class="{'discardFee':luxuryNurseFree }">¥{{goods.luxuryNurseFee }}</div>
       </div>
       <!-- row -->
       <div class="com-row">
@@ -188,17 +195,17 @@
           <div>运费</div>
           <div class=""></div>
         </div>
-        <div class="right">¥{{ orderData.expressFee }}</div>
+        <div class="right" :class="{'discardFee':isBaoYou }">¥{{ goods.expressFee }}</div>
       </div>
     </div>
     <!-- 支付 -->
     <div class="zhufu">
-      <zhifu-bar @zhifu="on_showZifu" dataObj="{{ orderData }}"></zhifu-bar>
+      <zhifu-bar @zhifu="on_showZifu" dataObj="{{ consumptionObj }}"></zhifu-bar>
     </div>
     <!-- 支付弹框 -->
     <half-screen-dialog @close="on_showZifu" show="{{ isShowZifu }}">
       <div class="slot-title" slot="title">
-        <div class="t1"> ¥2632.00 </div>
+        <div class="t1"> ¥{{ consumptionObj.sum }} </div>
         <div class="t2"> 应付金额 </div>
       </div>
       <div class="slot-conotent" slot="desc">
@@ -229,32 +236,64 @@
 </template>
 <script>
 import wepy from '@wepy/core'
-import { createOrder, goodsPrepayInfo, getAddrList } from './../../http/api.js'
+import { createOrder, goodsPrepayInfo, getDefaultAddr } from './../../http/api.js'
 wepy.page({
   computed: {
     vipRent () { // vip租金
-      return this.orderData.vipDayRent * this.orderData.day
+      return this.goods.memberDayRent * this.tenancyDays
     },
     rent () { // 普通人租金
-      return this.orderData.dayRent * this.orderData.day
+      return this.goods.dayRent * this.tenancyDays
     },
     spareRent () { // vip比普通人节省租金
       return this.rent - this.vipRent
+    },
+    // 支付对象
+    consumptionObj () {
+      let obj = {
+        fee: 0,
+        sum: 0,
+        deposit: this.goods.goodsDeposit
+      }
+      let zhujing = this.rent
+      if (this.account.memberLevel > 0) {
+        zhujing = this.vipRent
+      }
+      obj.fee = zhujing + this.goods.moreGoodsFee  // 加件费
+      if (this.isInsurance) { // 免赔
+        obj.fee += this.goods.dirtyInsureFee
+      }
+      if (this.isluxuryNurseFee && !this.luxuryNurseFree) { // 奢护服务
+        obj.fee += this.goods.luxuryNurseFee
+      }
+      if (!this.isBaoYou) { // 包邮
+        obj.fee += this.goods.expressFee
+      }
+      obj.sum = obj.fee + obj.deposit
+      return obj
     }
   },
   data: {
     tooltipShow: false, // 支付成功弹框
     // 用户地址
     checkedAddr: null, // 用户选中地址
-    orderData: null, // 订单详细
-    goods: null, // 商品
-    coupon: null, // 优惠券
+    isInsurance: false, // 免赔险
+    tenancyDays: '', // 租用天数
+    goodsId: '', // 商品id
+    goods: {
+      dayRent: 0,
+      memberDayRent: 0
+    }, // 商品
+    isluxuryNurseFee: false, //  是否 奢护服务
+    luxuryNurseFree: false, //  免奢护服务费
+    isBaoYou: false, // 是否包邮
     isShowZifu: false, // 确认支付
     paymentMethod: 'ZYT',  // ZYT / WX
     account: {
-      vipLevel: 0, // 会员等级
+      memberLevel: 0, // 会员等级
       userPoints: 0, // 账户积分
-      vipBalance: 0 // 会员卡余额
+      memberLevelDisplay: '', // 会员等级名称
+      memberBalance: 0 // 会员卡余额
     }
   },
   methods: {
@@ -269,9 +308,12 @@ wepy.page({
       let _this = this
       let parameter = {
         addrId: _this.checkedAddr.addrId,
-        goodsId: _this.orderData.goodsId,
-        insure: _this.orderData.isInsurance ? 1 : 0,
-        rentDays: _this.orderData.day
+        goodsId: _this.goodsId,
+        insure: _this.isInsurance ? 1 : 0,
+        rentDays: _this.tenancyDays,
+        dirtyInsure: _this.isInsurance ? 1 : 0,
+        luxuryNurse: _this.isluxuryNurseFee ? 1 : 0,
+        orderAmount: _this.consumptionObj.sum
       }
       createOrder(parameter).then(res => {
         if (res.code === 0) {
@@ -291,7 +333,6 @@ wepy.page({
         paySign: data.tradeInfo.paySign,
         success (res) {
           _this.tooltipShow = true
-          console.log(res)
         },
         fail (res) { }
       })
@@ -309,28 +350,54 @@ wepy.page({
       let _this = this
       const eventChannel = this.$wx.getOpenerEventChannel()
       eventChannel.on('getOrderData', function (data) {
-        _this.orderData = data
-        _this.prepayInfo(data.goodsId)
+        _this.isInsurance = data.isInsurance
+        _this.goodsId = data.goodsId
+        _this.tenancyDays = data.tenancyDays
+        // 获取默认用户地址
+        _this.getUserAddr()
       })
     },
     // 获取预付信息
-    prepayInfo (goodsId) {
+    prepayInfo () {
       let _this = this
-      goodsPrepayInfo({ goodsId: goodsId }).then(res => {
+      let parameter = {
+        addrId: _this.checkedAddr.addrId,
+        goodsId: _this.goodsId
+      }
+      goodsPrepayInfo(parameter).then(res => {
         if (res.code === 0) {
           _this.goods = res.data.goods
           _this.account = res.data.account
-          _this.coupon = res.data.coupon
+          if (res.data.goods.expressFee < 0) {
+            // 该地区不支持
+            wx.showToast({
+              title: '该地区不支持',
+              icon: 'none',
+              duration: 2000
+            })
+            // wx.showModal({
+            //   title: '提示',
+            //   content: '该地区不支持'
+            // })
+          }
+          res.data.itemList.forEach(element => {
+            if (element.itemCode === 'express' && element.itemSurplus > 0) {
+              _this.isBaoYou = true // 是否包邮
+            } else if (element.itemCode === 'nurse' && element.itemSurplus > 0) {
+              _this.isluxuryNurseFee = true //  是否 奢护服务
+              _this.luxuryNurseFree = true //  免奢护服务费
+            }
+          })
         }
       })
     },
     // 获取默认用户地址
     getUserAddr () {
       let _this = this
-      getAddrList().then(res => {
+      getDefaultAddr().then(res => {
         if (res.code === 0) {
-          let addrs = res.data.pageRows
-          _this.checkedAddr = addrs.find(item => item.addrDefault === 1)
+          _this.checkedAddr = res.data
+          _this.prepayInfo()
         }
       })
     }
@@ -338,8 +405,6 @@ wepy.page({
   // 监听页面加载
   onLoad () {
     this.getData()
-    // 获取默认用户地址
-    this.getUserAddr()
   },
   // 生命周期回调—监听页面显示
   onShow () {

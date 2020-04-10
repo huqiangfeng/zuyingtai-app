@@ -76,13 +76,18 @@ export const getUserInfo = () => {
       }
     })
 }
+// 资金流水/消费记录
+export const listMoneyFlow = (parameter) => post('/ma/user/listMoneyFlow', parameter)
 // 会员登录
 export const publicLogin = (parameter) => post('/ma/public/login', parameter)
+// 保存手机号
+export const savePhone = (parameter) => post('/ma/user/savePhone', parameter)
 /*
   快递信息
-  expressNo	快递单号	false  string
+expressNo	快递单号
+receiverPhone	收件人
 */
-export const expressDetail = (parameter) => post('/ma/express/detail', parameter)
+export const expressDetail = (parameter) => post('/ma/express/sfInfo', parameter)
 /*
   积分记录
 */
@@ -163,6 +168,12 @@ export const getAddrList = (parameter) => post('/ma/userAddr/list', parameter)
 */
 export const setDefaultAddr = (parameter) => post('/ma/userAddr/setDefault', parameter)
 /*
+
+获取默认地址
+ addrId	addrId
+*/
+export const getDefaultAddr = (parameter) => post('/ma/userAddr/getDefault', parameter)
+/*
  修改收货地址
  addrId	addrId
  addrAddress	收货人地址
@@ -196,6 +207,14 @@ formName	姓名
 */
 export const applySpreader = (parameter) => post('/ma/form/spreader', parameter)
 /*
+推手信息
+*/
+export const spreaderInfo = (parameter) => post('/ma/spreader/info', parameter)
+/*
+奖励流水
+*/
+export const spreaderListReward = (parameter) => post('/ma/spreader/listReward', parameter)
+/*
 会员中心
 */
 export const vipInfo = (parameter) => post('/ma/user/memberInfo', parameter)
@@ -224,11 +243,12 @@ goodsId	商品标识
 export const goodsPrepayInfo = (parameter) => post('/ma/goodsOrder/prepayInfo', parameter)
 /*
 用户下单
-addrId	地址标识	query
-goodsId	商品标识	query
-insure	是否保险.购买免赔险:1	query
-orderAmount	付款金额
+addrId	地址标识
+goodsId	商品标识
 rentDays	租借天数
+dirtyInsure	污划险.勾选:1
+luxuryNurse	奢护费.勾选:1
+orderAmount	付款金额
 */
 export const createOrder = (parameter) => post('/ma/goodsOrder/createOrder', parameter)
 /*

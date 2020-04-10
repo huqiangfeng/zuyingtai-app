@@ -19,9 +19,9 @@
 <template>
   <div class="page-container">
     <!-- 头 -->
-    <mp-navigation-bar back="{{ true }}" title="我的账户" ext-class="navigation" color="{{navBackground?'#fff': '' }}" background="{{ navBackground }}" />
+    <mp-navigation-bar back="{{ true }}" title="{{ title }}" ext-class="navigation" color="{{navBackground === '#fff'?'': '#fff' }}" background="{{ navBackground }}" />
     <!-- card -->
-    <div class="card">
+    <div v-if="isCardShow" class="card">
       <card-account></card-account>
     </div>
     <!-- <div class="title">积分记录</div> -->
@@ -33,20 +33,37 @@
 
 <script>
 import wepy from '@wepy/core'
-import { } from './../../http/api.js'
+import { listMoneyFlow } from './../../http/api.js'
 wepy.page({
 
   data: {
-    navBackground: '#30313B', // transparent /
-    list: [1, 1, 2, 2]
+    title: '消费记录',
+    isCardShow: false,
+    navBackground: '#fff', // transparent /
+    list: []
   },
   methods: {
     getDataInfo () {
-      // let _this = this
+      let _this = this
+      listMoneyFlow().then((res) => {
+        if (res.code === 0) {
+          _this.list = res.data.pageRows.map(item => {
+            let obj = {
+              title: item.flowTitle,
+              time: item.createTime,
+              value: '¥' + item.flowAmount,
+              extText: '',
+              valueActive: false,
+              extTextActive: false
+            }
+            return obj
+          })
+        }
+      })
     }
   },
   created () {
-
+    this.getDataInfo()
   },
   // 监听页面加载
   onLoad () {
