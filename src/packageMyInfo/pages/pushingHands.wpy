@@ -15,7 +15,6 @@
   <apply-pushing-hands v-if="showType==='apply'"></apply-pushing-hands>
   <!-- 审核中 -->
   <audit-pushing-hands v-if="showType==='audit'"></audit-pushing-hands>
-  </div>
   <!-- 推广码 -->
   <promotion-code v-if="showType==='promotion-code'"></promotion-code>
 </template>

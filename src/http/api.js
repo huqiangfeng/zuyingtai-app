@@ -289,3 +289,7 @@ identifyId	identifyId
 serviceId	鉴定服务标识
 */
 export const buyService = (parameter) => post('/ma/service/buyService', parameter)
+/*
+消息列表
+*/
+export const messageList = (parameter) => post('/ma/message/list', parameter)

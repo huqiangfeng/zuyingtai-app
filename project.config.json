@@ -56,19 +56,6 @@
 					"pathName": "packageMyInfo/pages/pushingHands",
 					"query": "",
 					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "packageMyInfo/pages/pushingRecord",
-					"pathName": "packageMyInfo/pages/pushingRecord",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "packageMyInfo/pages/pushingRecord",
-					"pathName": "packageMyInfo/pages/pushingRecord",
-					"scene": null
 				}
 			]
 		}

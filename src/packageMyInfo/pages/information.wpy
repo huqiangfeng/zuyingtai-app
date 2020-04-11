@@ -46,44 +46,16 @@ page {
 
 <template>
   <div class="page-container">
-    <div class="row">
-      <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi-huoche.png" mode="widthFix"></image>
+    <div class="row" v-for="(item,index) in list" :key="index">
+      <image v-if="item.msgType" class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi-huoche.png" mode="widthFix"></image>
+      <image v-else-if="item.msgType" class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi-xin.png" mode="widthFix"></image>
+      <image v-else class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi-jiaoyi.png" mode="widthFix"></image>
       <div class="row-info">
         <div class="header">
-          <div class="title">物流信息</div>
-          <div class="time">2012-10-10 14:23:26</div>
+          <div class="title">{{ item.msgTitle }}</div>
+          <div class="time">{{ item.createTime }}</div>
         </div>
-        <div class="body">
-          您的商品
-          ZYT201212121428891236
-          已到达无锡中转 站，请耐心等候。
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi-xin.png" mode="widthFix"></image>
-      <div class="row-info">
-        <div class="header">
-          <div class="title">消息通知</div>
-          <div class="time">2012-10-10 14:23:26</div>
-        </div>
-        <div class="body">
-          您的闲置商品已经发布成功，我们会及时联系您，请注
-          意查看消息
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi-jiaoyi.png" mode="widthFix"></image>
-      <div class="row-info">
-        <div class="header">
-          <div class="title">账户交易信息</div>
-          <div class="time">2012-10-10 14:23:26</div>
-        </div>
-        <div class="body">
-          您有一笔¥3000.00的资金从您的租英台账户提出，请
-          注意查收
-        </div>
+        <div class="body">{{ item.msgBody }}</div>
       </div>
     </div>
   </div>
@@ -91,15 +63,32 @@ page {
 
 <script>
 import wepy from '@wepy/core'
-import { } from './../../http/api.js'
+import { messageList } from './../../http/api.js'
 wepy.page({
 
   data: {
-    info: ''
+    list: [
+      {
+        msgBody: '',  // 消息体
+        msgHref: 'app://order?id=59&category=goods', // 消息跳转的页面 （需要处理）
+        msgId: 13, // id
+        msgStatus: 1, // 状态  1已读 未读
+        msgTitle: '', // 消息名称
+        msgType: 2, // 消息类型
+        msgTypeDisplay: '消费消息',
+        userId: 14
+      }
+    ]
   },
   methods: {
     getDataInfo () {
-      // let _this = this
+      let _this = this
+      messageList().then(res => {
+        if (res.code === 0) {
+          _this.list = res.data.pageRows
+          console.log(res)
+        }
+      })
     }
   },
   created () {
@@ -107,7 +96,7 @@ wepy.page({
   },
   // 监听页面加载
   onLoad () {
-
+    this.getDataInfo()
   },
   // 生命周期回调—监听页面显示
   onShow () { },

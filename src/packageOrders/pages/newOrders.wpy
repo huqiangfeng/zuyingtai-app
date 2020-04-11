@@ -5,11 +5,12 @@
   }
 
   .zhufu {
-    height: 150rpx;
+    height: 120rpx;
   }
   .commodity-box {
     background-color: #fff;
     padding: 50rpx 40rpx 30rpx;
+    margin-bottom: 20rpx;
     //
     .commodity {
       padding-bottom: 30rpx;
@@ -65,6 +66,9 @@
       .left-flex {
         display: flex;
         align-items: center;
+        van-checkbox {
+          margin: 0 12rpx;
+        }
         .icon-img {
           display: block;
           width: 28rpx;
@@ -160,20 +164,6 @@
         <div class="right jia-ge">¥{{ rent }}</div>
       </div>
       <!-- row -->
-      <div class="com-row">
-        <div class="left">加件费</div>
-        <div class="right">¥{{ goods.moreGoodsFee }}</div>
-      </div>
-      <!-- row -->
-      <div class="com-row row-ext" v-if="isInsurance">
-        <div class="left left-flex">
-          <div>免赔服务</div>
-          <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wenhao.png" mode="widthFix"></image>
-          <div class="t1">轻微划痕免赔</div>
-        </div>
-        <div class="right">¥{{ goods.dirtyInsureFee }}</div>
-      </div>
-      <!-- row -->
       <div class="com-row row-ext">
         <div class="left">
           <div>商品押金</div>
@@ -181,20 +171,37 @@
         </div>
         <div class="right">¥{{ goods.goodsDeposit }}</div>
       </div>
+    </div>
+    <!-- 增值服务 -->
+    <div class="commodity-box">
+      <div class="title">增值服务</div>
       <!-- row -->
       <div class="com-row">
-        <div class="left">
-          <div>奢护服务</div>
-          <!-- <div class=""></div> -->
+        <div class="left">加件费</div>
+        <div class="right">¥{{ goods.moreGoodsFee }}</div>
+      </div>
+      <!-- row -->
+      <div @tap="isInsurance = !isInsurance" class="com-row row-ext">
+        <div class="left left-flex">
+          <div class="underline" @tap.stop="on_toExplain('mian-pei')">免赔服务</div>
+          <van-checkbox icon-size="28rpx" checked-color="#C9AB79" value="{{ isInsurance }}"></van-checkbox>
+          <!-- <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wenhao.png" mode="widthFix"></image> -->
+          <div class="t1">轻微划痕免赔</div>
+        </div>
+        <div class="right">¥{{ goods.dirtyInsureFee }}</div>
+      </div>
+      <!-- row -->
+      <div @tap="isluxuryNurseFee = !isluxuryNurseFee" class="com-row row-ext">
+        <div class="left left-flex">
+          <div class="underline" @tap.stop="on_toExplain('se-hu')">奢护服务</div>
+          <van-checkbox icon-size="28rpx" checked-color="#C9AB79" value="{{ isluxuryNurseFee || luxuryNurseFree }}"></van-checkbox>
+          <!-- <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wenhao.png" mode="widthFix"></image> -->
         </div>
         <div class="right" :class="{'discardFee':luxuryNurseFree }">¥{{goods.luxuryNurseFee }}</div>
       </div>
       <!-- row -->
       <div class="com-row">
-        <div class="left">
-          <div>运费</div>
-          <div class=""></div>
-        </div>
+        <div class="left">顺丰快递</div>
         <div class="right" :class="{'discardFee':isBaoYou }">¥{{ goods.expressFee }}</div>
       </div>
     </div>
@@ -297,6 +304,10 @@ wepy.page({
     }
   },
   methods: {
+    // 跳转说明页
+    on_toExplain (type) {
+      console.log(type)
+    },
     // 支付完成
     on_affirm () {
       wx.navigateBack({

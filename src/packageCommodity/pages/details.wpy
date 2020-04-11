@@ -295,7 +295,7 @@
             <stepper value="{{ day }}" integer @change="on_ChangeDay" min="7" max="30" step="7"></stepper>
           </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
           <div class="left">
             <div class="title1">
               <div class="text">免赔服务</div>
@@ -309,7 +309,7 @@
             <div class="text">¥{{ details.goodsInsurance }}</div>
             <switch checked="{{ isInsurance }}" @change="on_ChangeGoodsInsurance" size="24px"></switch>
           </div>
-        </div>
+        </div> -->
         <div class="btn" @tap="on_xiadan">确认下单</div>
       </div>
     </half-screen-dialog>
