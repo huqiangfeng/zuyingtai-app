@@ -2,10 +2,6 @@
 @import './../../utils/style/base.less';
 .wrapper {
   padding: 0 40rpx;
-  .img-main {
-    width: 670rpx;
-    height: 894rpx;
-  }
   .promotion-record {
     display: flex;
     justify-content: center;
@@ -46,9 +42,10 @@
 }
 </style>
 <template>
+  <!-- <div class="van-loading">
+    <van-loading type="spinner"></van-loading>
+  </div> -->
   <div class="wrapper">
-    <!-- img -->
-    <image class="img-main" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zuyingtai.png" mode="widthFix"></image>
     <!-- 推广记录 -->
     <div class="promotion-record" @tap="on_toPushingRecord">
       <div>推广记录</div>
@@ -72,14 +69,14 @@
 
 <script>
 import wepy from '@wepy/core'
-// import store from '../../store'
-// import { mapState } from '@wepy/x'
+import store from '../../store'
+import { mapState } from '@wepy/x'
 import { spreaderInfo } from './../../http/api.js'
 wepy.component({
-  // store,
-  // computed: {
-  //   ...mapState(['userInfo'])
-  // },
+  store,
+  computed: {
+    ...mapState(['userInfo'])
+  },
   data: {
     invited: 0, // 邀请(
     lastWeekIncome: 0, // 周收益
@@ -96,18 +93,54 @@ wepy.component({
     on_toPushingRecord () {
       wx.navigateTo({ url: '/packageMyInfo/pages/pushingRecord' })
     },
-    // 保存
+    // 保存图片
     on_save () {
+      this.$emit('save')
     },
     getDataInfo () {
       let _this = this
-      spreaderInfo().then(res => {
-        _this.invited = res.data.invited
-        _this.lastWeekIncome = res.data.lastWeekIncome
-        _this.totalIncome = res.data.totalIncome
-        _this.spreaderCode = res.data.spreaderCode
-        _this.userNickname = res.data.userNickname
-        _this.userPhone = res.data.userPhone
+      // let imgPromise = new Promise((resolve, reject) => {
+      //   wx.getImageInfo({
+      //     src: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zuyingtai.png',
+      //     timeout: 30000,
+      //     success (res) {
+      //       wx.setStorageSync('imgPash', res)
+      //       resolve(res)
+      //       console.log(11)
+      //     },
+      //     fail (err) {
+      //       console.log(1144, err)
+      //       reject(err)
+      //     }
+      //   })
+      // })
+      let avatarPromise = new Promise((resolve, reject) => {
+        wx.getImageInfo({
+          src: _this.userInfo.userAvatar,
+          success (res) {
+            console.log(22)
+            resolve(res)
+          },
+          fail (err) {
+            console.log(2244, err)
+            reject(err)
+          }
+        })
+      })
+      // imgPromise
+      Promise.all([spreaderInfo(), avatarPromise]).then(res => {
+        let data = res[0].data
+        data.avatarPash = res[1].path
+        // data.imgPash = res[2].path
+        _this.invited = data.invited
+        _this.lastWeekIncome = data.lastWeekIncome
+        _this.totalIncome = data.totalIncome
+        _this.spreaderCode = data.spreaderCode
+        _this.userNickname = data.userNickname
+        _this.userPhone = data.userPhone
+        _this.$emit('initimageg', data)
+      }).catch(err => {
+        console.log(err)
       })
     }
   },
@@ -117,6 +150,7 @@ wepy.component({
   // 在组件实例进入页面节点树时执行
   attached () {
     this.getDataInfo()
+    // this.qrCode()
   },
   // 组件生命周期函数-在组件布局完成后执行
   ready () {
@@ -127,6 +161,7 @@ wepy.component({
 {
     navigationBarTitleText: '我的推广',
     usingComponents: {
+       "van-loading": "~@vant/loading/index"
     }
 }
 </config>

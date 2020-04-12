@@ -35,7 +35,7 @@ wepy.component({
     on_tapItem (e) {
       let goodsId = e.goodsId
       wx.navigateTo({
-        url: '/packageCommodity/pages/details',
+        url: '/packageCommodity/pages/details?goodsId=' + goodsId,
         success: function (res) {
           res.eventChannel.emit('getGoodsId', { goodsId })
         }

@@ -1,163 +1,83 @@
 <style lang="less">
-@import './../static/base.less';
+.bg-img {
+  width: 100%;
+}
+
+.conetnt {
+  padding: 40rpx;
+  .liucheng {
+    font-size: 48rpx;
+    color: #434342;
+    text-align: center;
+    margin: 45rpx auto 30rpx;
+  }
+  .liucheng-img {
+    width: 596rpx;
+    height: 311rpx;
+    display: block;
+    margin: 0 auto;
+  }
+  .kefu {
+    font-size: 28rpx;
+    font-weight: 300;
+    color: rgba(82, 82, 82, 1);
+    text-align: center;
+    margin: 68rpx auto 0rpx;
+  }
+  .my-btn {
+    background: rgba(201, 171, 121, 1);
+    margin: 46rpx 0;
+  }
+  .guanggao-img {
+    width: 670rpx;
+    height: 314rpx;
+    display: block;
+    margin: 0 auto;
+  }
+}
 </style>
 
 <template>
-  <div class="page-container">
-    <!-- 品牌 -->
-    <div class="group right-down">
-      <div class="brand ">
-        <picker bindchange="changeCheckedBrand" range-key="brandSourceName" value="{{index}}" range="{{brands}}">
-          <view class="input-group ">
-            <div class="title">品　　牌</div>
-            <input class="input" value="{{brands[index].brandSourceName}}" disabled="{{true}}" placeholder="请选择品牌" />
-          </view>
-        </picker>
-      </div>
-    </div>
-    <!-- 图片 -->
-    <div class="group ">
-      <div class="images">
-        <div class="input-group">
-          <div class="title">添加产品照片</div>
-          <div class="title-ext">（最多上传6张）</div>
-        </div>
-        <div class="images-group">
-          <van-uploader accept="image" max-count="6" file-list="{{ images }}" @delete="imgDelete" @after-read="imgRead" />
-        </div>
-      </div>
-    </div>
-    <!-- 价格 -->
-    <div class="group ">
-      <div class="price">
-        <view class="input-group ">
-          <div class="title">我 要 卖</div>
-          <input class="input" type="number" v-model="price" placeholder="请输入期望价格" />
-          <div class="yuan">元</div>
-          <div class="zixun">咨询</div>
-        </view>
-      </div>
-    </div>
-    <!-- 联系方式 -->
-    <div class="group ">
-      <div class="contact">
-        <view class="input-group ">
-          <div class="title">联系方式</div>
-          <input class="input" v-model="contact" placeholder="请输入微信号/手机号" />
-        </view>
-      </div>
-    </div>
-    <!-- 描述 -->
-    <div class="group ">
-      <div class="describe">
-        <textarea maxlength="9999" v-model="describe" auto-height placeholder="请描述您包包的成色等详情" />
-        </div>
-      </div>
-    <!-- 协议 -->
-    <div class="checkbox-group" @tap="onChange">
-      <van-checkbox icon-size="30rpx" checked-color="#C9AB79" value="{{ checkedProtocol }}"></van-checkbox>
-      <div class="t1">我已阅读并同意租英台</div>
-      <div class="t2">《寄卖协议》</div>
-    </div>
-    <!-- btn -->
-    <div class="btn" @tap="submit">提交</div>
+  <!-- 头 -->
+  <mp-navigation-bar back="{{ true }}" title="{{   navBackground !=='#fff'?'':'我的推广'  }}" ext-class="navigation" color="{{navBackground !=='#fff'?'': '#000' }}" background="{{ navBackground }}" />
+  <image class="bg-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xianzhi-bg.png" mode="widthFix"></image>
+  <div class="conetnt">
+    <div class="liucheng">变现流程</div>
+    <image class="liucheng-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xianzhi-liucheng.png" mode="widthFix"></image>
+    <div class="kefu">微信客服：11110000</div>
+    <div class="my-btn" @tap="issue">发布闲置</div>
+    <image class="guanggao-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xianzhi-guanggao.png" mode="widthFix"></image>
   </div>
-
-    <!-- 弹框 -->
-  <tooltip @affirm="on_affirm" show="{{ tooltipShow }}" title="{{ '提交成功' }}" p1="您的资料已提交成功，我们会尽快联系您" p2="注意留意电话或微信 !!!"></tooltip>
 </template>
 <script>
 import wepy from '@wepy/core'
-import { listBrand } from './../../http/api.js'
+import { } from './../../http/api.js'
+import drawQrcode from '../../utils/weapp.qrcode.esm.js'
+
 wepy.page({
   config: {
     navigationBarTitleText: '闲置'
   },
   data: {
-    index: undefined, // 选中的品牌下标
-    brands: [], // 品牌
-    images: [], // 图片
-    price: '', // 价格
-    contact: '', // 联系方式
-    describe: '', // 描述
-    checkedProtocol: false,  // 协议
-    tooltipShow: false
+    navBackground: ''
   },
   methods: {
-    // 品牌
-    changeCheckedBrand: function (e) {
-      this.index = e.$wx.detail.value
-    },
-    // 协议
-    onChange () {
-      this.checkedProtocol = !this.checkedProtocol
-    },
-    // 获取品牌数据
-    getBrandData () {
-      listBrand().then(res => {
-        if (res.code === 0) {
-          this.brands = res.data.listRows
-        }
-      })
-    },
-    // 图片
-    imgRead (event) {
-      const { file } = event.$wx.detail
-      this.images.push({ ...file, url: file.path })
-    },
-    imgDelete (event) {
-      let index = event.$wx.detail.index
-      this.images.splice(index, 1)
-    },
-    submit () {
-      let _this = this
-      if (!_this.checkedProtocol) {
-        wx.showModal({
-          title: '提示',
-          content: '请阅读并同意寄卖协议',
-          success (res) {
-            if (res.confirm) {
-              console.log('用户点击确定')
-            } else if (res.cancel) {
-              console.log('用户点击取消')
-            }
-          }
-        })
-      } else {
-        // 显示弹框
-        _this.tooltipShow = true
-        // wx.uploadFile({
-        //   url: '', // 仅为示例，非真实的接口地址
-        //   filePath: file.path,
-        //   name: 'file',
-        //   formData: { user: 'test' },
-        //   success (res) {
-        //     // 上传完成需要更新 fileList
-        //     const { fileList = [] } = this.data
-        //     fileList.push({ ...file, url: res.data })
-        //     this.setData({ fileList })
-        //   }
-        // })
-      }
-    },
-    on_affirm () {
-      wx.navigateBack({
-        delta: 1
+    // 发布闲置
+    issue () {
+      wx.redirectTo({
+        url: '/packageLeaveUnused/pages/issueLeaveUnused'
       })
     }
   },
   created () {
-    this.getBrandData()
-    wx.getUserInfo({
-      success (res) {
-        console.log(res)
-      }
-    })
+
   },
   // 监听页面加载
   onLoad () { },
   // 生命周期回调—监听页面显示
-  onShow () { },
+  onShow () {
+
+  },
   // 生命周期回调—监听页面初次渲染完成
   onReady () { },
   // 生命周期回调—监听页面隐藏
@@ -180,11 +100,10 @@ wepy.page({
 </script>
 <config>
 {
-    navigationBarTitleText: '闲置发布',
+    navigationBarTitleText: '闲置',
     usingComponents: {
-       "van-checkbox": "~@vant/checkbox/index",
-        "van-uploader": "~@vant/uploader/index",
-        "tooltip": "~@components/tooltip",
+
     },
+    "navigationStyle": "custom",
 }
 </config>

@@ -79,6 +79,8 @@ wepy.app({
       pages: [
         // 闲置
         'pages/leaveUnused',
+        // 发布闲置
+        'pages/issueLeaveUnused',
         // 养护
         'pages/maintain',
         // 选择服务

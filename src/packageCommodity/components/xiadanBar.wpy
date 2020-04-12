@@ -88,6 +88,10 @@ wepy.component({
       console.log(item)
       if (item.text === '收藏') {
         this.$emit('collect')
+      } else if (item.text === '海报') {
+        this.$emit('poster')
+      } else if (item.text === '客服') {
+        this.$emit('service')
       }
     }
   },
