@@ -1,6 +1,7 @@
 /* eslint-disable no-tabs */
 import {
-  post
+  post,
+  uploadFile
 } from './http'
 import store from '../store'
 // 用户信息授权
@@ -76,6 +77,15 @@ export const getUserInfo = () => {
       }
     })
 }
+
+/*
+  保存用户信息
+userAvatar	头像
+userBirth	生日 (yyyy-MM-dd)
+userGender	性别 (0保密1男2女)
+userNickname	昵称
+*/
+export const saveMyInfo = (parameter) => post('/ma/user/saveMyInfo', parameter)
 // 资金流水/消费记录
 export const listMoneyFlow = (parameter) => post('/ma/user/listMoneyFlow', parameter)
 // 会员登录
@@ -96,6 +106,10 @@ export const integralRecord = (parameter) => post('/ma/points/listRecord', param
   签到
 */
 export const sign = (parameter) => post('/ma/points/sign', parameter)
+/*
+  检查今天是否签到
+*/
+export const checkSign = (parameter) => post('/ma/points/checkSign', parameter)
 
 // 获取图片页 （首页图片）
 export const getImagePage = (parameter) => post('/ma/page/getImagePage', parameter)
@@ -221,7 +235,7 @@ export const vipInfo = (parameter) => post('/ma/user/memberInfo', parameter)
 /*
 查看所有会员
 */
-export const listVip = (parameter) => post('/ma/memberCard/list', parameter)
+export const listVip = (parameter) => post('/ma/memberCard/listSale', parameter)
 /*
 购买VIP会员
 */
@@ -274,22 +288,38 @@ orderId	订单标识
 export const sendBack = (parameter) => post('/ma/goodsOrder/sendBack', parameter)
 /*
 查看所有服务
-expressNo	快递单号
-orderId	订单标识
+filter 筛选(鉴定:identify)
 */
-export const listService = (parameter) => post('/ma/service/listService', parameter)
+export const listService = (parameter) => post('/ma/item/listItem', parameter)
 /*
 服务的预支付信息 （ 鉴定，养护）
-serviceId	服务标识
+itemCode	服务项目代码(identify:鉴定)
 */
-export const servicePrepayInfo = (parameter) => post('/ma/service/prepayInfo', parameter)
+export const servicePrepayInfo = (parameter) => post('/ma/item/prepayInfo', parameter)
 /*
-购买服务
-identifyId	identifyId
-serviceId	鉴定服务标识
+购买服务项目
+images	图片
+itemId	服务项目标识
+name	姓名
+phone	电话
+remark	备注
+userItemId	折扣标识
 */
-export const buyService = (parameter) => post('/ma/service/buyService', parameter)
+export const buyServiceItem = (parameter) => post('/ma/item/payItem', parameter)
 /*
 消息列表
 */
 export const messageList = (parameter) => post('/ma/message/list', parameter)
+/*
+问题列表
+*/
+export const questionList = (parameter) => post('/ma/question/list', parameter)
+/*
+问题详情
+questionId	问题标识
+*/
+export const questionDetail = (parameter) => post('/ma/question/detail', parameter)
+/*
+上传图片
+*/
+export const uploadImg = (parameter) => uploadFile('/ma/attachment/upload', parameter)

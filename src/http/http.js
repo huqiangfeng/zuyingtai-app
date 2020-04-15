@@ -63,7 +63,7 @@ export const post = (url, data) => {
   if (data) {
     initDataK(data)
   }
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject, contentType) => {
     wx.showLoading({
       title: '加载中'
     })
@@ -72,7 +72,7 @@ export const post = (url, data) => {
       data: data,
       method: 'post',
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
+        'content-type': contentType || 'application/x-www-form-urlencoded',
         token: wx.getStorageSync('token')
       },
       success(res) {
@@ -105,6 +105,34 @@ export const post = (url, data) => {
           duration: 2000
         })
         reject(err)
+      }
+    })
+  })
+}
+
+export const uploadFile = (url, parameter) => {
+  wx.showLoading({
+    title: '加载中'
+  })
+  return new Promise((resolve, reject) => {
+    wx.uploadFile({
+      url: baseUrl + (url || '/ma/attachment/upload'),
+      filePath: parameter.file,
+      name: parameter.fileKey || 'file',
+      formData: {
+        module: parameter.module
+      },
+      header: {
+        token: wx.getStorageSync('token')
+      },
+      success(res) {
+        resolve(JSON.parse(res.data))
+      },
+      fail(err) {
+        reject(err)
+      },
+      complete() {
+        wx.hideLoading()
       }
     })
   })

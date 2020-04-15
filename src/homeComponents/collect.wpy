@@ -17,7 +17,7 @@
     </block>
     <block v-else>
       <div class="list">
-        <commodity-list collect="{{ true }}" list="{{ list }}"></commodity-list>
+        <commodity-list collect="{{ true }}" @refresh="on_refresh"  list="{{ list }}"></commodity-list>
       </div>
     </block>
   </div>
@@ -42,6 +42,11 @@ wepy.component({
     }
   },
   methods: {
+    // 更新
+    on_refresh () {
+      // this.on_collect()
+      this.getData()
+    },
     getData () {
       let _this = this
       listFavorites().then(res => {

@@ -13,6 +13,7 @@
     position: absolute;
     top: 0;
     right: 0;
+    padding:0 0 30rpx 30rpx;
     .img-xinxin {
       width: 44rpx;
       height: 44rpx;
@@ -63,7 +64,8 @@
 <template>
   <div class="container" @tap="on_tapItem">
     <!-- 星星 -->
-    <div class="xinxin" v-if="collect">
+    <div class="xinxin" v-if="collect" @tap.stop="on_collect">
+      <!-- isLike === 1 -->
       <image v-if="collect" class="xinxin-yes img-xinxin" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/yishouchang.png" mode="widthFix"></image>
       <image v-else class="xinxin-no img-xinxin" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouchang.png" mode="widthFix"></image>
     </div>
@@ -86,6 +88,7 @@
 
 <script>
 import wepy from '@wepy/core'
+import { likeGoods, unlike } from './../http/api.js'
 wepy.component({
   props: {
     item: {
@@ -97,8 +100,8 @@ wepy.component({
       default: false
     }
   },
-  dey: {
-    not () {
+  computed: {
+    dey() {
       try {
         let tiem = new Date(this.item.expectSaleDate) - new Date()
         let day = Math.ceil(tiem / 1000 / 60 / 60 / 24)
@@ -112,6 +115,36 @@ wepy.component({
   methods: {
     on_tapItem () {
       this.$emit('tapitem', this.item)
+    },
+      // 收藏
+    on_collect () {
+      let _this = this
+
+      let data = {
+        goodsId: _this.item.goodsId
+      }
+      if (_this.item.isLike !== 1) {
+        wx.showModal({
+          title: '提示',
+          content: '确认取消收藏',
+          success (res) {
+            if (res.confirm) {
+              unlike(data).then(res => {
+                if (res.code === 0) {
+                  _this.$emit('refresh')
+                }
+              })
+            } else if (res.cancel) {
+            }
+          }
+        })
+      } else {
+        likeGoods(data).then(res => {
+          if (res.code === 0) {
+            _this.$emit('refresh')
+          }
+        })
+      }
     }
   },
   attached () {

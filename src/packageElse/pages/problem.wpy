@@ -27,38 +27,40 @@ page {
 
 <template>
   <div class="page-container">
-    <div @tap="on_toDetails" v-for="(item,index) in problems" :key="index" class="row right-go ">
+    <div @tap="on_toDetails(item.questionId)" v-for="(item,index) in problems" :key="index" class="row right-go ">
       <div class="item">
-        {{ item }}
+        {{ item.questionTitle }}
       </div>
     </div>
-
     <div class="x-g">关于租英台</div>
   </div>
 </template>
 
 <script>
 import wepy from '@wepy/core'
+import { questionList } from './../../http/api.js'
 wepy.page({
 
   data: {
     problems: ['VIP会员问题', '如何租包', '商品相关', '租期相关', '如何还包', '更多问题']
   },
   methods: {
-    on_toDetails () {
-      wx.showToast({
-        title: '不你没问题',
-        icon: 'none',
-        duration: 1000
+    on_toDetails (id) {
+      console.log(id)
+      wx.navigateTo({ url: '/packageElse/pages/problemDetail?id=' + id })
+    },
+    // 获取页面数据
+    getPageData () {
+      let _this = this
+      questionList().then((res) => {
+        if (res.code === 0) {
+          _this.problems = res.data.listRows
+        }
       })
     }
   },
   created () {
-    wx.getUserInfo({
-      success (res) {
-        console.log(res)
-      }
-    })
+    this.getPageData()
   },
   // 监听页面加载
   onLoad () { },

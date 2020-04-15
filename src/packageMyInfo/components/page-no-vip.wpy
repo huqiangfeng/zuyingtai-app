@@ -33,6 +33,7 @@
       line-height: 1;
       .img {
         width: 60rpx;
+        height:60rpx;
         display: block;
       }
       .title {
@@ -117,10 +118,10 @@
     </div>
     <!-- 会员权益 -->
     <div class="rights">
-      <div class="rights-item" v-for="(item,index) in rights" :key="index">
-        <image class="img" src="{{ item.imageSrc }}" mode="widthFix"></image>
-        <div class="title">{{ item.title }}</div>
-        <div class="explain-text">{{ item.explain }}</div>
+      <div class="rights-item" v-for="(item,index) in listRows[vipIndex].itemList" :key="index">
+        <image class="img" src="{{ item.itemGiftIcon }}" ></image>
+        <div class="title">{{ item.itemGiftTitle }}</div>
+        <div class="explain-text">{{ item.itemGiftDesc }}</div>
       </div>
     </div>
 

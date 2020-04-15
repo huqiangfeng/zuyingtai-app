@@ -91,7 +91,7 @@ wepy.component({
     getUserPhoneNumber (e) {
       let _this = this
       let data = e.$wx.detail
-      data.code = _this.code
+      // data.code = _this.code
       if (_this.flag) {
         savePhone(data).then(res => {
           if (res.code === 0) {
@@ -124,10 +124,10 @@ wepy.component({
   },
   // 在组件实例进入页面节点树时执行
   attached () {
-    let _this = this
-    wx.login({}).then(data => {
-      _this.code = data.code
-    })
+    // let _this = this
+    // wx.login({}).then(data => {
+    //   // _this.code = data.code
+    // })
   }
 })
 </script>

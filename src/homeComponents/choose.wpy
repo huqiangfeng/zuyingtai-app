@@ -101,7 +101,7 @@
         </div>
       </div>
       <div class="list" v-show="isShowlist">
-        <commodity-list list="{{ list }}"></commodity-list>
+        <commodity-list  @refresh="on_refresh"  list="{{ list }}"></commodity-list>
       </div>
       <!-- 非会员 -->
       <!-- <div class="nonmember">
@@ -146,6 +146,11 @@ wepy.component({
     list: []
   },
   methods: {
+        // 更新
+    on_refresh () {
+      // this.on_collect()
+      this.getData()
+    },
     // 搜索
     on_search (e) {
       this.goodsName = e.$wx.detail

@@ -3,14 +3,23 @@
 </style>
 <script>
 import wepy from '@wepy/core'
+// import eventHub from './common/eventHub'
 import vuex from '@wepy/x'
-import 'wepy-async-function'
 wepy.use(vuex)
 wepy.app({
+  hooks: {
+    // App 级别 hook，对整个 App 生效
+    // 同时存在 Page hook 和 App hook 时，优先执行 Page hook，返回值再交由 App hook 处
+    'before-setData': function (dirty) {
+      // console.log('setData dirty: ', dirty)
+      return dirty
+    }
+  },
   globalData: {
     baseImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/'
   },
   onLaunch () {
+    // this.testAsync()
   },
   methods: {
   }
@@ -28,7 +37,7 @@ wepy.app({
       root: 'packageLogin',
       name: 'login',
       pages: [
-        // 登录授权页
+        // 手机号登录页
         'pages/newTelLogin'
       ]
     },
@@ -114,7 +123,8 @@ wepy.app({
       name: 'else',
       pages: [
         // 问题
-        'pages/problem'
+        'pages/problem',
+        'pages/problemDetail'
       ],
       independent: true
     }

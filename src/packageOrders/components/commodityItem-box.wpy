@@ -70,7 +70,7 @@ wepy.component({
     on_tapItem () {
       let orderId = this.item.orderId
       wx.navigateTo({
-        url: '/packageOrders/pages/ordersDetails',
+        url: '/packageOrders/pages/ordersDetails?orderId=' + orderId,
         success: function (res) {
           // 通过eventChannel向被打开页面传送数据
           res.eventChannel.emit('getPageData', orderId)

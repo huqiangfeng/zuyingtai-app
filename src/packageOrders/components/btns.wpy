@@ -102,7 +102,7 @@
     <div class="btn btn2" @tap="on_del" v-if="CLOSED">删除订单</div>
     <div class="btn btn2" @tap="on_service" v-if="UNPAID||CLOSED">联系客服</div>
     <div class="btn btn2" @tap="on_bask" v-if="COMPLETE||USING">晒单</div>
-    <div class="btn btn2" @tap="on_renewal" v-if="USING">续 租</div>
+    <!-- <div class="btn btn2" @tap="on_renewal" v-if="USING">续 租</div> -->
     <div class="btn btn1" @tap="on_appointReturn" v-if="USING">归还</div>
     <div class="btn btn1" @tap="on_logistics" v-if="SENDING||RETURNING">查看物流</div>
     <div class="btn btn1" @tap="on_confirmReceipt" v-if="SENDING">确认收货</div>
@@ -117,7 +117,7 @@
       <div class="t2"> 应付金额 </div>
     </div>
     <div class="slot-conotent" slot="desc">
-      <div class="row" @tap="on_changePaymentMethod('ZYT')">
+      <!-- <div class="row" @tap="on_changePaymentMethod('ZYT')">
         <div class="left">
           <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/qian-icon.png" mode="widthFix"></image>
           <div class="text">租英台账户（余额：¥0）</div>
@@ -125,7 +125,7 @@
         <div class="right">
           <van-checkbox icon-size="40rpx" checked-color="#C9AB79" value="{{ paymentMethod === 'ZYT' }}"></van-checkbox>
         </div>
-      </div>
+      </div> -->
       <div class="row" @tap="on_changePaymentMethod('WX')">
         <div class="left">
           <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wx.png" mode="widthFix"></image>
@@ -388,6 +388,7 @@ wepy.component({
       "half-screen-dialog": "~@weui/half-screen-dialog/half-screen-dialog",
       "tooltip": "~@components/tooltip",
       "stepper": "~@vant/stepper",
+      "van-checkbox": "~@vant/checkbox",
     }
 }
 </config>

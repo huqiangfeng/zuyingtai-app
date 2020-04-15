@@ -13,7 +13,7 @@
 <template>
   <div class="list">
     <div class="commodity-item" v-for="(item,index) in list" :key="index">
-      <commodity-item @tapitem="on_tapItem" collect="{{ collect }}" item="{{item}}"></commodity-item>
+      <commodity-item @tapitem="on_tapItem" @refresh="refresh" collect="{{ collect }}" item="{{item}}"></commodity-item>
     </div>
   </div>
 </template>
@@ -40,6 +40,9 @@ wepy.component({
           res.eventChannel.emit('getGoodsId', { goodsId })
         }
       })
+    },
+    refresh() {
+      this.$emit('refresh')
     }
   },
   attached () {

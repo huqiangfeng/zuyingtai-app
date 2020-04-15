@@ -22,7 +22,7 @@
     <mp-navigation-bar back="{{ true }}" title="我的积分" ext-class="navigation" color="{{navBackground?'#fff': '' }}" background="{{ navBackground }}" />
     <!-- card -->
     <div class="card">
-      <card-jifeng></card-jifeng>
+      <card-jifeng @refresh="on_refresh" ></card-jifeng>
     </div>
     <div class="title">积分记录</div>
     <div class="list">
@@ -33,21 +33,38 @@
 
 <script>
 import wepy from '@wepy/core'
-import { } from './../../http/api.js'
+import { integralRecord } from './../../http/api.js'
 wepy.page({
-
   data: {
     navBackground: '#30313B', // transparent /
-    list: [1, 1, 2, 2]
+    list: []
   },
   methods: {
     getDataInfo () {
-      // let _this = this
-
+      let _this = this
+      integralRecord().then(res => {
+        if (res.code === 0) {
+          _this.list = res.data.pageRows.map(item => {
+            let obj = {
+              title: item.flowTitle,
+              time: item.createTime,
+              value: (item.flowDirection ? '+' : '-') + item.flowPoints,
+              extText: '',
+              valueActive: false,
+              extTextActive: false
+            }
+            return obj
+          })
+        }
+      })
+    },
+  // 刷新
+    on_refresh() {
+      this.getDataInfo()
     }
   },
   created () {
-
+    this.getDataInfo()
   },
   // 监听页面加载
   onLoad () {

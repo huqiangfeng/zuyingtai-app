@@ -10,6 +10,8 @@ export default {
   isShowLogin: false,
   // 登录的ocde
   code: '',
+  // 版本
+  versions: 'V1.0.0',
   // 用户信息
   userInfo: {
     createTime: '', // 创建时间
@@ -22,6 +24,7 @@ export default {
     userId: null, // id
     userPhone: null, // 手机
     userNickname: '', // 名字
+    userBirth: '', // 生日
     userPoints: 0, // 积分
     memberBalance: 0, // 会员余额
     memberExpireDate: null, // 会员终止时间

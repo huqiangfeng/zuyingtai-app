@@ -39,6 +39,36 @@ page {
     }
   }
 }
+// 屏风弹框
+.screen-dialog {
+  padding-bottom: 40rpx;
+  box-sizing: border-box;
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50rpx;
+    font-size: 28rpx;
+    line-height: 1;
+    color: rgba(49, 49, 59, 1);
+    .left {
+    }
+    .right {
+    }
+  }
+  .btn {
+    width: 100%;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    background: rgba(49, 49, 59, 1);
+    font-size: 30rpx;
+    color: #fff;
+  }
+  .express-input {
+    width: 100%;
+  }
+}
 </style>
 
 <template>
@@ -48,16 +78,16 @@ page {
       <div class="item-content ">
         <div class="item-label">头像</div>
         <div class="item-right">
-          <image class="img-header" src="{{ avatar }}" mode="widthFix"></image>
+          <image class="img-header" src="{{ userInfo.userAvatar }}" mode="widthFix"></image>
         </div>
       </div>
     </div>
     <!-- 昵称 -->
-    <div class="item item-cell__bd right-go">
+    <div class="item item-cell__bd right-go" @tap="on_tapItem('昵称')">
       <div class="item-content">
         <div class="item-label">昵称</div>
         <div class="item-right">
-          虾米吃馍馍
+          {{ userInfo.userNickname }}
         </div>
       </div>
     </div>
@@ -66,8 +96,8 @@ page {
       <div class="item-content">
         <div class="item-label">性别</div>
         <div class="item-right">
-          <picker bindchange="bindSexChange" value="{{sexIndex}}" range="{{sex}}">
-            <div class="itemselect itemselect_in-select-after">{{sex[sexIndex]}}</div>
+          <picker bindchange="bindSexChange" value="{{userInfo.userGender}}" range="{{sex}}">
+            <div class="itemselect itemselect_in-select-after">{{sex[userInfo.userGender]}}</div>
           </picker>
         </div>
       </div>
@@ -77,88 +107,157 @@ page {
       <div class="item-content">
         <div class="item-label">生日</div>
         <div class="item-right">
-          <picker mode="date" value="{{date}}" bindchange="bindDateChange">
-            <view class="weui-input">{{date}}</view>
+          <picker mode="date" value="{{userInfo.userBirth}}" bindchange="bindDateChange">
+            <view class="weui-input">{{userInfo.userBirth}}</view>
           </picker>
         </div>
       </div>
     </div>
     <!-- 手机号 -->
-    <div class="item item-cell__bd right-go">
+    <div class="item item-cell__bd right-go" @tap="on_tapItem('newTelLogin')">
       <div class="item-content">
         <div class="item-label">手机号</div>
         <div class="item-right">
-          13986532254
+          {{ userInfo.userPhone }}
         </div>
       </div>
     </div>
     <!-- 加入租英台推手 -->
     <div class="item item-cell__bd right-go" style="margin-top:30rpx;">
-      <div class="item-content">
-        <div class="item-label">加入租英台推手</div>
+      <div class="item-content" @tap="on_tapItem('pushingHands')">
+        <div class="item-label" v-if="userInfo.spreaderRole ===1">我的推荐</div>
+        <div class="item-label" v-else>加入租英台推手</div>
         <div class="item-right">
         </div>
       </div>
     </div>
     <!-- 当前版本 -->
-    <div class="item item-cell__bd right-go">
+    <div class="item item-cell__bd">
       <div class="item-content">
         <div class="item-label">当前版本</div>
         <div class="item-right" style="color:#31313B">
-          V1.0.0
+          {{ versions }}
         </div>
       </div>
     </div>
 
   </div>
+
+  <!-- 屏风弹框-物流 -->
+  <half-screen-dialog @close="on_hiddenDialog" show="{{isShowDialog}}">
+    <div slot="desc" class="screen-dialog">
+      <!-- <div class="row">
+        <div class="left">物流公司</div>
+        <div class="right">顺丰</div>
+      </div> -->
+      <div class="row">
+        <!-- 名字 -->
+        <input class="express-input" adjust-position="{{true}}" cursor-spacing="15" v-model="value" placeholder="请输入{{ inputType }}" />
+      </div>
+      <div class="btn" @tap="on_inputSubmit">提交</div>
+    </div>
+  </half-screen-dialog>
+  <!-- 改手机号 -->
+  <tel-login show="{{ isShowTel }}" @onClickHide="on_changeShowTel" />
 </template>
 
 <script>
 import wepy from '@wepy/core'
-import { } from './../../http/api.js'
+import store from './../../store'
+import { mapState } from '@wepy/x'
+import { saveMyInfo, getUserInfo, uploadImg } from './../../http/api.js'
 wepy.page({
+  store,
+  computed: {
+    ...mapState(['userInfo', 'versions'])
+  },
   config: {
     navigationBarTitleText: '首页'
   },
   data: {
-    // 头像
-    avatar: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/touxiang.png',
-    sex: ['男', '女'],
-    // 选中的性别
-    sexIndex: 0,
-    date: '2016-09-01',
-    // 生日
-    preventClick: true
+    // 防止重复点击
+    preventClick: true,
+    sex: ['保密', '男', '女'], // 性别选择
+    isShowDialog: false, // 输入弹框
+    inputType: '',  // 输入框类型
+    value: '', // 输入框值
+    isShowTel: false // 手机号弹框
   },
   methods: {
-    bindDateChange: function (e) {
-      this.date = e.$wx.detail.value
+    // 切换手机号弹框
+    on_changeShowTel () {
+      this.isShowTel = !this.isShowTel
     },
+    // 隐藏输入框
+    on_hiddenDialog () {
+      this.value = ''
+      this.isShowDialog = false
+    },
+    // 输入框确认
+    on_inputSubmit () {
+      console.log(this.inputType + '-----' + this.value)
+      if (this.inputType === '昵称') {
+        this.saveMyInfo({
+          userNickname: this.value
+        })
+      }
+      this.on_hiddenDialog()
+    },
+    // 点击项
+    on_tapItem (type) {
+      if (type === 'pushingHands') {
+        wx.navigateTo({ url: '/packageMyInfo/pages/pushingHands' })
+      } else if (type === 'newTelLogin') {
+        this.on_changeShowTel()
+      } else {
+        this.inputType = type
+        this.isShowDialog = true
+      }
+    },
+    // 生日
+    bindDateChange: function (e) {
+      console.log(e)
+      this.saveMyInfo({
+        userBirth: e.$wx.detail.value
+      })
+    },
+    // 性别
     bindSexChange: function (e) {
-      this.sexIndex = e.$wx.detail.value
+      this.saveMyInfo({
+        userGender: e.$wx.detail.value
+      })
+    },
+    // 保存修改
+    saveMyInfo (data) {
+      saveMyInfo(data).then(res => {
+        if (res.code === 0) {
+          getUserInfo()
+        }
+      })
     },
     // 调用本地头像
     getAvatar () {
-      if (this.preventClick) {
-        this.preventClick = false
+      let _this = this
+      if (_this.preventClick) {
+        _this.preventClick = false
         wx.chooseImage({
           count: 1,
           sizeType: ['original', 'compressed'],
           sourceType: ['album', 'camera'],
           success: res => {
-            this.preventClick = true
+            _this.preventClick = true
             const tempFilePaths = res.tempFilePaths
-            console.log(tempFilePaths)
-            this.avatar = tempFilePaths[0]
-            // 上传头像
-            wx.uploadFile({
-              url: '',
-              filePath: tempFilePaths[0],
-              name: 'file',
-              success: res1 => {
-                console.log(res1)
-                //  更新头像
+            uploadImg({
+              file: tempFilePaths[0],
+              module: 'user'
+            }).then((res) => {
+              if (res.code === 0) {
+                _this.saveMyInfo({
+                  userAvatar: res.data.path
+                })
               }
+            }).catch((err) => {
+              console.log(err)
             })
           }
         })
@@ -169,12 +268,6 @@ wepy.page({
     }
   },
   created () {
-    wx.getUserInfo({
-      success (res) {
-        console.log(res)
-      }
-    })
-
     // 获取版本号
     // wx.getAccountInfoSync()
   },
@@ -206,6 +299,8 @@ wepy.page({
 {
     navigationBarTitleText: '设置',
     usingComponents: {
+      "half-screen-dialog": "~@weui/half-screen-dialog/half-screen-dialog",
+      "tel-login": "~@components/telLogin"
     }
 }
 </config>

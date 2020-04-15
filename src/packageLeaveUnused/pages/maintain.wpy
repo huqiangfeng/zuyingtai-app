@@ -32,7 +32,7 @@
           <div class="title-ext">（最多上传6张）</div>
         </div>
         <div class="images-group">
-          <van-uploader accept="image" max-count="6" file-list="{{ images }}" @delete="imgDelete" @after-read="imgRead" />
+          <van-uploader multiple="{{ true }}" accept="image" max-count="6" file-list="{{ images }}" @delete="imgDelete" @after-read="imgRead" />
         </div>
       </div>
     </div>
@@ -135,7 +135,7 @@ wepy.page({
     // 图片
     imgRead (event) {
       const { file } = event.$wx.detail
-      this.images.push({ ...file, url: file.path })
+      this.images = [...this.images, ...file]
     },
     imgDelete (event) {
       let index = event.$wx.detail.index

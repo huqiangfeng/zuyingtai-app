@@ -47,7 +47,7 @@
       }
     }
     .row-ext {
-      border-bottom: 1px solid #f6f6f6;
+      // border-bottom: 1px solid #f6f6f6;
       .left {
         .left-ext {
           padding-top: 12rpx;
@@ -155,7 +155,7 @@
       <div v-else class="com-row row-ext">
         <div class="left">
           <div>非会员租金</div>
-          <div class="left-ext">
+          <div class="left-ext" @tap="on_toVip">
             <div class="t1">开通会员本单租金立省</div>
             <div class="t2">¥{{ spareRent }}</div>
             <div class="t3">　去开通 》</div>
@@ -184,11 +184,11 @@
       <div @tap="isInsurance = !isInsurance" class="com-row row-ext">
         <div class="left left-flex">
           <div class="underline" @tap.stop="on_toExplain('mian-pei')">免赔服务</div>
-          <van-checkbox icon-size="28rpx" checked-color="#C9AB79" value="{{ isInsurance }}"></van-checkbox>
+          <van-checkbox icon-size="28rpx" checked-color="#C9AB79" value="{{ isInsurance || dirtyInsureFree  }}"></van-checkbox>
           <!-- <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wenhao.png" mode="widthFix"></image> -->
           <div class="t1">轻微划痕免赔</div>
         </div>
-        <div class="right">¥{{ goods.dirtyInsureFee }}</div>
+        <div class="right" :class="{'discardFee':dirtyInsureFree }">¥{{ goods.dirtyInsureFee }}</div>
       </div>
       <!-- row -->
       <div @tap="isluxuryNurseFee = !isluxuryNurseFee" class="com-row row-ext">
@@ -216,7 +216,7 @@
         <div class="t2"> 应付金额 </div>
       </div>
       <div class="slot-conotent" slot="desc">
-        <div class="row" @tap="on_changePaymentMethod('ZYT')">
+        <!-- <div class="row" @tap="on_changePaymentMethod('ZYT')">
           <div class="left">
             <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/qian-icon.png" mode="widthFix"></image>
             <div class="text">租英台账户（余额：¥0）</div>
@@ -224,7 +224,7 @@
           <div class="right">
             <van-checkbox icon-size="40rpx" checked-color="#C9AB79" value="{{ paymentMethod === 'ZYT' }}"></van-checkbox>
           </div>
-        </div>
+        </div> -->
         <div class="row" @tap="on_changePaymentMethod('WX')">
           <div class="left">
             <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wx.png" mode="widthFix"></image>
@@ -267,7 +267,7 @@ wepy.page({
         zhujing = this.vipRent
       }
       obj.fee = zhujing + this.goods.moreGoodsFee  // 加件费
-      if (this.isInsurance) { // 免赔
+      if (this.isInsurance && !this.dirtyInsureFree) { // 免赔
         obj.fee += this.goods.dirtyInsureFee
       }
       if (this.isluxuryNurseFee && !this.luxuryNurseFree) { // 奢护服务
@@ -284,14 +284,15 @@ wepy.page({
     tooltipShow: false, // 支付成功弹框
     // 用户地址
     checkedAddr: null, // 用户选中地址
-    isInsurance: false, // 免赔险
     tenancyDays: '', // 租用天数
     goodsId: '', // 商品id
     goods: {
       dayRent: 0,
       memberDayRent: 0
     }, // 商品
-    isluxuryNurseFee: false, //  是否 奢护服务
+    isInsurance: true, // 是否 免赔险
+    dirtyInsureFree: false, // 免 免赔险
+    isluxuryNurseFee: true, //  是否 奢护服务
     luxuryNurseFree: false, //  免奢护服务费
     isBaoYou: false, // 是否包邮
     isShowZifu: false, // 确认支付
@@ -304,6 +305,10 @@ wepy.page({
     }
   },
   methods: {
+       // 跳去vip页
+    on_toVip () {
+      wx.navigateTo({ url: '/packageMyInfo/pages/vipMember' })
+    },
     // 跳转说明页
     on_toExplain (type) {
       console.log(type)
@@ -361,7 +366,7 @@ wepy.page({
       let _this = this
       const eventChannel = this.$wx.getOpenerEventChannel()
       eventChannel.on('getOrderData', function (data) {
-        _this.isInsurance = data.isInsurance
+        // _this.isInsurance = data.isInsurance
         _this.goodsId = data.goodsId
         _this.tenancyDays = data.tenancyDays
         // 获取默认用户地址
@@ -397,6 +402,9 @@ wepy.page({
             } else if (element.itemCode === 'nurse' && element.itemSurplus > 0) {
               _this.isluxuryNurseFee = true //  是否 奢护服务
               _this.luxuryNurseFree = true //  免奢护服务费
+            } else if (element.itemCode === 'dirty' && element.itemSurplus > 0) {
+              _this.isInsurance = true //  是否 奢护服务
+              _this.dirtyInsureFree = true //  免奢护服务费
             }
           })
         }

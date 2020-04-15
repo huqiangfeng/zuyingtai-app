@@ -44,7 +44,7 @@
   <div class="conetnt">
     <div class="liucheng">变现流程</div>
     <image class="liucheng-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xianzhi-liucheng.png" mode="widthFix"></image>
-    <div class="kefu">微信客服：11110000</div>
+    <div class="kefu" @tap="on_copy">微信客服：11110000</div>
     <div class="my-btn" @tap="issue">发布闲置</div>
     <image class="guanggao-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xianzhi-guanggao.png" mode="widthFix"></image>
   </div>
@@ -52,7 +52,6 @@
 <script>
 import wepy from '@wepy/core'
 import { } from './../../http/api.js'
-import drawQrcode from '../../utils/weapp.qrcode.esm.js'
 
 wepy.page({
   config: {
@@ -62,6 +61,19 @@ wepy.page({
     navBackground: ''
   },
   methods: {
+       // 复制
+    on_copy () {
+      wx.setClipboardData({
+        data: '11110000',
+        success (res) {
+          wx.showToast({
+            title: '客服微信号已复制',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      })
+    },
     // 发布闲置
     issue () {
       wx.redirectTo({

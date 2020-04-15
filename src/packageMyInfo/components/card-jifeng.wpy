@@ -50,35 +50,66 @@
         <div>积分规则</div>
       </div>
     </div>
-    <div class="value-jifen">1800</div>
+    <div class="value-jifen">{{ userInfo.userPoints  }}</div>
     <div class="btn" :class="{'active':active}" @click="on_sign">签 到</div>
   </div>
 </template>
 
 <script>
 import wepy from '@wepy/core'
+import store from './../../store'
+import { mapState } from '@wepy/x'
+import { sign, checkSign } from './../../http/api.js'
 wepy.component({
   props: {
-    card: {
-      type: Object,
-      default: {}
-    }
+  },
+  store,
+  computed: {
+    ...mapState(['userInfo'])
   },
   data: {
     active: false
   },
   methods: {
+
+    // 签到
     on_sign () {
-      this.active = !this.active
-      wx.showToast({
-        title: '已签到',
-        icon: 'none',
-        duration: 2000
+      if (this.active) { return }
+      sign().then(res => {
+        if (res.code === 0) {
+          this.checkSign()
+          this.$emit('refresh')
+          wx.showToast({
+            title: '签到成功',
+            icon: 'none',
+            duration: 2000
+          })
+        }
       })
       // this.$emit('')
+    },
+    // 检查签到
+    checkSign() {
+      let _this = this
+      checkSign().then(res => {
+        if (res.code === 0) {
+          if (res.data.todaySign === 1) {
+            _this.active = true
+          }
+        }
+      })
     }
   },
+    // 在组件实例刚刚被创建时执行
+  created () {
+  },
+  // 在组件实例进入页面节点树时执行
   attached () {
+    // 获取页面数据
+    this.checkSign()
+  },
+  // 组件生命周期函数-在组件布局完成后执行
+  ready () {
   }
 })
 </script>

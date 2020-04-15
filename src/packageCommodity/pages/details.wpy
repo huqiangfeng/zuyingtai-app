@@ -251,8 +251,8 @@
         width: 560px;
         height: 810px;
         position: absolute;
-        top: -810px;
-        left: -560px;
+        top: -1810px;
+        left: -1560px;
       }
       .img-main {
         width: 560rpx;
@@ -334,7 +334,7 @@
       </div>
     </div>
     <!-- 下单 -->
-    <xiadan-bar @xiadan="on_showDialog" collect="{{ details.isLike === 1 }}" @collect="on_collect" @poster="on_poster" @service="on_service"></xiadan-bar>
+    <xiadan-bar @xiadan="on_showDialog"  details="{{ details }}"  @collect="on_collect" @poster="on_poster" @service="on_service"></xiadan-bar>
     <!-- 屏风弹框 -->
     <half-screen-dialog @close="on_showDialog" show="{{showDialog}}">
       <div slot="desc" class="screen-dialog">
@@ -394,8 +394,6 @@ import drawQrcode from '../../utils/weapp.qrcode.esm.js'
 import { detailGoods, likeGoods, unlike, GoodsSuggest } from './../../http/api.js'
 wepy.page({
   store,
-  computed: {
-  },
   data: {
     imgSrc: '', // 海报图片
     goodsId: '',
@@ -548,8 +546,11 @@ wepy.page({
       let _this = this
       _this.changeShowPoster()
       let ctx = wx.createCanvasContext('myCanvas')
+      ctx.setFillStyle('#fff')
+      ctx.fillRect(0, 0, 560, 810)
       ctx.drawImage(data.imgGoods, 40, 40, 480, 480)
       ctx.drawImage(data.imgLogoPash, 432, 687, 88, 88)
+      ctx.setFillStyle('#000')
       ctx.setFontSize(28)
       ctx.fillText(_this.details.goodsName.slice(0, 14), 30, 550, 280)
       if (_this.details.goodsName.length > 14) {
@@ -608,7 +609,16 @@ wepy.page({
     },
     //  客服
     on_service () {
-
+      wx.setClipboardData({
+        data: 'iyavic',
+        success (res) {
+          wx.showToast({
+            title: '客服微信号已复制',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      })
     },
     // 去品牌详情
     on_toPinpai () {
