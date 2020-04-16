@@ -24,6 +24,9 @@
     display: flex;
   }
 }
+.iphone-X {
+  padding-bottom: 34px;
+}
 </style>
 
 <template>
@@ -33,7 +36,7 @@
         <image class="logo" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/logo.png" mode="widthFix"></image>
       </div>
     </mp-navigation-bar>
-    <div class="container">
+    <div class="container" :class="{'iphone-X':iPhoneX}">
       <home v-if="footer===0"></home>
       <choose v-if="footer===1"></choose>
       <leave-unused v-if="footer===2"></leave-unused>
@@ -41,15 +44,19 @@
       <my-index v-if="footer===4"></my-index>
     </div>
   </div>
-  <div class="flooter">
+  <div class="flooter" :class="{'iphone-X':iPhoneX}">
     <flooter></flooter>
   </div>
+  <!--  登录弹框  -->
+  <info-login />
 </template>
 
 <script>
 import wepy from '@wepy/core'
 import { mapState } from '@wepy/x'
 import store from '../store'
+import { isAuthorization } from './../http/api.js'
+import scrollNavigationBar from './../mixins/scroll-navigation-bar.js'
 wepy.page({
   store,
   data: {
@@ -57,18 +64,29 @@ wepy.page({
     color: '#000',
     background: '#f8f8f8',
     show: true,
-    animated: false
+    animated: false,
+    iPhoneX: false
   },
+  mixins: [scrollNavigationBar],
   computed: {
     ...mapState(['footer']),
     navBackground () {
-      return this.footer === 4 ? '#000' : '#fff'
+      return this.footer === 4 && !this.scorllBackground ? '#000' : '#fff'
     }
   },
   methods: {
   },
   created () {
-
+    let _this = this
+    wx.getSystemInfo({
+      success: function (res) {
+        // 根据 model 进行判断
+        if (res.model.search('iPhone X') !== -1) {
+          _this.iPhoneX = true
+        }
+      }
+    })
+    isAuthorization()
   },
   // 监听页面加载
   onLoad () { },
@@ -83,7 +101,9 @@ wepy.page({
   // 监听用户下拉动作
   onPullDownRefresh () { },
   // 页面上拉触底事件的处理函数
-  onReachBottom () { },
+  onReachBottom () {
+    console.log(2134)
+  },
   // 用户点击右上角转发
   onShareAppMessage () { },
   // 页面滚动触发事件的处理函数
@@ -103,8 +123,10 @@ wepy.page({
       "collect":"~@/homeComponents/collect",
       "leave-unused":"~@/homeComponents/leaveUnused",
       "my-index":"~@/homeComponents/myIndex",
-      'mp-navigation-bar': '~@weui/navigation-bar/navigation-bar'
+      'mp-navigation-bar': '~@weui/navigation-bar/navigation-bar',
+      "info-login": "~@components/infoLogin"
     },
+    // "enablePullDownRefresh": true, // 开启页面下拉刷新
     "navigationStyle": "custom",
 }
 </config>

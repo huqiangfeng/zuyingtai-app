@@ -64,6 +64,7 @@ page {
 <script>
 import wepy from '@wepy/core'
 import { messageList } from './../../http/api.js'
+import { pageStrAnalysis } from './../../utils/util.js'
 wepy.page({
 
   data: {
@@ -92,27 +93,12 @@ wepy.page({
     },
     // 跳去详情
     on_toDetail (item) {
-      let data = this.pageStrAnalysis(item.msgHref)
+      let data = pageStrAnalysis(item.msgHref)
       if (data.url === 'order/detail') {
         wx.navigateTo({
           url: '/packageOrders/pages/ordersDetails?orderId=' + data.orderId
         })
       }
-    },
-    // 处理要跳转的链接
-    pageStrAnalysis (str) {
-      if (str.indexOf('app://') < 0) {
-        return ''
-      }
-      let params = {}
-      params.url = str.slice(6, str.indexOf('?'))
-      let hash = str.slice(str.indexOf('?') + 1).split('&')
-      for (let i = 0; i < hash.length; i++) {
-        let h = hash[i].split('=') //
-        params[h[0]] = h[1]
-        console.log(h)
-      }
-      return params
     }
   },
   created () {

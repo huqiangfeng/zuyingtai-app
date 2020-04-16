@@ -133,20 +133,15 @@
       <div class="t2">《会员卡购买协议》</div>
       <div class="t2">《用户指南》</div>
     </div>
-
     <!-- 购/卡/说明 -->
     <div class="explain-box">
       <div class="title">购/卡/说/明</div>
-      <div class="p"> 1.用户须在租英台小程序中参与活动，包括APP客户端和WAP网
-        页端；</div>
-      <div class="p">2.用户需注册/登录租英台账号（VIP）才可参与活动，普通用户
-        不参加本次活动；</div>
-      <div class="p">3.多个分享者邀请同一好友，被邀请者通过分享链接（或二维码）
-        注册或购买，系统只给被邀请者最终点击链接（或二维码）的
-        分享者发放积分奖励；</div>
-      <div class="p">4.经官方认定为通过不正当手段(如恶意刷单等)获得积分奖励的，
-        租英台有权撤销奖励，并冻结账户积分，如有相关疑问，请致
-        电客服400-800-8956。</div>
+      <div class="p">1、请使用您本人实名办理的手机号码注册并购买各项增值服务；</div>
+      <div class="p">2、会员卡有效期内租赁商品，享受会员专享免费及折扣价；</div>
+      <div class="p">3、商品租期可在7天-14天-30天内选择；</div>
+      <div class="p">4、丰厚的会员权益，平台专属服务“享”不停；</div>
+      <div class="p">5、会员卡无减免押金权限，用户仍需缴纳租赁押金，具体押金以订单页显示为准；</div>
+      <div class="p">6、会员卡购买成功或兑换成功即激活,不支持退款。</div>
     </div>
 
     <!-- 弹框 推荐码 -->
@@ -255,12 +250,12 @@ wepy.component({
           }
         })
       } else {
-        _this.showDialog = true
+        _this.payVip()
+        // _this.showDialog = true
       }
     },
     // 微信支付
     WXzifu (data) {
-      let _this = this
       wx.requestPayment({
         timeStamp: data.tradeInfo.timeStamp,
         nonceStr: data.tradeInfo.nonceStr,
@@ -268,7 +263,6 @@ wepy.component({
         signType: data.tradeInfo.signType,
         paySign: data.tradeInfo.paySign,
         success (res) {
-          _this.tooltipShow = true
           if (res.errMsg === 'requestPayment:ok') {
             getUserInfo()
           }

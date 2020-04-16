@@ -16,14 +16,14 @@
       </div>
     </div>
     <!-- 修护服务 -->
-    <div class="group right-go" @tap="on_toSelectServe">
+    <!-- <div class="group right-go" @tap="on_toSelectServe">
       <div class="brand ">
         <view class="input-group ">
           <div class="title">修护服务</div>
           <input class="input" value="{{maintain}}" disabled="{{true}}" placeholder="请选择服务" />
         </view>
       </div>
-    </div>
+    </div> -->
     <!-- 图片 -->
     <div class="group ">
       <div class="images">
@@ -54,6 +54,12 @@
         </view>
       </div>
     </div>
+    <!-- 描述 -->
+    <div class="group ">
+      <div class="describe">
+        <textarea maxlength="9999" v-model="remark" auto-height placeholder="填写需要备注的信息" />
+        </div>
+      </div>
     <!-- 协议 -->
     <div class="checkbox-group" @tap="onChange">
       <van-checkbox icon-size="30rpx" checked-color="#C9AB79" value="{{ checkedProtocol }}"></van-checkbox>
@@ -74,18 +80,20 @@
 </template>
 <script>
 import wepy from '@wepy/core'
+import uploadImage from './../../mixins/uploadImage.js'
 import { listBrand } from './../../http/api.js'
 wepy.page({
   config: {
     navigationBarTitleText: '闲置'
   },
+  mixins: [uploadImage],
   data: {
     index: undefined, // 选中的品牌下标
     brands: [], // 品牌
     maintain: '', // 修护服务
-    images: [], // 图片
     userName: '', // 物主姓名
     contact: '', // 联系方式
+    remark: '', // 备注
     checkedProtocol: false,  // 协议
     tooltipShow: false
   },
@@ -132,15 +140,6 @@ wepy.page({
         }
       })
     },
-    // 图片
-    imgRead (event) {
-      const { file } = event.$wx.detail
-      this.images = [...this.images, ...file]
-    },
-    imgDelete (event) {
-      let index = event.$wx.detail.index
-      this.images.splice(index, 1)
-    },
     submit () {
       let _this = this
       if (!_this.checkedProtocol) {
@@ -156,20 +155,24 @@ wepy.page({
           }
         })
       } else {
+        let parameter = {
+          brandName: _this.brands[_this.index].brandChineseName,
+          name: _this.userName,
+          phone: _this.contact,
+          remark: _this.remark,
+          userItemId: _this.userItemId
+        }
+        let imgStr = ''
+        _this.images.forEach((item, index) => {
+          if (index > 0) {
+            imgStr += ','
+          }
+          imgStr += item.path
+        })
+        parameter.images = imgStr
+        console.log(parameter)
         // 显示弹框
-        _this.tooltipShow = true
-        // wx.uploadFile({
-        //   url: '', // 仅为示例，非真实的接口地址
-        //   filePath: file.path,
-        //   name: 'file',
-        //   formData: { user: 'test' },
-        //   success (res) {
-        //     // 上传完成需要更新 fileList
-        //     const { fileList = [] } = this.data
-        //     fileList.push({ ...file, url: res.data })
-        //     this.setData({ fileList })
-        //   }
-        // })
+        // _this.tooltipShow = true
       }
     },
     on_affirm () {

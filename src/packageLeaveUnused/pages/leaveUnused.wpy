@@ -1,10 +1,14 @@
 <style lang="less">
 .bg-img {
   width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .conetnt {
-  padding: 40rpx;
+  margin-top: -64px;
+  padding: 580rpx 40rpx 40rpx;
   .liucheng {
     font-size: 48rpx;
     color: #434342;
@@ -58,10 +62,10 @@ wepy.page({
     navigationBarTitleText: '闲置'
   },
   data: {
-    navBackground: ''
+    navBackground: 'transparency'
   },
   methods: {
-       // 复制
+    // 复制
     on_copy () {
       wx.setClipboardData({
         data: '11110000',
@@ -114,7 +118,7 @@ wepy.page({
 {
     navigationBarTitleText: '闲置',
     usingComponents: {
-
+      'mp-navigation-bar': '~@weui/navigation-bar/navigation-bar'
     },
     "navigationStyle": "custom",
 }

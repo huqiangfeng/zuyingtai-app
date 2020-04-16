@@ -20,6 +20,7 @@
       :key="index"
     >
       <image
+      @tap="on_tapItem(item)"
         class="arr-img"
         src="{{ item.imageSrc }}"
         mode="widthFix"
@@ -38,6 +39,9 @@ wepy.component({
     }
   },
   methods: {
+    on_tapItem(item) {
+      this.$emit('tapitem', item)
+    }
   }
 })
 </script>

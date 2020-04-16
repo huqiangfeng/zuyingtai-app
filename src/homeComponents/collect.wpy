@@ -2,6 +2,7 @@
 .container {
   .img-not {
     width: 100%;
+    box-sizing: border-box;
     padding: 20rpx 40rpx;
   }
   .list {
@@ -17,12 +18,12 @@
     </block>
     <block v-else>
       <div class="list">
-        <commodity-list collect="{{ true }}" @refresh="on_refresh"  list="{{ list }}"></commodity-list>
+        <commodity-list collect="{{ true }}" @refresh="on_refresh" list="{{ list }}"></commodity-list>
       </div>
     </block>
   </div>
   <!-- 登录弹框 -->
-  <info-login @success="getData" />
+  <!-- <info-login @success="getData" /> -->
 </template>
 
 <script>
@@ -65,7 +66,7 @@ wepy.component({
 {
     usingComponents: {
       "commodity-list": "~@components/commodityList",
-      "info-login": "~@components/infoLogin"
+      // "info-login": "~@components/infoLogin"
     }
 }
 </config>

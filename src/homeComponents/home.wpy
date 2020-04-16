@@ -25,14 +25,14 @@
     <block v-for="(item,index) in images" :key="index">
       <block v-if="item.imageSrc === 'carousel'">
         <div class="swiper">
-          <my-swiper setStyle="height: 240rpx;" list="{{ item.list }}" />
+          <my-swiper @tapitem="on_tapItem" setStyle="height: 240rpx;" list="{{ item.list }}" />
         </div>
       </block>
       <block v-else-if="item.imageSrc === 'list'">
-        <img-box list="{{ item.list }}"></img-box>
+        <img-box @tapitem="on_tapItem" list="{{ item.list }}"></img-box>
       </block>
       <block v-else>
-        <img-box list="{{ [item] }}"></img-box>
+        <img-box @tapitem="on_tapItem" list="{{ [item] }}"></img-box>
       </block>
     </block>
   </div>
@@ -41,6 +41,7 @@
 <script>
 import wepy from '@wepy/core'
 import { getImagePage } from './../http/api.js'
+import { pageStrAnalysis } from './../utils/util.js'
 wepy.component({
   config: {
     navigationBarTitleText: '首页'
@@ -51,6 +52,17 @@ wepy.component({
   computed: {
   },
   methods: {
+    on_tapItem(item) {
+      if (item.imageHref) {
+        let dataObj = pageStrAnalysis(item.imageHref)
+        console.log(dataObj)
+        if (dataObj.url === 'goods/zone') {
+          wx.navigateTo({
+            url: '/packageCommodity/pages/goodsZone?zoneId=' + dataObj.zoneId
+          })
+        }
+      }
+    }
   },
   // 在组件实例刚刚被创建时执行
   created () {

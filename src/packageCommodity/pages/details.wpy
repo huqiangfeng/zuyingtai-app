@@ -334,7 +334,7 @@
       </div>
     </div>
     <!-- 下单 -->
-    <xiadan-bar @xiadan="on_showDialog"  details="{{ details }}"  @collect="on_collect" @poster="on_poster" @service="on_service"></xiadan-bar>
+    <xiadan-bar @xiadan="on_showDialog" details="{{ details }}" @collect="on_collect" @poster="on_poster" @service="on_service"></xiadan-bar>
     <!-- 屏风弹框 -->
     <half-screen-dialog @close="on_showDialog" show="{{showDialog}}">
       <div slot="desc" class="screen-dialog">
@@ -607,19 +607,19 @@ wepy.page({
         success (res) { }
       })
     },
-    //  客服
-    on_service () {
-      wx.setClipboardData({
-        data: 'iyavic',
-        success (res) {
-          wx.showToast({
-            title: '客服微信号已复制',
-            icon: 'none',
-            duration: 2000
-          })
-        }
-      })
-    },
+    // //  客服
+    // on_service () {
+    //   wx.setClipboardData({
+    //     data: 'iyavic',
+    //     success (res) {
+    //       wx.showToast({
+    //         title: '客服微信号已复制',
+    //         icon: 'none',
+    //         duration: 2000
+    //       })
+    //     }
+    //   })
+    // },
     // 去品牌详情
     on_toPinpai () {
       let _this = this

@@ -116,7 +116,7 @@ String.prototype.toISODateformat = function (date) {
 // ----------------------------
 
 // 验证是否是手机号码
-function vailPhone(number) {
+export const vailPhone = (number) => {
   let flag = true
   let myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0]{1})|(15[0-3]{1})|(15[5-9]{1})|(18[0-9]{1}))+\d{8})$/
   if (number.length !== 11 || !myreg.test(number)) {
@@ -125,11 +125,20 @@ function vailPhone(number) {
   return flag
 }
 //  去除字符串所有空格
-function sTrim(text) {
+export const sTrim = (text) => {
   return text.replace(/\s/g, '')
 }
-
-module.exports = {
-  sTrim,
-  vailPhone
+// 处理要跳转的链接
+export const pageStrAnalysis = (str) => {
+  if (str.indexOf('app://') < 0) {
+    return ''
+  }
+  let params = {}
+  params.url = str.slice(6, str.indexOf('?'))
+  let hash = str.slice(str.indexOf('?') + 1).split('&')
+  for (let i = 0; i < hash.length; i++) {
+    let h = hash[i].split('=') //
+    params[h[0]] = h[1]
+  }
+  return params
 }

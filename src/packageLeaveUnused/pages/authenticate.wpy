@@ -86,10 +86,10 @@
     </div>
     <!-- btn -->
     <div class="btn" @tap="submit">
-      <div :class="{discardFee:authenticate[authenticateIndex].userItemSurplus>0}">
-          ¥{{authenticate[authenticateIndex].itemPrice  }}
+      <div :class="{discardFee:userItemId}">
+          ¥{{authenticate[authenticateIndex].itemPrice}}
       </div>
-      <div v-if="authenticate[authenticateIndex].userItemSurplus>0"> 　¥0　</div>
+      <div v-if="userItemId"> 　¥0</div>
       <div>购买服务</div>
     </div>
 
@@ -196,6 +196,7 @@ wepy.page({
         userItemId	折扣标识
         */
         let parameter = {
+          brandName: _this.brands[_this.index].brandChineseName,
           itemId: _this.authenticate[_this.authenticateIndex].itemId,
           name: _this.userName,
           phone: _this.contact,
@@ -213,22 +214,29 @@ wepy.page({
         console.log(parameter)
         buyServiceItem(parameter).then(res => {
           if (res.code === 0) {
-            _this.tooltipShow = true
+            if (res.data.payment === 'WXPay') {
+              _this.WXzifu(res.data)
+            } else if (res.data.payment === 'discount') {
+              _this.tooltipShow = true
+            }
           }
         })
-        // wx.uploadFile({
-        //   url: '', // 仅为示例，非真实的接口地址
-        //   filePath: file.path,
-        //   name: 'file',
-        //   formData: { user: 'test' },
-        //   success (res) {
-        //     // 上传完成需要更新 fileList
-        //     const { fileList = [] } = this.data
-        //     fileList.push({ ...file, url: res.data })
-        //     this.setData({ fileList })
-        //   }
-        // })
       }
+    },
+        // 微信支付
+    WXzifu (data) {
+      let _this = this
+      wx.requestPayment({
+        timeStamp: data.tradeInfo.timeStamp,
+        nonceStr: data.tradeInfo.nonceStr,
+        package: data.tradeInfo.package,
+        signType: data.tradeInfo.signType,
+        paySign: data.tradeInfo.paySign,
+        success (res) {
+          _this.tooltipShow = true
+        },
+        fail (res) { }
+      })
     },
     // 获取预支付信息
     servicePrepayInfo () {

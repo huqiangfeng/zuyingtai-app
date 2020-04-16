@@ -90,6 +90,8 @@ wepy.component({
         duration: 0
       })
     }
+  },
+  created () {
   }
 })
 </script>

@@ -4,6 +4,11 @@ import {
   uploadFile
 } from './http'
 import store from '../store'
+/*
+上传图片
+*/
+export const uploadImg = (parameter) => uploadFile('/ma/attachment/upload', parameter)
+
 // 用户信息授权
 export const gitToken = (parameter) => {
   return new Promise((resolve, reject) => {
@@ -43,7 +48,8 @@ export const isAuthorization = (url, data) => {
           wx.login({}).then((code) => {
             wx.getUserInfo({
               success(res1) {
-                gitToken(res1, code.code).then(res => {
+                res1.code = code.code
+                gitToken(res1).then(res => {
                   if (url) {
                     post(url, data).then((res) => {
                       resolve(res)
@@ -320,6 +326,12 @@ questionId	问题标识
 */
 export const questionDetail = (parameter) => post('/ma/question/detail', parameter)
 /*
-上传图片
+专区信息
+zoneId	专区标识
 */
-export const uploadImg = (parameter) => uploadFile('/ma/attachment/upload', parameter)
+export const zoneInfo = (parameter) => post('/ma/goods/zoneInfo', parameter)
+/*
+专区商品
+zoneId	专区标识
+*/
+export const zoneGoods = (parameter) => post('/ma/goods/zoneGoods', parameter)

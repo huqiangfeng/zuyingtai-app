@@ -52,6 +52,8 @@ wepy.app({
         'pages/details',
         // 品牌详情
         'pages/brandDetails',
+        // 商品区域
+        'pages/goodsZone',
       ]
     },
     // 我的信息

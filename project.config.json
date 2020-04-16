@@ -52,22 +52,9 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "packageMyInfo/pages/pushingHands",
-					"pathName": "packageMyInfo/pages/pushingHands",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
 					"name": "packageLeaveUnused/pages/leaveUnused",
 					"pathName": "packageLeaveUnused/pages/leaveUnused",
 					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "packageLeaveUnused/pages/leaveUnused",
-					"pathName": "packageLeaveUnused/pages/leaveUnused",
 					"scene": null
 				}
 			]

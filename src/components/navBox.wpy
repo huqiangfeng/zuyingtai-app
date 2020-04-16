@@ -29,6 +29,22 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      button {
+        background-color: #fff;
+        border: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        line-height: 1.6;
+        &:after {
+          width: 0;
+          height: 0;
+          display: none;
+        }
+      }
+      line-height: 1.6;
       .img {
         width: 60rpx;
         height: 60rpx;
@@ -53,8 +69,14 @@
     </div>
     <div class="list-box">
       <div @tap="on_item(item)" class="list-item" v-for="(item,index) in list" :key="index">
-        <image class="img" src="{{ item.imageSrc }}" mode="widthFix"></image>
-        <div class="text"> {{item.text }} </div>
+        <button v-if="item.copy === '客服售后'" open-type="contact">
+          <image class="img" src="{{ item.imageSrc }}" mode="widthFix"></image>
+          <div class="text"> {{item.text }} </div>
+        </button>
+        <block v-else>
+          <image class="img" src="{{ item.imageSrc }}" mode="widthFix"></image>
+          <div class="text"> {{item.text }} </div>
+        </block>
       </div>
     </div>
   </div>
@@ -84,16 +106,16 @@ wepy.component({
           }
         })
       } else if (item.copy) {
-        wx.setClipboardData({
-          data: item.copy,
-          success (res) {
-            wx.showToast({
-              title: '客服微信已复制',
-              icon: 'none',
-              duration: 2000
-            })
-          }
-        })
+        // wx.setClipboardData({
+        //   data: item.copy,
+        //   success (res) {
+        //     wx.showToast({
+        //       title: '客服微信已复制',
+        //       icon: 'none',
+        //       duration: 2000
+        //     })
+        //   }
+        // })
       } else {
         wx.showToast({
           title: '敬请期待',

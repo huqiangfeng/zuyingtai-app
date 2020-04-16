@@ -14,10 +14,10 @@
     .icons {
       display: flex;
       position: absolute;
-      right: 40rpx;
-      top: 20rpx;
+      right: 30rpx;
+      top: 0rpx;
       .icon {
-        padding: 10rpx;
+        padding: 30rpx;
         position: relative;
         .img-icon {
           width: 44rpx;
@@ -26,8 +26,8 @@
         &.active::after {
           content: '';
           position: absolute;
-          top: 10rpx;
-          right: 10rpx;
+          top: 25rpx;
+          right: 25rpx;
           width: 8rpx;
           height: 8rpx;
           background: rgba(224, 46, 36, 1);
@@ -98,7 +98,7 @@
   </div>
 
   <!-- 登录弹框 -->
-  <info-login @success="getUserInfo" />
+  <!-- <info-login @success="getUserInfo" /> -->
 </template>
 
 <script>
@@ -210,7 +210,7 @@ wepy.component({
       "cards": "~@components/cards",
       "nav-box": "~@components/navBox",
       "my-swiper": "~@components/mySwiper",
-      "info-login": "~@components/infoLogin"
+     // "info-login": "~@components/infoLogin"
     }
 }
 </config>
