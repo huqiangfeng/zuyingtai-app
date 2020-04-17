@@ -146,6 +146,7 @@
 
 <script>
 import wepy from '@wepy/core'
+import { vailPhone } from './../../utils/util.js'
 import { applySpreader, getUserInfo } from './../../http/api.js'
 wepy.component({
   props: {
@@ -157,7 +158,8 @@ wepy.component({
   data: {
     name: '',
     tel: '',
-    checkedProtocol: false  // 协议
+    checkedProtocol: false,  // 协议
+    throttle: true // 节流阀
   },
   methods: {
     // 刷新
@@ -170,6 +172,10 @@ wepy.component({
     },
     // 开通会员
     on_submit () {
+      if (!this.throttle) {
+        return
+      }
+
       let _this = this
       if (!_this.checkedProtocol) {
         wx.showModal({
@@ -184,12 +190,29 @@ wepy.component({
           }
         })
       } else {
+        _this.throttle = false
         _this.showDialog = true
-        console.log(_this.name, _this.tel)
+        if (!_this.name) {
+          wx.showModal({
+            title: '请填写姓名',
+            content: '',
+            success (res) {
+            }
+          })
+        }
+        if (!vailPhone(_this.tel)) {
+          wx.showModal({
+            title: '提示',
+            content: '请输入正确的手机号',
+            success (res) {
+            }
+          })
+        }
         applySpreader({
           formMobile: _this.tel,
           formName: _this.name
         }).then(res => {
+          _this.throttle = true
           wx.showModal({
             title: '提示',
             content: '申请已提交',
@@ -197,6 +220,8 @@ wepy.component({
             }
           })
           getUserInfo()
+        }).catch(() => {
+          _this.throttle = true
         })
       }
     }

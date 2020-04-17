@@ -112,7 +112,6 @@ String.prototype.toDate = function () {
 String.prototype.toISODateformat = function (date) {
   return date.toDate().toFormatorString('yyyy-mm-dd hh:mi:ss')
 }
-
 // ----------------------------
 
 // 验证是否是手机号码

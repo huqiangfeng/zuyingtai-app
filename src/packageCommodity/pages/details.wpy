@@ -341,7 +341,8 @@
         <div class="row">
           <div class="left">租用天数</div>
           <div class="right">
-            <stepper value="{{ day }}" integer @change="on_ChangeDay" min="7" max="30" step="7"></stepper>
+            <!-- step="7" -->
+            <stepper value="{{ day }}" integer @change="on_ChangeDay" min="7" max="30"></stepper>
           </div>
         </div>
         <!-- <div class="row">
@@ -390,8 +391,7 @@
 import wepy from '@wepy/core'
 import { mapActions } from '@wepy/x'
 import store from '../../store'
-import drawQrcode from '../../utils/weapp.qrcode.esm.js'
-import { detailGoods, likeGoods, unlike, GoodsSuggest, getCodeUnlimited } from './../../http/api.js'
+import { detailGoods, likeGoods, unlike, GoodsSuggest, getQrCode } from './../../http/api.js'
 wepy.page({
   store,
   data: {
@@ -529,28 +529,45 @@ wepy.page({
           }
         })
       })
-      let qrCode = getCodeUnlimited({
-        page: '/packageCommodity/pages/details',
-        scene: 'goodsId=' + this.goodsId,
-        width: '88'
+      let qrCode = getQrCode({
+        page: 'packageCommodity/pages/details',
+        scene: 'goodsId=' + this.goodsId
       })
       // imgPromise
       Promise.all([imgLogoPromise, imgGoodsPromise, qrCode]).then(res => {
-        let data = {
-          imgLogoPash: res[0].path,
-          imgGoods: res[1].path,
-          qrCode: res[2].data.maQrCode
-        }
-        console.log(data)
-
-        // 初始化海报图
-        _this.on_initPosterImg(data)
+        let imgSrc = res[2].data.maQrCode// base64编码
+        imgSrc = imgSrc.replace('data:image/jpeg;base64,', '')
+        let save = wx.getFileSystemManager()
+        // 获取随机数
+        // 保存本地图片文件路径，也是绘图路径
+        let filePath = `${wx.env.USER_DATA_PATH}/qrcode.png`
+        save.writeFile({
+          filePath: filePath,
+          data: imgSrc,
+          encoding: 'base64',
+          success: res2 => {
+            wx.saveImageToPhotosAlbum({
+              filePath: filePath,
+              success: function (res3) {
+                console.log(res3)
+                let data = {
+                  imgLogoPash: res[0].path,
+                  imgGoods: res[1].path,
+                  qrCode: filePath
+                }
+                // 初始化海报图
+                _this.on_initPosterImg(data)
+              }
+            })
+          }
+        })
       }).catch(err => {
         console.log(err)
       })
     },
     // 初始化海报图
     on_initPosterImg (data) {
+      console.log(data)
       let _this = this
       _this.changeShowPoster()
       let ctx = wx.createCanvasContext('myCanvas')
@@ -558,6 +575,7 @@ wepy.page({
       ctx.fillRect(0, 0, 560, 810)
       ctx.drawImage(data.imgGoods, 40, 40, 480, 480)
       ctx.drawImage(data.imgLogoPash, 432, 687, 88, 88)
+      ctx.drawImage(data.qrCode, 30, 687, 88, 88)
       ctx.setFillStyle('#000')
       ctx.setFontSize(28)
       ctx.fillText(_this.details.goodsName.slice(0, 14), 30, 550, 280)
@@ -584,29 +602,19 @@ wepy.page({
       ctx.fillText('①保存图片至相册', 130, 716)
       ctx.fillText('②打开租英台选款', 130, 760)
       ctx.draw(true)
-      drawQrcode({
-        ctx: ctx,
-        text: '21311231',
-        width: 88,
-        height: 88,
-        x: 30,
-        y: 687,
-        callback: res => {
-          setTimeout(() => {
-            wx.canvasToTempFilePath({
-              destWidth: 560,
-              destHeight: 810,
-              canvasId: 'myCanvas',
-              fail (err) {
-                console.log(err)
-              },
-              success (res) {
-                _this.imgSrc = res.tempFilePath
-              }
-            })
-          }, 100)
-        }
-      })
+      setTimeout(() => {
+        wx.canvasToTempFilePath({
+          destWidth: 560,
+          destHeight: 810,
+          canvasId: 'myCanvas',
+          fail (err) {
+            console.log(err)
+          },
+          success (res) {
+            _this.imgSrc = res.tempFilePath
+          }
+        })
+      }, 100)
     },
     // 保存海报图片
     on_posterSave () {
@@ -641,7 +649,23 @@ wepy.page({
     // 改变租用天数
     on_ChangeDay (e) {
       console.log(e.$wx.detail)
-      this.day = e.$wx.detail
+      // this.day = e.$wx.detail
+      if (e.$wx.detail === 8 || e.$wx.detail === 29) {
+        this.day = 0
+        setTimeout(() => {
+          this.day = 14
+        }, 0)
+      } else if (e.$wx.detail >= 15) {
+        this.day = 0
+        setTimeout(() => {
+          this.day = 30
+        }, 0)
+      } else if (e.$wx.detail <= 13) {
+        this.day = 0
+        setTimeout(() => {
+          this.day = 7
+        }, 0)
+      }
     },
     // 是否免赔险
     on_ChangeGoodsInsurance () {

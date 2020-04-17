@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+  z-index: 99999;
 }
 .block {
   width: 560rpx;

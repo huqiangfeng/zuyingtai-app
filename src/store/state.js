@@ -2,8 +2,6 @@ export default {
   baseImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/',
   // tab选项
   footer: 0,
-  // 会员
-  member: false,
   // 是否登录
   login: false,
   // 显示登录弹框

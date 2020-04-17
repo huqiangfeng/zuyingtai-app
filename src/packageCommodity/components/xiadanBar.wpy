@@ -117,7 +117,6 @@ wepy.component({
     },
     // 点击icon
     on_tapIcon (item) {
-      console.log(item)
       if (item.text === '收藏') {
         this.$emit('collect')
       } else if (item.text === '海报') {

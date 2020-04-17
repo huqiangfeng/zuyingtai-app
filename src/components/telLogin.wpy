@@ -7,7 +7,8 @@
 }
 .block {
   width: 560rpx;
-  height: 648rpx;
+  padding-bottom: 50rpx;
+  // height: 648rpx;
   background: rgba(255, 255, 255, 1);
   border-radius: 20rpx;
   display: flex;

@@ -36,12 +36,12 @@
         </div>
       </div>
     </div>
-    <!-- 价格 -->
+    <!-- 物主姓名 -->
     <div class="group ">
       <div class="price">
         <view class="input-group ">
           <div class="title">物主姓名</div>
-          <input class="input" type="number" v-model="userName" placeholder="请输入您的姓名" />
+          <input class="input" v-model="userName" placeholder="请输入您的姓名" />
         </view>
       </div>
     </div>
@@ -81,6 +81,7 @@
 <script>
 import wepy from '@wepy/core'
 import uploadImage from './../../mixins/uploadImage.js'
+import { vailPhone } from './../../utils/util.js'
 import { listBrand } from './../../http/api.js'
 wepy.page({
   config: {
@@ -88,7 +89,7 @@ wepy.page({
   },
   mixins: [uploadImage],
   data: {
-    index: undefined, // 选中的品牌下标
+    index: 0, // 选中的品牌下标
     brands: [], // 品牌
     maintain: '', // 修护服务
     userName: '', // 物主姓名
@@ -159,8 +160,8 @@ wepy.page({
           brandName: _this.brands[_this.index].brandChineseName,
           name: _this.userName,
           phone: _this.contact,
-          remark: _this.remark,
-          userItemId: _this.userItemId
+          remark: _this.remark
+          // userItemId: _this.userItemId
         }
         let imgStr = ''
         _this.images.forEach((item, index) => {
@@ -170,9 +171,27 @@ wepy.page({
           imgStr += item.path
         })
         parameter.images = imgStr
-        console.log(parameter)
+
+        for (const key in parameter) {
+          if (!parameter[key] && key !== 'remark') {
+            wx.showToast({
+              title: '请完善信息之后在提交哦',
+              icon: 'none',
+              duration: 2000
+            })
+            return
+          }
+        }
+        if (!vailPhone(parameter.phone)) {
+          wx.showToast({
+            title: '请输入正确的手机号',
+            icon: 'none',
+            duration: 2000
+          })
+          return
+        }
         // 显示弹框
-        // _this.tooltipShow = true
+        _this.tooltipShow = true
       }
     },
     on_affirm () {

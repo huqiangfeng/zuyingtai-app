@@ -101,7 +101,7 @@
         </div>
       </div>
       <div class="list" v-show="isShowlist">
-        <commodity-list  @refresh="on_refresh"  list="{{ list }}"></commodity-list>
+        <commodity-list @refresh="on_refresh" list="{{ list }}"></commodity-list>
       </div>
       <!-- 非会员 -->
       <!-- <div class="nonmember">
@@ -126,10 +126,9 @@ wepy.component({
     usingComponents: {}
   },
   computed: {
-    // member 会员
-    ...mapState(['member']),
     isShowlist () {
-      return this.list.length > 0 && (this.navActive === 0 || this.member)
+      // return this.list.length > 0 && (this.navActive === 0 )
+      return this.list.length > 0
     }
   },
   data: {
@@ -146,7 +145,7 @@ wepy.component({
     list: []
   },
   methods: {
-        // 更新
+    // 更新
     on_refresh () {
       // this.on_collect()
       this.getData()
@@ -181,7 +180,7 @@ wepy.component({
         brandId: this.filtrate.brandId, // 品牌标识
         goodsName: this.goodsName, //  商品名称
         goodsSort: this.filtrate.goodsSort, // 排序
-        vip: this.navActive  // 1会员专享
+        category: this.navActive  // 1会员专享
       }
       listGoods(data).then(res => {
         if (res.code === 0) {

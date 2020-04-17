@@ -78,10 +78,11 @@ wepy.page({
       let _this = this
       console.log('---都有了---', data)
       let ctx = wx.createCanvasContext('myCanvas')
-      // ctx.drawImage(data.imgPash, 0, 0, 670, 894)
-      ctx.drawImage('./../../static/image/zuyingtai.png', 0, 0, 670, 894)
+      ctx.drawImage(data.imgPash, 0, 0, 670, 894)
+      // ctx.drawImage('./../../static/image/zuyingtai.png', 0, 0, 670, 894)
       // 图片
       ctx.drawImage(data.avatarPash, 30, 738, 126, 126)
+      ctx.drawImage(data.qrCode, 495, 719, 140, 140)
       ctx.setFillStyle('#fff')
       ctx.fillRect(490, 714, 150, 150)
 
@@ -90,28 +91,28 @@ wepy.page({
       ctx.setFontSize(24)
       ctx.fillText('推广码： ' + data.spreaderCode, 180, 840)
       ctx.draw(true)
-      drawQrcode({
-        ctx: ctx,
-        text: '21311231',
-        width: 140,
-        height: 140,
-        x: 495,
-        y: 719,
-        callback: res => {
-          wx.canvasToTempFilePath({
-            destWidth: 670,
-            destHeight: 894,
-            canvasId: 'myCanvas',
-            fail (err) {
-              console.log(err)
-            },
-            success (res) {
-              console.log(res.tempFilePath)
-              _this.imgSrc = res.tempFilePath
-            }
-          })
+      wx.canvasToTempFilePath({
+        destWidth: 670,
+        destHeight: 894,
+        canvasId: 'myCanvas',
+        fail (err) {
+          console.log(err)
+        },
+        success (res) {
+          console.log(res.tempFilePath)
+          _this.imgSrc = res.tempFilePath
         }
       })
+      // drawQrcode({
+      //   ctx: ctx,
+      //   text: '21311231',
+      //   width: 140,
+      //   height: 140,
+      //   x: 495,
+      //   y: 719,
+      //   callback: res => {
+      //   }
+      // })
     }
   },
   created () {

@@ -167,9 +167,22 @@
       <div class="com-row row-ext">
         <div class="left">
           <div>商品押金</div>
+          <div class="left-ext" v-if="account.memberLevel < 1 ">包包归还签收后，1-2个工作日内极速退押金</div>
+        </div>
+        <div class="right jia-ge" :class="{'discardFee':account.memberLevel > 0 }">¥{{ goods.goodsDeposit }}</div>
+      </div>
+      <div class="com-row row-ext" v-if="account.memberLevel < 1">
+        <div class="left">
+          <div>会员商品押金</div>
+        </div>
+        <div class="right jia-ge">¥{{ goods.lowestGoodsDeposit }}</div>
+      </div>
+      <div class="com-row row-ext" v-if="account.memberLevel > 1">
+        <div class="left">
+          <div>会员商品押金</div>
           <div class="left-ext">包包归还签收后，1-2个工作日内极速退押金</div>
         </div>
-        <div class="right">¥{{ goods.goodsDeposit }}</div>
+        <div class="right">¥{{ goods.memberGoodsDeposit }}</div>
       </div>
     </div>
     <!-- 增值服务 -->
@@ -261,6 +274,9 @@ wepy.page({
         fee: 0,
         sum: 0,
         deposit: this.goods.goodsDeposit
+      }
+      if (this.account.memberLevel > 0) {
+        obj.deposit = this.goods.memberGoodsDeposit
       }
       let zhujing = this.rent
       if (this.account.memberLevel > 0) {

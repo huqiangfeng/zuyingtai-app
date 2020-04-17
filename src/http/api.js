@@ -29,8 +29,6 @@ export const gitToken = (parameter) => {
           store.dispatch('setShowLogin', {
             isShowLogin: false
           })
-          console.log(666)
-
           if (!res.data.userPhone) {
             store.dispatch('setShowBindTel', {
               isShowBindTel: true
@@ -131,7 +129,7 @@ export const getImagePage = (parameter) => post('/ma/page/getImagePage', paramet
     brandId	品牌标识
     goodsName	商品名称
     goodsSort	排序 {defaultSort:默认,releaseDesc:最新,rentPriceDesc:价格降序,rentPriceAsc:价格升序
-    vip	vip专享.会员专享:1
+    category	门类(1:0元专区)
 */
 export const listGoods = (parameter) => post('/ma/goods/listGoods', parameter)
 /*
@@ -348,4 +346,4 @@ page	小程序页面
 scene	参数
 width	尺寸
 */
-export const getCodeUnlimited = (parameter) => post('/ma/wx/getCodeUnlimited', parameter)
+export const getQrCode = (parameter) => post('/ma/wx/getQrCode', parameter)
