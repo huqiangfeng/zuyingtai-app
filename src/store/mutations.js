@@ -23,5 +23,9 @@ export default {
       })
     }
     state.isShowLogin = payload.isShowLogin
+  },
+  // 显示绑定手机号
+  setShowBindTel(state, payload) {
+    state.isShowBindTel = payload.isShowBindTel
   }
 }

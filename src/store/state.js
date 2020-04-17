@@ -8,6 +8,8 @@ export default {
   login: false,
   // 显示登录弹框
   isShowLogin: false,
+  // 显示绑定手机弹框
+  isShowBindTel: false,
   // 登录的ocde
   code: '',
   // 版本

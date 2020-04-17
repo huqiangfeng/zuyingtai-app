@@ -29,6 +29,13 @@ export const gitToken = (parameter) => {
           store.dispatch('setShowLogin', {
             isShowLogin: false
           })
+          console.log(666)
+
+          if (!res.data.userPhone) {
+            store.dispatch('setShowBindTel', {
+              isShowBindTel: true
+            })
+          }
         } else {
           reject(res)
         }
@@ -335,3 +342,10 @@ export const zoneInfo = (parameter) => post('/ma/goods/zoneInfo', parameter)
 zoneId	专区标识
 */
 export const zoneGoods = (parameter) => post('/ma/goods/zoneGoods', parameter)
+/*
+获取小程序码
+page	小程序页面
+scene	参数
+width	尺寸
+*/
+export const getCodeUnlimited = (parameter) => post('/ma/wx/getCodeUnlimited', parameter)

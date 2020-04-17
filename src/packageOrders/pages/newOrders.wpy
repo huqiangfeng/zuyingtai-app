@@ -140,12 +140,12 @@
       <div class="commodity">
         <commodity-item isFaHuo="{{ true }}" item="{{ goods }}"></commodity-item>
       </div>
-      <!-- row -->
+      <!-- 租用天数 -->
       <div class="com-row">
         <div class="left">租用天数</div>
         <div class="right">{{ tenancyDays }}天</div>
       </div>
-      <!-- row -->
+      <!-- 会员租金 -->
       <div class="com-row row-ext" v-if="account.memberLevel > 0">
         <div class="left">
           <div>会员租金</div>
@@ -163,7 +163,7 @@
         </div>
         <div class="right jia-ge">¥{{ rent }}</div>
       </div>
-      <!-- row -->
+      <!-- 商品押金 -->
       <div class="com-row row-ext">
         <div class="left">
           <div>商品押金</div>
@@ -180,7 +180,7 @@
         <div class="left">加件费</div>
         <div class="right">¥{{ goods.moreGoodsFee }}</div>
       </div>
-      <!-- row -->
+      <!-- 免赔服务 -->
       <div @tap="isInsurance = !isInsurance" class="com-row row-ext">
         <div class="left left-flex">
           <div class="underline" @tap.stop="on_toExplain('mian-pei')">免赔服务</div>
@@ -190,7 +190,7 @@
         </div>
         <div class="right" :class="{'discardFee':dirtyInsureFree }">¥{{ goods.dirtyInsureFee }}</div>
       </div>
-      <!-- row -->
+      <!-- 奢护服务 -->
       <div @tap="isluxuryNurseFee = !isluxuryNurseFee" class="com-row row-ext">
         <div class="left left-flex">
           <div class="underline" @tap.stop="on_toExplain('se-hu')">奢护服务</div>
@@ -199,7 +199,7 @@
         </div>
         <div class="right" :class="{'discardFee':luxuryNurseFree }">¥{{goods.luxuryNurseFee }}</div>
       </div>
-      <!-- row -->
+      <!-- 顺丰快递 -->
       <div class="com-row">
         <div class="left">顺丰快递</div>
         <div class="right" :class="{'discardFee':isBaoYou }">¥{{ goods.expressFee }}</div>
@@ -305,7 +305,7 @@ wepy.page({
     }
   },
   methods: {
-       // 跳去vip页
+    // 跳去vip页
     on_toVip () {
       wx.navigateTo({ url: '/packageMyInfo/pages/vipMember' })
     },

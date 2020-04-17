@@ -47,7 +47,8 @@
       <div class="tel">{{ tel }}</div>
     </div>
   </div>
-  <tel-login show="{{ show }}" @onClickHide="onClickHide" />
+  <!-- 绑定手机号 -->
+  <!-- <tel-login /> -->
 </template>
 <script>
 import wepy from '@wepy/core'
@@ -56,7 +57,7 @@ import { mapState } from '@wepy/x'
 wepy.component({
   store,
   computed: {
-    ...mapState(['userInfo', 'bindTel']),
+    ...mapState(['userInfo']),
     name () {
       return this.userInfo.userNickname ? this.userInfo.userNickname : '登录/注册'
     },
@@ -71,21 +72,16 @@ wepy.component({
     }
   },
   data: {
-    show: false
   },
   props: {},
   methods: {
-    // 弹框
-    onClickHide () {
-      this.show = false
-    },
     on_setOrLogin () {
       if (this.userInfo.userPhone) {
         wx.navigateTo({
           url: '/packageMyInfo/pages/setMyInfo'
         })
       } else {
-        this.show = true
+
       }
     }
   }
@@ -94,7 +90,7 @@ wepy.component({
 <config>
 {
     usingComponents: {
-      "tel-login": "~@components/telLogin"
+      // "tel-login": "~@components/telLogin"
     }
 }
 </config>

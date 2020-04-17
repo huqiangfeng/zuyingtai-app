@@ -46,7 +46,7 @@
 </style>
 
 <template>
-  <van-overlay show="{{ show }}">
+  <van-overlay show="{{ isShowBindTel }}">
     <div class="wrapper">
       <div class="block">
         <image class="img logo" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/logo3.png" mode="widthFix"></image>
@@ -59,7 +59,7 @@
           class="btn"
           @tap="to_newTelLogin"
         >手机验证码登录</div> -->
-        <div class="btn" @tap="onClickHide">取 消</div>
+        <!-- <div class="btn" @tap="onClickHide">取 消</div> -->
       </div>
 
     </div>
@@ -69,24 +69,21 @@
 <script>
 import wepy from '@wepy/core'
 import store from '../store'
-import { mapState } from '@wepy/x'
+import { mapState, mapActions } from '@wepy/x'
 import { savePhone, getUserInfo } from './../http/api.js'
 wepy.component({
   store,
   computed: {
-    ...mapState(['userInfo'])
+    ...mapState(['isShowBindTel'])
   },
   data: {
     flag: true,
     code: ''
   },
   props: {
-    show: {
-      type: [Boolean],
-      default: false
-    }
   },
   methods: {
+    ...mapActions(['setShowBindTel']),
     // 获取手机号
     getUserPhoneNumber (e) {
       let _this = this
@@ -96,7 +93,9 @@ wepy.component({
         savePhone(data).then(res => {
           if (res.code === 0) {
             getUserInfo()
-            _this.$emit('onClickHide')
+            _this.setShowBindTel({
+              isShowBindTel: false
+            })
             _this.flag = true
           }
         }).catch(_ => {
@@ -112,14 +111,18 @@ wepy.component({
         url: '/packageLogin/pages/newTelLogin',
         events: {
           loginSucceed: function (data) {
-            _this.$emit('onClickHide')
+            _this.setShowBindTel({
+              isShowBindTel: false
+            })
           }
         }
       })
     },
     // 隐藏弹框
     onClickHide () {
-      this.$emit('onClickHide')
+      this.setShowBindTel({
+        isShowBindTel: false
+      })
     }
   },
   // 在组件实例进入页面节点树时执行

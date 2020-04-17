@@ -49,6 +49,8 @@
   </div>
   <!--  登录弹框  -->
   <info-login />
+  <!-- 绑定手机号 -->
+  <tel-login />
 </template>
 
 <script>
@@ -124,7 +126,8 @@ wepy.page({
       "leave-unused":"~@/homeComponents/leaveUnused",
       "my-index":"~@/homeComponents/myIndex",
       'mp-navigation-bar': '~@weui/navigation-bar/navigation-bar',
-      "info-login": "~@components/infoLogin"
+      "info-login": "~@components/infoLogin",
+      "tel-login": "~@components/telLogin"
     },
     // "enablePullDownRefresh": true, // 开启页面下拉刷新
     "navigationStyle": "custom",

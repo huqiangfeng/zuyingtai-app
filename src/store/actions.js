@@ -11,6 +11,12 @@ export default {
   }, payload) {
     commit('setShowLogin', payload)
   },
+  //   // 显示绑定手机号
+  setShowBindTel({
+    commit
+  }, payload) {
+    commit('setShowBindTel', payload)
+  },
   // 登录
   setLogin({
     commit
