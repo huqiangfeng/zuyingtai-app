@@ -113,7 +113,7 @@ wepy.page({
   },
   mixins: [uploadImage],
   data: {
-    index: undefined, // 选中的品牌下标
+    index: 0, // 选中的品牌下标
     brands: [], // 品牌
     brand: '', // 品牌
     authenticateIndex: 0, // 鉴定服务
@@ -207,12 +207,13 @@ wepy.page({
         parameter.images = imgStr
 
         for (const key in parameter) {
-          if (!parameter[key] && key !== 'remark') {
+          if (!parameter[key] && key !== 'remark' && key !== 'userItemId') {
             wx.showToast({
               title: '请完善信息之后在提交哦',
               icon: 'none',
               duration: 2000
             })
+            return
           }
         }
         if (!vailPhone(parameter.phone)) {

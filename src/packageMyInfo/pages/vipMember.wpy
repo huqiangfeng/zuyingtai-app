@@ -4,15 +4,15 @@
 <template>
   <!-- 头 -->
   <mp-navigation-bar back="{{ true }}" title="开通会员" ext-class="navigation" color="{{navBackground?'#fff': '' }}" background="{{ navBackground }}" />
-  <page-no-vip v-if="!userInfo.memberLevel" id="noVip" @refresh="on_refresh"></page-no-vip>
-  <page-yes-vip v-else id="yesVip"></page-yes-vip>
+  <page-yes-vip v-if="userInfo.memberLevel"  id="yesVip"></page-yes-vip>
+  <page-no-vip v-else  id="noVip" @refresh="on_refresh"></page-no-vip>
 </template>
 
 <script>
 import wepy from '@wepy/core'
 import store from './../../store'
 import { mapState } from '@wepy/x'
-import { } from './../../http/api.js'
+import { getUserInfo } from './../../http/api.js'
 wepy.page({
   store,
   computed: {
@@ -31,10 +31,10 @@ wepy.page({
   methods: {
     // 刷新页面数据
     on_refresh () {
-      // this.getDataInfo()
     }
   },
   created () {
+    getUserInfo()
   },
   // 监听页面加载
   onLoad () {

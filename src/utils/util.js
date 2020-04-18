@@ -141,3 +141,22 @@ export const pageStrAnalysis = (str) => {
   }
   return params
 }
+// 处理url参数
+export const disposeUrlParameter = (str) => {
+  let params = {}
+  let hash = unescape(str).split('&')
+  for (let i = 0; i < hash.length; i++) {
+    let h = hash[i].split('=') //
+    params[h[0]] = h[1]
+  }
+  return params
+}
+
+// Toast 轻提示
+export const Toast = (str, icon) => {
+  wx.showToast({
+    title: str,
+    icon: icon || 'none',
+    duration: 2000
+  })
+}

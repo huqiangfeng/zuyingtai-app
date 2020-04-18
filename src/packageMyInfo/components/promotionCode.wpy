@@ -54,11 +54,11 @@
     <!--  -->
     <div class="data-valbox">
       <div class="item">
-        <div class="val">{{ invited }}</div>
+        <div class="val">{{ pushinginfo.invited }}</div>
         <div class="key">邀请人数</div>
       </div>
       <div class="item">
-        <div class="val">{{ totalIncome }}</div>
+        <div class="val">{{ pushinginfo.totalIncome }}</div>
         <div class="key">奖励金（元）</div>
       </div>
     </div>
@@ -69,24 +69,14 @@
 
 <script>
 import wepy from '@wepy/core'
-import store from '../../store'
-import { mapState } from '@wepy/x'
-import { spreaderInfo, getQrCode } from './../../http/api.js'
 wepy.component({
-  store,
-  computed: {
-    ...mapState(['userInfo'])
-  },
   data: {
-    invited: 0, // 邀请(
-    lastWeekIncome: 0, // 周收益
-    totalIncome: 0,  // 总收益
-    spreaderCode: '',  // 推荐码
-    userNickname: '', // 推荐人名字
-    userPhone: '' // 推荐手机
   },
   props: {
-
+    pushinginfo: {
+      type: [Object],
+      default: {}
+    }
   },
   methods: {
     // 推广记录
@@ -96,75 +86,6 @@ wepy.component({
     // 保存图片
     on_save () {
       this.$emit('save')
-    },
-    getDataInfo () {
-      let _this = this
-      let imgPromise = new Promise((resolve, reject) => {
-        wx.getImageInfo({
-          src: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zuyingtai.png',
-          timeout: 30000,
-          success (res) {
-            wx.setStorageSync('imgPash', res)
-            resolve(res)
-            console.log(11)
-          },
-          fail (err) {
-            console.log(1144, err)
-            reject(err)
-          }
-        })
-      })
-      let avatarPromise = new Promise((resolve, reject) => {
-        wx.getImageInfo({
-          src: _this.userInfo.userAvatar,
-          success (res) {
-            console.log(22)
-            resolve(res)
-          },
-          fail (err) {
-            console.log(2244, err)
-            reject(err)
-          }
-        })
-      })
-      let qrCode = getQrCode({
-        page: 'packageCommodity/pages/details',
-        scene: 'goodsId=' + this.goodsId
-      })
-      // imgPromise
-      Promise.all([spreaderInfo(), avatarPromise, imgPromise, qrCode]).then(res => {
-        let imgSrc = res[3].data.maQrCode// base64编码
-        imgSrc = imgSrc.replace('data:image/jpeg;base64,', '')
-        let save = wx.getFileSystemManager()
-        // 获取随机数
-        // 保存本地图片文件路径，也是绘图路径
-        let filePath = `${wx.env.USER_DATA_PATH}/qrcode.png`
-        save.writeFile({
-          filePath: filePath,
-          data: imgSrc,
-          encoding: 'base64',
-          success: res2 => {
-            wx.saveImageToPhotosAlbum({
-              filePath: filePath,
-              success: function (res3) {
-                let data = res[0].data
-                data.avatarPash = res[1].path
-                data.imgPash = res[2].path
-                data.qrCode = filePath
-                _this.invited = data.invited
-                _this.lastWeekIncome = data.lastWeekIncome
-                _this.totalIncome = data.totalIncome
-                _this.spreaderCode = data.spreaderCode
-                _this.userNickname = data.userNickname
-                _this.userPhone = data.userPhone
-                _this.$emit('initimageg', data)
-              }
-            })
-          }
-        })
-      }).catch(err => {
-        console.log(err)
-      })
     }
   },
   // 在组件实例刚刚被创建时执行
@@ -172,8 +93,6 @@ wepy.component({
   },
   // 在组件实例进入页面节点树时执行
   attached () {
-    this.getDataInfo()
-    // this.qrCode()
   },
   // 组件生命周期函数-在组件布局完成后执行
   ready () {

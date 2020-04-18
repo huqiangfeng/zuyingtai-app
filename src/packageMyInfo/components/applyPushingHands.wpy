@@ -127,7 +127,7 @@
         </div>
         <div class="wx-te input-group">
           <div class="key">电话/微信</div>
-          <input class="input" v-model="tel" placeholder="请输入电话/微信" />
+          <input class="input" type="number" v-model="tel" placeholder="请输入电话/微信" />
         </div>
       </div>
       <!-- 协议 -->
@@ -170,7 +170,7 @@ wepy.component({
     onChange () {
       this.checkedProtocol = !this.checkedProtocol
     },
-    // 开通会员
+    // 推手
     on_submit () {
       if (!this.throttle) {
         return
@@ -190,8 +190,6 @@ wepy.component({
           }
         })
       } else {
-        _this.throttle = false
-        _this.showDialog = true
         if (!_this.name) {
           wx.showModal({
             title: '请填写姓名',
@@ -199,6 +197,7 @@ wepy.component({
             success (res) {
             }
           })
+          return
         }
         if (!vailPhone(_this.tel)) {
           wx.showModal({
@@ -207,10 +206,13 @@ wepy.component({
             success (res) {
             }
           })
+          return
         }
+        _this.throttle = false
+        _this.showDialog = true
         applySpreader({
-          formMobile: _this.tel,
-          formName: _this.name
+          phone: _this.tel,
+          name: _this.name
         }).then(res => {
           _this.throttle = true
           wx.showModal({

@@ -11,7 +11,7 @@ export default {
   // 登录的ocde
   code: '',
   // 版本
-  versions: 'V1.0.0',
+  versions: 'V1.0.1',
   // 用户信息
   userInfo: {
     createTime: '', // 创建时间

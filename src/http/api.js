@@ -347,3 +347,21 @@ scene	参数
 width	尺寸
 */
 export const getQrCode = (parameter) => post('/ma/wx/getQrCode', parameter)
+/*
+养护表单
+brand	品牌
+images	图片
+name	姓名
+phone	手机/微信
+remark	备注
+*/
+export const formNurse = (parameter) => post('/ma/form/nurse', parameter)
+/*
+发布闲置表单
+brand	品牌
+images	图片
+phone	手机/微信
+price	价格
+remark	备注
+*/
+export const formIdle = (parameter) => post('/ma/form/idle', parameter)

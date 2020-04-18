@@ -2,7 +2,6 @@
 .my-canvas {
   width: 670px;
   height: 894px;
-  opacity: 0;
   position: absolute;
   left: -670px;
   top: -894px;
@@ -30,14 +29,17 @@
   <!-- 审核中 -->
   <audit-pushing-hands v-if="showType==='audit'"></audit-pushing-hands>
   <!-- 推广码 -->
-  <canvas v-if="showType==='promotion-code'" class="my-canvas" canvas-id="myCanvas" id="myCanvas"></canvas>
-  <image v-if="showType==='promotion-code'" class="img-main" src="{{ imgSrc }}" mode="widthFix"></image>
-  <promotion-code @save="on_save" @initimageg="on_initImg" v-if="showType==='promotion-code'"></promotion-code>
+  <block  v-if="showType==='promotion-code'">
+    <canvas class="my-canvas" canvas-id="myCanvas" id="myCanvas"></canvas>
+    <image class="img-main" src="{{ imgSrc }}" mode="widthFix"></image>
+    <promotion-code @save="on_save"  :pushinginfo="pushinginfo"></promotion-code>
+  </block>
 </template>
 <script>
 import wepy from '@wepy/core'
 import store from '../../store'
 import { mapState } from '@wepy/x'
+import { spreaderInfo, getQrCode } from './../../http/api.js'
 import drawQrcode from '../../utils/weapp.qrcode.esm.js'
 wepy.page({
   store,
@@ -54,12 +56,23 @@ wepy.page({
       let str = 'apply'
       if (this.userInfo.spreaderRole > 0) {
         str = 'promotion-code'
+        setTimeout(() => {
+          this.getDataInfo()
+        }, 0)
       }
       return str
     }
   },
   data: {
-    imgSrc: ''
+    imgSrc: '',
+    pushinginfo: { // 推手信息
+      invited: 0, // 邀请(
+      lastWeekIncome: 0, // 周收益
+      totalIncome: 0,  // 总收益
+      spreaderCode: '',  // 推荐码
+      userNickname: '', // 推荐人名字
+      userPhone: '' // 推荐手机
+    }
   },
   methods: {
     // 刷新页面数据
@@ -73,36 +86,85 @@ wepy.page({
         success (res) { }
       })
     },
+    // 获取手信息
+    getDataInfo () {
+      let _this = this
+      let avatarPromise = new Promise((resolve, reject) => {
+        wx.getImageInfo({
+          src: _this.userInfo.userAvatar,
+          success (res) {
+            console.log(22)
+            resolve(res)
+          },
+          fail (err) {
+            console.log(2244, err)
+            reject(err)
+          }
+        })
+      })
+      let qrCode = getQrCode({
+        page: 'pages/index',
+        scene: 'id=1213'
+      })
+      Promise.all([ spreaderInfo(), avatarPromise, qrCode ]).then(res => {
+        let imgSrc = res[2].data.maQrCode// base64编码
+        let save = wx.getFileSystemManager()
+        // 获取随机数
+        // 保存本地图片文件路径，也是绘图路径
+        let filePath = `${wx.env.USER_DATA_PATH}/qrcode.png`
+        save.writeFile({
+          filePath: filePath,
+          data: imgSrc,
+          encoding: 'base64',
+          success: res2 => {
+            wx.saveImageToPhotosAlbum({
+              filePath: filePath,
+              success: function (res3) {
+                let data = res[0].data
+                _this.pushinginfo = data
+                data.avatarPash = res[1].path
+                data.qrCode = filePath
+                _this.on_initImg(data)
+              }
+            })
+          }
+        })
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     // 推荐图片
     on_initImg (data) {
       let _this = this
-      console.log('---都有了---', data)
+      console.log('都有了', data)
       let ctx = wx.createCanvasContext('myCanvas')
-      ctx.drawImage(data.imgPash, 0, 0, 670, 894)
-      // ctx.drawImage('./../../static/image/zuyingtai.png', 0, 0, 670, 894)
+      ctx.drawImage('./../../static/image/zuyingtai.png', 0, 0, 670, 894)
       // 图片
       ctx.drawImage(data.avatarPash, 30, 738, 126, 126)
       ctx.drawImage(data.qrCode, 495, 719, 140, 140)
       ctx.setFillStyle('#fff')
-      ctx.fillRect(490, 714, 150, 150)
-
+      // ctx.fillRect(490, 714, 150, 150)
       ctx.setFontSize(36)
       ctx.fillText(data.userNickname, 180, 783)
       ctx.setFontSize(24)
-      ctx.fillText('推广码： ' + data.spreaderCode, 180, 840)
+      // ctx.fillText('推广码： ' + data.spreaderCode, 180, 840)
+      ctx.fillText('推广码： ' + data.userPhone, 180, 840)
       ctx.draw(true)
-      wx.canvasToTempFilePath({
-        destWidth: 670,
-        destHeight: 894,
-        canvasId: 'myCanvas',
-        fail (err) {
-          console.log(err)
-        },
-        success (res) {
-          console.log(res.tempFilePath)
-          _this.imgSrc = res.tempFilePath
-        }
-      })
+      setTimeout(() => {
+        wx.canvasToTempFilePath({
+          destWidth: 670,
+          destHeight: 894,
+          canvasId: 'myCanvas',
+          fail (err) {
+            console.log(err)
+          },
+          success (res) {
+            console.log(res.tempFilePath)
+            _this.imgSrc = res.tempFilePath
+          }
+        })
+      }, 100)
+
       // drawQrcode({
       //   ctx: ctx,
       //   text: '21311231',

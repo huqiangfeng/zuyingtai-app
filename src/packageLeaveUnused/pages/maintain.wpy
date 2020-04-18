@@ -82,7 +82,7 @@
 import wepy from '@wepy/core'
 import uploadImage from './../../mixins/uploadImage.js'
 import { vailPhone } from './../../utils/util.js'
-import { listBrand } from './../../http/api.js'
+import { listBrand, formNurse } from './../../http/api.js'
 wepy.page({
   config: {
     navigationBarTitleText: '闲置'
@@ -157,7 +157,7 @@ wepy.page({
         })
       } else {
         let parameter = {
-          brandName: _this.brands[_this.index].brandChineseName,
+          brand: _this.brands[_this.index].brandChineseName,
           name: _this.userName,
           phone: _this.contact,
           remark: _this.remark
@@ -190,8 +190,12 @@ wepy.page({
           })
           return
         }
-        // 显示弹框
-        _this.tooltipShow = true
+        formNurse(parameter).then((res) => {
+          if (res.code === 0) {
+            // 显示弹框
+            _this.tooltipShow = true
+          }
+        })
       }
     },
     on_affirm () {

@@ -43,7 +43,7 @@
       <div class="contact">
         <view class="input-group ">
           <div class="title">联系方式</div>
-          <input class="input" v-model="contact" placeholder="请输入微信号/手机号" />
+          <input class="input" type="number"  v-model="contact" placeholder="请输入微信号/手机号" />
         </view>
       </div>
     </div>
@@ -68,15 +68,17 @@
 </template>
 <script>
 import wepy from '@wepy/core'
-import { listBrand } from './../../http/api.js'
+import uploadImage from './../../mixins/uploadImage.js'
+import { vailPhone } from './../../utils/util.js'
+import { listBrand, formIdle } from './../../http/api.js'
 wepy.page({
   config: {
     navigationBarTitleText: '闲置'
   },
+  mixins: [uploadImage],
   data: {
-    index: undefined, // 选中的品牌下标
+    index: 0, // 选中的品牌下标
     brands: [], // 品牌
-    images: [], // 图片
     price: '', // 价格
     contact: '', // 联系方式
     describe: '', // 描述
@@ -100,15 +102,6 @@ wepy.page({
         }
       })
     },
-    // 图片
-    imgRead (event) {
-      const { file } = event.$wx.detail
-      this.images = [...this.images, ...file]
-    },
-    imgDelete (event) {
-      let index = event.$wx.detail.index
-      this.images.splice(index, 1)
-    },
     submit () {
       let _this = this
       if (!_this.checkedProtocol) {
@@ -124,20 +117,46 @@ wepy.page({
           }
         })
       } else {
-        // 显示弹框
-        _this.tooltipShow = true
-        // wx.uploadFile({
-        //   url: '', // 仅为示例，非真实的接口地址
-        //   filePath: file.path,
-        //   name: 'file',
-        //   formData: { user: 'test' },
-        //   success (res) {
-        //     // 上传完成需要更新 fileList
-        //     const { fileList = [] } = this.data
-        //     fileList.push({ ...file, url: res.data })
-        //     this.setData({ fileList })
-        //   }
-        // })
+        let parameter = {
+          brand: _this.brands[_this.index].brandChineseName,
+          price: _this.price,
+          phone: _this.contact,
+          remark: _this.remark
+          // userItemId: _this.userItemId
+        }
+        let imgStr = ''
+        _this.images.forEach((item, index) => {
+          if (index > 0) {
+            imgStr += ','
+          }
+          imgStr += item.path
+        })
+        parameter.images = imgStr
+
+        for (const key in parameter) {
+          if (!parameter[key] && key !== 'remark') {
+            wx.showToast({
+              title: '请完善信息之后在提交哦',
+              icon: 'none',
+              duration: 2000
+            })
+            return
+          }
+        }
+        if (!vailPhone(parameter.phone)) {
+          wx.showToast({
+            title: '请输入正确的手机号',
+            icon: 'none',
+            duration: 2000
+          })
+          return
+        }
+        formIdle(parameter).then((res) => {
+          if (res.code === 0) {
+              // 显示弹框
+            _this.tooltipShow = true
+          }
+        })
       }
     },
     on_affirm () {
@@ -148,11 +167,6 @@ wepy.page({
   },
   created () {
     this.getBrandData()
-    wx.getUserInfo({
-      success (res) {
-        console.log(res)
-      }
-    })
   },
   // 监听页面加载
   onLoad () { },

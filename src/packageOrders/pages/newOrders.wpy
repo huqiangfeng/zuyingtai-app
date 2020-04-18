@@ -256,6 +256,7 @@
 </template>
 <script>
 import wepy from '@wepy/core'
+import {Toast} from './../../utils/util.js'
 import { createOrder, goodsPrepayInfo, getDefaultAddr } from './../../http/api.js'
 wepy.page({
   computed: {
@@ -312,7 +313,7 @@ wepy.page({
     luxuryNurseFree: false, //  免奢护服务费
     isBaoYou: false, // 是否包邮
     isShowZifu: false, // 确认支付
-    paymentMethod: 'ZYT',  // ZYT / WX
+    paymentMethod: 'WX',  // ZYT / WX
     account: {
       memberLevel: 0, // 会员等级
       userPoints: 0, // 账户积分
@@ -375,6 +376,10 @@ wepy.page({
     },
     // 显示支付框
     on_showZifu () {
+      if (!this.checkedAddr.addrId) {
+        Toast('请选择收获地址')
+        return
+      }
       this.isShowZifu = !this.isShowZifu
     },
     // 获取页面传入数据
