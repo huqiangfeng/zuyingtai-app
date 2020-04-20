@@ -1,3 +1,4 @@
+/* eslint-disable  */
 /*
   将 html 解析为适用于小程序 rich-text 的 DOM 结构
   github：https://github.com/jin-yufeng/Parser

@@ -86,6 +86,9 @@
       .right-c {
         color: #a1a1a1;
       }
+      image {
+        width: 100% !important;
+      }
     }
   }
   // 品牌
@@ -301,9 +304,10 @@
       <div class="x-q">
         <div class="left">详 情</div>
         <div class="right right-c">
-          当天16:00前完成支付的当天发货，周日及部分节
+          <parser html="{{details.goodsContent}}"></parser>
+          <!-- 当天16:00前完成支付的当天发货，周日及部分节
           假日发货时间顺延，具体以物流信息为准；100%
-          正品；全程顺丰；医用除菌；押金速退
+          正品；全程顺丰；医用除菌；押金速退 -->
         </div>
       </div>
     </div>
@@ -396,6 +400,7 @@ import { detailGoods, likeGoods, unlike, GoodsSuggest, getQrCode } from './../..
 wepy.page({
   store,
   data: {
+    html: '<div>Hello World!</div>',
     imgSrc: '', // 海报图片
     goodsId: '',
     details: {
@@ -728,7 +733,8 @@ wepy.page({
       "switch": "~@vant/switch",
       "half-screen-dialog": "~@weui/half-screen-dialog/half-screen-dialog",
       "info-login": "~@components/infoLogin",
-      "van-overlay": "~@vant/overlay/index"
+      "van-overlay": "~@vant/overlay/index",
+      'parser': '~@components/parser/parser'
     }
 }
 </config>
