@@ -116,15 +116,14 @@
 
 <script>
 import wepy from '@wepy/core'
-import store from '../store'
-import { mapState } from '@wepy/x'
+import pageTurning from './../mixins/pageTurning.js'
 import { listGoods } from './../http/api.js'
 wepy.component({
-  store,
   config: {
     navigationBarTitleText: '选款',
     usingComponents: {}
   },
+  mixins: [pageTurning],
   computed: {
     isShowlist () {
       // return this.list.length > 0 && (this.navActive === 0 )
@@ -148,17 +147,19 @@ wepy.component({
     // 更新
     on_refresh () {
       // this.on_collect()
-      this.getData()
+      this.getPageListData()
     },
     // 搜索
     on_search (e) {
       this.goodsName = e.$wx.detail
-      this.getData()
+      this.initPageNum()
+      this.getPageListData()
     },
     // 全部/0元
     onChangeNavActive (e) {
       this.navActive = e
-      this.getData()
+      this.initPageNum()
+      this.getPageListData()
     },
     // 筛选
     to_filtrate () {
@@ -168,30 +169,46 @@ wepy.component({
           filtrate: data => {
             // 得到筛选条件
             this.filtrate = data
-            this.getData()
+            this.initPageNum()
+            this.getPageListData()
             console.log(this.filtrate)
           }
         }
       })
     },
-    getData () {
+    getPageListData () {
       let _this = this
       let data = {
-        brandId: this.filtrate.brandId, // 品牌标识
-        goodsName: this.goodsName, //  商品名称
-        goodsSort: this.filtrate.goodsSort, // 排序
-        category: this.navActive  // 1会员专享
+        pageNum: _this.pageNum,
+        pageSize: _this.pageSize,
+        brandId: _this.filtrate.brandId, // 品牌标识
+        goodsName: _this.goodsName, //  商品名称
+        goodsSort: _this.filtrate.goodsSort, // 排序
+        category: _this.navActive  // 1会员专享
       }
       listGoods(data).then(res => {
         if (res.code === 0) {
-          _this.list = res.data.pageRows
+          // 设置信息数组
+          if (this.pageNum > 1) {
+            _this.list = [..._this.list, ...res.data.pageRows]
+          } else {
+            _this.list = res.data.pageRows
+          }
+          this.pageSize = res.data.pageRows.length
         }
       })
+    },
+    // 上拉加载
+    onReachBottom () {
+      if (this.$wepy.pageSize === 10) {
+        this.$wepy.pageNum = ++this.$wepy.pageNum
+        this.$wepy.getPageListData()
+      }
     }
   },
   // 在组件实例刚刚被创建时执行
   created () {
-    this.getData()
+    this.getPageListData()
   }
 })
 </script>

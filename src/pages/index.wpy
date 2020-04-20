@@ -38,9 +38,9 @@
     </mp-navigation-bar>
     <div class="container" :class="{'iphone-X':iPhoneX}">
       <home v-if="footer===0"></home>
-      <choose v-if="footer===1"></choose>
+      <choose v-if="footer===1" id="choose"></choose>
       <leave-unused v-if="footer===2"></leave-unused>
-      <collect v-if="footer===3"></collect>
+      <collect v-if="footer===3" id="collect"></collect>
       <my-index v-if="footer===4"></my-index>
     </div>
   </div>
@@ -95,7 +95,9 @@ wepy.page({
   // 生命周期回调—监听页面显示
   onShow () { },
   // 生命周期回调—监听页面初次渲染完成
-  onReady () { },
+  onReady () {
+
+  },
   // 生命周期回调—监听页面隐藏
   onHide () { },
   // 生命周期回调—监听页面卸载
@@ -104,7 +106,11 @@ wepy.page({
   onPullDownRefresh () { },
   // 页面上拉触底事件的处理函数
   onReachBottom () {
-    console.log(2134)
+    if (this.footer === 1) {
+      this.$wx.selectComponent('#choose').onReachBottom()
+    } else if (this.footer === 3) {
+      this.$wx.selectComponent('#collect').onReachBottom()
+    }
   },
   // 用户点击右上角转发
   onShareAppMessage () { },

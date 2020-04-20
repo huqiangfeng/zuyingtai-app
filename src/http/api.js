@@ -365,3 +365,8 @@ price	价格
 remark	备注
 */
 export const formIdle = (parameter) => post('/ma/form/idle', parameter)
+/*
+获取文档页面
+pageCode	页面code
+*/
+export const getDocPage = (parameter) => post('/ma/doc/getDocPage', parameter)

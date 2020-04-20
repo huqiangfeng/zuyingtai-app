@@ -33,7 +33,7 @@
       line-height: 1;
       .img {
         width: 60rpx;
-        height:60rpx;
+        height: 60rpx;
         display: block;
       }
       .title {
@@ -119,7 +119,7 @@
     <!-- 会员权益 -->
     <div class="rights">
       <div class="rights-item" v-for="(item,index) in listRows[vipIndex].itemList" :key="index">
-        <image class="img" src="{{ item.itemGiftIcon }}" ></image>
+        <image class="img" src="{{ item.itemGiftIcon }}"></image>
         <div class="title">{{ item.itemGiftTitle }}</div>
         <div class="explain-text">{{ item.itemGiftDesc }}</div>
       </div>
@@ -131,7 +131,7 @@
       <van-checkbox icon-size="30rpx" checked-color="#C9AB79" value="{{ checkedProtocol }}"></van-checkbox>
       <div class="t1">我已阅读并同意</div>
       <div class="t2">《会员卡购买协议》</div>
-      <div class="t2">《用户指南》</div>
+      <!-- <div class="t2">《用户指南》</div> -->
     </div>
     <!-- 购/卡/说明 -->
     <div class="explain-box">

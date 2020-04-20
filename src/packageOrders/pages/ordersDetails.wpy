@@ -404,7 +404,6 @@ wepy.page({
       let _this = this
       detailOrder({ orderId: _this.orderId }).then(res => {
         if (res.code === 0) {
-          console.log(res)
           _this.orderData = res.data
           _this.checkedAddr = {
             addrContact: res.data.sendAddrContact,
@@ -412,6 +411,7 @@ wepy.page({
             addrArea: res.data.sendAddrArea,
             addrAddress: res.data.sendAddrAddress
           }
+          wx.setNavigationBarTitle({title: _this.orderData.orderStatusDisplay})
         }
       })
     },
@@ -441,7 +441,7 @@ wepy.page({
 </script>
 <config>
 {
-    navigationBarTitleText: '确认下单',
+    navigationBarTitleText: '',
     usingComponents: {
         "addr-icon-box": "./../components/addrIconBox",
         "btns": "./../components/btns",

@@ -4,15 +4,6 @@ export default {
     pageSize: 10
   },
   methods: {
-    setPageListData(arr, resArr) {
-      // 设置信息数组
-      if (this.pageNum > 1) {
-        arr = [...arr, ...resArr]
-      } else {
-        arr = resArr
-      }
-      this.pageSize = resArr.length
-    },
     initPageNum() {
       this.pageNum = 1
       this.pageSize = 10
@@ -28,8 +19,9 @@ export default {
   },
   // 上拉加载
   onReachBottom() {
-    this.pageNum = ++this.pageNum
+    console.log('加载了')
     if (this.pageSize === 10) {
+      this.pageNum = ++this.pageNum
       this.getPageListData()
     }
   }

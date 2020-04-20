@@ -121,7 +121,7 @@ wepy.page({
           brand: _this.brands[_this.index].brandChineseName,
           price: _this.price,
           phone: _this.contact,
-          remark: _this.remark
+          remark: _this.describe
           // userItemId: _this.userItemId
         }
         let imgStr = ''

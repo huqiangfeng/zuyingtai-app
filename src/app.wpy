@@ -3,6 +3,7 @@
 </style>
 <script>
 import wepy from '@wepy/core'
+// import regeneratorRuntime from './utils/runtime.js'
 // import eventHub from './common/eventHub'
 import vuex from '@wepy/x'
 wepy.use(vuex)
@@ -22,6 +23,18 @@ wepy.app({
     // this.testAsync()
   },
   methods: {
+
+    // sleep (s) {
+    //   return new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //       resolve('promise resolved')
+    //     }, s * 1000)
+    //   })
+    // },
+    // async testAsync () {
+    //   let d = await this.sleep(3)
+    //   console.log(d)
+    // }
   }
 })
 </script>

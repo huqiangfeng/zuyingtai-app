@@ -1,6 +1,7 @@
 <style lang="less">
 @import './../../utils/style/base.less';
 .apply {
+  padding-bottom:34px;
   // 背景
   .img-bg {
     position: absolute;
@@ -117,6 +118,8 @@
         <div>拥有至少一个100人以上的种草群</div>
         <div>能将时尚好物分享给身边的时尚小伙伴们</div>
         <div>欢迎您加入租英台</div>
+             <!-- 合作微信 -->
+        <div @tap="on_copy('VIP_BY_VIP')">合作微信：VIP_BY_VIP</div>
       </div>
       <div class="title">-申请表-</div>
       <!-- 输入框 -->
@@ -139,7 +142,7 @@
       <!-- btn -->
       <div class="my-btn" @tap="on_submit">提交</div>
       <!--  -->
-      <div class="footer">客服电话：400-800-8976</div>
+      <div class="footer" @tap="on_copy('400-800-8976')">客服电话：400-800-8976</div>
     </div>
   </div>
 </template>
@@ -162,6 +165,19 @@ wepy.component({
     throttle: true // 节流阀
   },
   methods: {
+    // 复制
+    on_copy (str) {
+      wx.setClipboardData({
+        data: str,
+        success (res) {
+          wx.showToast({
+            title: '已复制',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      })
+    },
     // 刷新
     refresh () {
       this.$emit('refresh')

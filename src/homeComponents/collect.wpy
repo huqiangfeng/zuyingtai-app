@@ -28,11 +28,13 @@
 
 <script>
 import wepy from '@wepy/core'
+import pageTurning from './../mixins/pageTurning.js'
 import { listFavorites } from './../http/api.js'
 wepy.component({
   config: {
     navigationBarTitleText: '收藏'
   },
+  mixins: [pageTurning],
   data: {
     // 商品列表
     list: []
@@ -46,19 +48,36 @@ wepy.component({
     // 更新
     on_refresh () {
       // this.on_collect()
-      this.getData()
+      this.getPageListData()
     },
-    getData () {
+    getPageListData () {
       let _this = this
-      listFavorites().then(res => {
+      let data = {
+        pageNum: _this.pageNum,
+        pageSize: _this.pageSize
+      }
+      listFavorites(data).then(res => {
         if (res.code === 0) {
-          _this.list = res.data.pageRows
+          // 设置信息数组
+          if (this.pageNum > 1) {
+            _this.list = [..._this.list, ...res.data.pageRows]
+          } else {
+            _this.list = res.data.pageRows
+          }
+          this.pageSize = res.data.pageRows.length
         }
       })
+    },
+    // 上拉加载
+    onReachBottom () {
+      if (this.$wepy.pageSize === 10) {
+        this.$wepy.pageNum = ++this.$wepy.pageNum
+        this.$wepy.getPageListData()
+      }
     }
   },
   created () {
-    this.getData()
+    this.getPageListData()
   }
 })
 </script>

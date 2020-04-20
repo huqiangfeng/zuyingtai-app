@@ -40,10 +40,12 @@ page {
 </template>
 <script>
 import wepy from '@wepy/core'
+import pageTurning from './../../mixins/pageTurning.js'
 import { listOrder } from './../../http/api.js'
 wepy.page({
   computed: {
   },
+  mixins: [pageTurning],
   data: {
     tabActive: '全部订单',
     tabList: [
@@ -60,11 +62,12 @@ wepy.page({
     on_changeTab (item) {
       console.log(item)
       this.tabActive = item.text
-      this.prepayInfo()
+      this.initPageNum()
+      this.getPageListData()
     },
     // 刷新数据
     on_refresh () {
-      this.prepayInfo()
+      this.getPageListData()
     },
     // 获取页面传入数据
     getData () {
@@ -72,15 +75,17 @@ wepy.page({
       const eventChannel = this.$wx.getOpenerEventChannel()
       eventChannel.on('getPageData', function (data) {
         _this.tabActive = data
-        _this.prepayInfo()
+        _this.getPageListData()
       })
     },
     // 获取订单列表
-    prepayInfo (orderFilter) {
+    getPageListData () {
       let _this = this
 
       let parameter = {
-        orderFilter: ''
+        orderFilter: '',
+        pageNum: _this.pageNum,
+        pageSize: _this.pageSize
       }
       switch (_this.tabActive) {
         case '待付款':
@@ -98,7 +103,13 @@ wepy.page({
       }
       listOrder(parameter).then(res => {
         if (res.code === 0) {
-          _this.ordersList = res.data.pageRows
+          // 设置信息数组
+          if (this.pageNum > 1) {
+            _this.ordersList = [..._this.ordersList, ...res.data.pageRows]
+          } else {
+            _this.ordersList = res.data.pageRows
+          }
+          this.pageSize = res.data.pageRows.length
         }
       })
     }
@@ -106,7 +117,6 @@ wepy.page({
   // 监听页面加载
   onLoad () {
     this.getData()
-    // this.prepayInfo()
   },
   // 生命周期回调—监听页面显示
   onShow () {

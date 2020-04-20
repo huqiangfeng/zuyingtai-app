@@ -2,8 +2,8 @@
 	"description": "A WePY project",
 	"setting": {
 		"urlCheck": true,
-		"es6": true,
-		"enhance": false,
+		"es6": false,
+		"enhance": true,
 		"postcss": false,
 		"minified": false,
 		"newFeature": true,
@@ -12,6 +12,7 @@
 		"autoAudits": false,
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false,
+		"uglifyFileName": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
