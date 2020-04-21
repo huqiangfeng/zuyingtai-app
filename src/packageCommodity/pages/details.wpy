@@ -287,7 +287,7 @@
     <!-- vip -->
     <div class="vip-tt" @tap="on_toVip">
       <div>
-        成为VIP本次可节约¥{{ details.dayRent - details.memberDayRent }}/天
+        成为vip享受更多折扣本次可节约¥{{ details.dayRent - details.memberDayRent }}/天
       </div>
       <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/bofang.png" mode="widthFix"></image>
     </div>
@@ -693,7 +693,7 @@ wepy.page({
       this.showDialog = !this.showDialog
     },
     // 跳转
-    on_tapItem(item) {
+    on_tapItem (item) {
       let goodsId = item.goodsId
       wx.navigateTo({ url: '/packageCommodity/pages/details?goodsId=' + goodsId })
     }

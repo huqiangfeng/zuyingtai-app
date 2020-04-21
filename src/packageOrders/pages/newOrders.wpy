@@ -256,7 +256,7 @@
 </template>
 <script>
 import wepy from '@wepy/core'
-import {Toast} from './../../utils/util.js'
+import { Toast } from './../../utils/util.js'
 import { createOrder, goodsPrepayInfo, getDefaultAddr } from './../../http/api.js'
 wepy.page({
   computed: {
@@ -451,6 +451,7 @@ wepy.page({
     let checkedAddr = wx.getStorageSync('checkedAddr')
     if (checkedAddr) {
       this.checkedAddr = checkedAddr
+      this.prepayInfo()
       wx.removeStorageSync('checkedAddr')
     }
   },

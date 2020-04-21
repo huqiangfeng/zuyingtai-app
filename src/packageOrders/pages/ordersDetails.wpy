@@ -11,7 +11,7 @@ page {
     .order-status {
       line-height: 1;
       padding-left: 40rpx;
-      padding-bottom:30rpx;
+      padding-bottom: 30rpx;
       font-size: 30rpx;
       font-weight: 500;
       color: #000;
@@ -360,7 +360,7 @@ wepy.page({
     COMPLETE () { // 交易完成
       return this.orderData.orderStatus === 9
     },
-    stepsActive() { // 步骤条
+    stepsActive () { // 步骤条
       if (this.USING) {
         return 0
       } else if (this.RETURNING) {
@@ -411,7 +411,7 @@ wepy.page({
             addrArea: res.data.sendAddrArea,
             addrAddress: res.data.sendAddrAddress
           }
-          wx.setNavigationBarTitle({title: _this.orderData.orderStatusDisplay})
+          // wx.setNavigationBarTitle({ title: _this.orderData.orderStatusDisplay })
         }
       })
     },
@@ -441,7 +441,7 @@ wepy.page({
 </script>
 <config>
 {
-    navigationBarTitleText: '',
+    navigationBarTitleText: '订单详情',
     usingComponents: {
         "addr-icon-box": "./../components/addrIconBox",
         "btns": "./../components/btns",

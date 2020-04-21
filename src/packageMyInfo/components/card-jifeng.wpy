@@ -45,12 +45,12 @@
   <div class="card">
     <div class="row">
       <div class="crrent-jifen">当前积分</div>
-      <div class="guizhe">
+      <div class="guizhe" @tap="on_toProtocol">
         <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wenhao.png" mode="widthFix"></image>
         <div>积分规则</div>
       </div>
     </div>
-    <div class="value-jifen">{{ userInfo.userPoints  }}</div>
+    <div class="value-jifen">{{ userInfo.userPoints }}</div>
     <div class="btn" :class="{'active':active}" @click="on_sign">签 到</div>
   </div>
 </template>
@@ -59,7 +59,7 @@
 import wepy from '@wepy/core'
 import store from './../../store'
 import { mapState } from '@wepy/x'
-import { sign, checkSign } from './../../http/api.js'
+import { sign, checkSign, getUserInfo } from './../../http/api.js'
 wepy.component({
   props: {
   },
@@ -71,13 +71,17 @@ wepy.component({
     active: false
   },
   methods: {
-
+    // 跳转协议
+    on_toProtocol () {
+      wx.navigateTo({ url: '/packageElse/pages/protocolSpecification?pageCode=jifen_guizhe' })
+    },
     // 签到
     on_sign () {
       if (this.active) { return }
       sign().then(res => {
         if (res.code === 0) {
           this.checkSign()
+          getUserInfo()
           this.$emit('refresh')
           wx.showToast({
             title: '签到成功',
@@ -89,7 +93,7 @@ wepy.component({
       // this.$emit('')
     },
     // 检查签到
-    checkSign() {
+    checkSign () {
       let _this = this
       checkSign().then(res => {
         if (res.code === 0) {
@@ -100,7 +104,7 @@ wepy.component({
       })
     }
   },
-    // 在组件实例刚刚被创建时执行
+  // 在组件实例刚刚被创建时执行
   created () {
   },
   // 在组件实例进入页面节点树时执行
