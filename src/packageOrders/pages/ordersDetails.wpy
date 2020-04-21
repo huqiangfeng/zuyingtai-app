@@ -189,7 +189,7 @@ page {
       </div>
 
       <div v-else-if="USING||RETURNING" class="stay-return">
-        <van-steps active-icon="checked" active-color="#C9AB79" inactive-color="#F6F6F6" steps="{{ steps }}" active="{{ stepsActive }}" />
+        <van-steps active-icon="checked" active-color="#C9AB79" inactive-color="#ddd" steps="{{ steps }}" active="{{ stepsActive }}" />
       </div>
 
     </div>

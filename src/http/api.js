@@ -370,3 +370,8 @@ export const formIdle = (parameter) => post('/ma/form/idle', parameter)
 pageCode	页面code
 */
 export const getDocPage = (parameter) => post('/ma/doc/getDocPage', parameter)
+/*
+获取未完成订单数量统计
+pageCode	页面code
+*/
+export const goodsOrderCountUnfinished = (parameter) => post('/ma/goodsOrder/countUnfinished', parameter)

@@ -70,11 +70,13 @@
     <div class="list-box">
       <div @tap="on_item(item)" class="list-item" v-for="(item,index) in list" :key="index">
         <button v-if="item.copy === '客服售后'" open-type="contact">
-          <image class="img" src="{{ item.imageSrc }}" mode="widthFix"></image>
+          <van-icon size="60rpx" info="{{ item.count||''  }}" name="{{ item.imageSrc }}"></van-icon>
+          <!-- <image class="img" src="{{ item.imageSrc }}" mode="widthFix"></image> -->
           <div class="text"> {{item.text }} </div>
         </button>
         <block v-else>
-          <image class="img" src="{{ item.imageSrc }}" mode="widthFix"></image>
+          <van-icon size="60rpx" info="{{ item.count||''  }}" name="{{ item.imageSrc }}"></van-icon>
+          <!-- <image class="img" src="{{ item.imageSrc }}" mode="widthFix"></image> -->
           <div class="text"> {{item.text }} </div>
         </block>
       </div>
@@ -136,7 +138,7 @@ wepy.component({
 <config>
 {
     usingComponents: {
-
+      "van-icon": "~@vant/icon/index"
     }
 }
 </config>

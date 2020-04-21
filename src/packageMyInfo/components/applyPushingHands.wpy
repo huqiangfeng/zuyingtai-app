@@ -75,14 +75,13 @@
       padding-top: 10rpx;
       display: flex;
       align-items: center;
-
       .t1 {
         margin-left: 10rpx;
         font-size: 28rpx;
         color: rgba(48, 49, 59, 1);
       }
-
       .t2 {
+        font-size: 28rpx;
         color: #c9ab79;
       }
     }
@@ -119,7 +118,7 @@
         <div>能将时尚好物分享给身边的时尚小伙伴们</div>
         <div>欢迎您加入租英台</div>
         <!-- 合作微信 -->
-        <div @tap="on_copy('VIP_BY_VIP')">合作微信：VIP_BY_VIP</div>
+        <div style="margin-top:30rpx" @tap="on_copy('VIP_BY_VIP')">合作微信：VIP_BY_VIP</div>
       </div>
       <div class="title">-申请表-</div>
       <!-- 输入框 -->
@@ -137,7 +136,7 @@
       <div class="checkbox-group" @tap="onChange">
         <van-checkbox icon-size="30rpx" checked-color="#C9AB79" value="{{ checkedProtocol }}"></van-checkbox>
         <div class="t1">我已阅读并同意</div>
-        <div class="t2">《推手须知》</div>
+        <div class="t2" @tap.stop="on_toProtocol">《推手须知》</div>
       </div>
       <!-- btn -->
       <div class="my-btn" @tap="on_submit">提交</div>
@@ -165,6 +164,10 @@ wepy.component({
     throttle: true // 节流阀
   },
   methods: {
+    // 跳转协议
+    on_toProtocol () {
+      wx.navigateTo({ url: '/packageElse/pages/protocolSpecification?pageCode=jifen_guizhe' })
+    },
     // 复制
     on_copy (str) {
       wx.setClipboardData({

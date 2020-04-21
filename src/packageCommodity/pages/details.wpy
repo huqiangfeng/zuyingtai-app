@@ -86,9 +86,12 @@
       .right-c {
         color: #a1a1a1;
       }
-      image {
-        width: 100% !important;
-      }
+    }
+    image {
+      width: 100% !important;
+    }
+    .x-q-contemt {
+      padding-bottom: 40rpx;
     }
   }
   // 品牌
@@ -270,7 +273,7 @@
   <div class="page-container">
     <!-- 轮播 -->
     <div class="swiper">
-      <my-swiper setStyle="height: 750rpx;" list="{{ details.goodsImages }}" />
+      <my-swiper @tapitem="on_previewImage" setStyle="height: 750rpx;" list="{{ details.goodsImages }}" />
     </div>
     <!-- 价格 -->
     <div class="container">
@@ -304,11 +307,15 @@
       <div class="x-q">
         <div class="left">详 情</div>
         <div class="right right-c">
-          <!-- <parser html="{{details.goodsContent}}"></parser> -->
+
           <!-- 当天16:00前完成支付的当天发货，周日及部分节
           假日发货时间顺延，具体以物流信息为准；100%
           正品；全程顺丰；医用除菌；押金速退 -->
         </div>
+      </div>
+      <!-- 详情 -->
+      <div class="x-q-contemt">
+        <parser html="{{details.goodsContent}}"></parser>
       </div>
     </div>
     <!-- 品牌 -->
@@ -422,7 +429,7 @@ wepy.page({
       goodsPrice: '', // 价格
       goodsPriority: '',  // 权重
       goodsStatus: '', // 状态  1是可以出售的大于一就已租用
-      expectSaleDate: '', // 预计归还日期  小于二天就等于两天
+      releaseDate: '', // 预计归还日期  小于二天就等于两天
       storageId: '', // 厂库id
       expressFee: '', // 快递费
       dayRent: '', // 租金
@@ -437,6 +444,14 @@ wepy.page({
   },
   methods: {
     ...mapActions(['setShowLogin']),
+    // 预览图片
+    on_previewImage (item) {
+      let urls = this.details.goodsImages.map(item => item.imageSrc)
+      wx.previewImage({
+        current: item.imageSrc, // 当前显示图片的http链接
+        urls: urls // 需要预览的图片http链接列表
+      })
+    },
     // 更新
     on_refresh () {
       // this.on_collect()
@@ -539,10 +554,25 @@ wepy.page({
       })
       let qrCode = getQrCode({
         page: 'packageCommodity/pages/details',
-        scene: 'goodsId=' + this.goodsId
+        scene: 'goodsId=' + this.goodsId,
+        file: 'url'
       })
       // imgPromise
       Promise.all([imgLogoPromise, imgGoodsPromise, qrCode]).then(res => {
+        let imgSrc = res[2].data.url// base64编码
+        wx.getImageInfo({
+          src: imgSrc,
+          success (res2) {
+            let data = {
+              imgLogoPash: res[0].path,
+              imgGoods: res[1].path,
+              qrCode: res2.path
+            }
+            // 初始化海报图
+            _this.on_initPosterImg(data)
+          }
+        })
+        /*
         let imgSrc = res[2].data.maQrCode// base64编码
         let save = wx.getFileSystemManager()
         // 获取随机数
@@ -568,6 +598,7 @@ wepy.page({
             })
           }
         })
+        */
       }).catch(err => {
         console.log(err)
       })
@@ -700,14 +731,17 @@ wepy.page({
   },
   // 监听页面加载
   onLoad (e) {
-    let _this = this
     if (e.goodsId) {
       this.goodsId = e.goodsId
     } else {
       let pageData = disposeUrlParameter(e.scene)
       this.goodsId = pageData.goodsId
     }
-    this.getPageData()
+  },
+  // 生命周期回调—监听页面显示
+  onShow () {
+    let _this = this
+    _this.getPageData()
     wx.getSystemInfo({
       success: function (res) {
         // 根据 model 进行判断
@@ -716,10 +750,7 @@ wepy.page({
         }
       }
     })
-    // this.getData()
   },
-  // 生命周期回调—监听页面显示
-  onShow () { },
   // 生命周期回调—监听页面初次渲染完成
   onReady () { },
   // 生命周期回调—监听页面隐藏
@@ -752,7 +783,7 @@ wepy.page({
       "half-screen-dialog": "~@weui/half-screen-dialog/half-screen-dialog",
       "info-login": "~@components/infoLogin",
       "van-overlay": "~@vant/overlay/index",
-      // 'parser': '~@components/parser/parser'
+      'parser': '~@components/parser/parser'
     }
 }
 </config>

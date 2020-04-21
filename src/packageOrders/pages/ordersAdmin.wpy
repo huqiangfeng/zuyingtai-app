@@ -8,8 +8,8 @@ page {
     background-color: #fff;
     display: flex;
     .tab {
-      flex: 1;
-      padding: 30rpx 10rpx;
+      // flex: 1;
+      padding: 30rpx 16rpx;
       text-align: center;
       font-size: 30rpx;
       color: #a1a1a1;
@@ -29,7 +29,7 @@ page {
 <template>
   <div class="page-container">
     <div class="tabs">
-      <div @tap="on_changeTab(item)" class="tab" :class="{'active': tabActive === item.text}" v-for="(item,index) in tabList" :key="index"> {{ item.text }} </div>
+      <div @tap="on_changeTab(item)" class="tab" :class="{'active': tabActive === item.code}" v-for="(item,index) in tabList" :key="index"> {{ item.text }} </div>
     </div>
     <div class="list">
       <div class="item-box" v-for="(item,index) in ordersList" :key="index">
@@ -47,13 +47,22 @@ wepy.page({
   },
   mixins: [pageTurning],
   data: {
-    tabActive: '全部订单',
+    tabActive: '',
     tabList: [
-      { text: '待付款' },
-      { text: '待收货' },
-      { text: '待归还' },
-      { text: '归还中' },
-      { text: '全部订单' }
+      {
+        text: '待付款',
+        code: 'unpaid'
+      },
+      { text: '待收货',
+        code: 'sending'},
+      { text: '待归还',
+        code: 'using' },
+      { text: '归还中',
+        code: 'returning'},
+      { text: '结单',
+        code: 'checking'},
+      { text: '全部订单',
+        code: '' }
     ],
     ordersList: [] // 订单列表
   },
@@ -61,7 +70,7 @@ wepy.page({
     // tab改变了
     on_changeTab (item) {
       console.log(item)
-      this.tabActive = item.text
+      this.tabActive = item.code
       this.initPageNum()
       this.getPageListData()
     },
@@ -83,23 +92,9 @@ wepy.page({
       let _this = this
 
       let parameter = {
-        orderFilter: '',
+        orderFilter: _this.tabActive,
         pageNum: _this.pageNum,
         pageSize: _this.pageSize
-      }
-      switch (_this.tabActive) {
-        case '待付款':
-          parameter.orderFilter = 'unpaid'
-          break
-        case '待收货':
-          parameter.orderFilter = 'sending'
-          break
-        case '待归还':
-          parameter.orderFilter = 'using'
-          break
-        case '归还中':
-          parameter.orderFilter = 'returning'
-          break
       }
       listOrder(parameter).then(res => {
         if (res.code === 0) {

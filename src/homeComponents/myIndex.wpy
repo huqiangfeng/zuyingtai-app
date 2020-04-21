@@ -54,7 +54,7 @@
   }
   .advertising {
     background-color: #fff;
-    padding: 30rpx 40rpx 40rpx;
+    padding: 30rpx 40rpx 100rpx;
     margin-top: 20rpx;
   }
 }
@@ -105,7 +105,7 @@
 import wepy from '@wepy/core'
 import store from '../store'
 import { mapState, mapActions } from '@wepy/x'
-import { getUserInfo } from './../http/api.js'
+import { getUserInfo, goodsOrderCountUnfinished } from './../http/api.js'
 wepy.component({
   store,
   computed: {
@@ -119,26 +119,32 @@ wepy.component({
         text: '待支付',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zhifu.png',
         pagePath: '/packageOrders/pages/ordersAdmin',
-        data: '待付款'
+        data: 'unpaid',
+        count: 0
       }, {
         text: '待收货',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouhuo.png',
         pagePath: '/packageOrders/pages/ordersAdmin',
-        data: '待收货'
+        data: 'sending',
+        count: 0
       }, {
         text: '待归还',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/daiguihuan.png',
         pagePath: '/packageOrders/pages/ordersAdmin',
-        data: '待归还'
+        data: 'using',
+        count: 0
       }, {
         text: '归还中',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/huihuanzhong.png',
         pagePath: '/packageOrders/pages/ordersAdmin',
-        data: '归还中'
+        data: 'returning',
+        count: 0
       }, {
-        text: '客服售后',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouhouda.png',
-        copy: '客服售后'
+        text: '结单',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zhifu.png',
+        pagePath: '/packageOrders/pages/ordersAdmin',
+        data: 'checking',
+        count: 0
       }],
     // 服务nav
     serve: [
@@ -161,6 +167,10 @@ wepy.component({
         text: '常见问题',
         imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zhifu.png',
         pagePath: '/packageElse/pages/problem'
+      }, {
+        text: '客服售后',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouhouda.png',
+        copy: '客服售后'
       }],
     // 轮播图
     swiper: [
@@ -194,12 +204,40 @@ wepy.component({
       wx.navigateTo({ url: '/packageOrders/pages/addrAdmin' })
     },
     // 获取用户信息
-    getUserInfo () {
+    getPageData () {
+      let _this = this
       getUserInfo()
+      goodsOrderCountUnfinished().then((res) => {
+        if (res.code === 0) {
+          let orders = res.data.listRows
+          orders.forEach(element => {
+            switch (element.goodsOrderStatusCode) {
+              case 'unpaid':
+                _this.orders[0].count = element.count
+                break
+              case 'sending':
+                _this.orders[1].count = element.count
+                break
+              case 'using':
+                _this.orders[2].count = element.count
+                break
+              case 'returning':
+                _this.orders[3].count = element.count
+                break
+              case 'checking':
+                _this.orders[4].count = element.count
+                break
+            }
+          })
+          console.log(res)
+        }
+      }).catch(_ => {
+
+      })
     }
   },
   created () {
-    this.getUserInfo()
+    this.getPageData()
   }
 })
 </script>

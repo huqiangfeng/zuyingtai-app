@@ -24,9 +24,6 @@
     display: flex;
   }
 }
-.iphone-X {
-  padding-bottom: 34px;
-}
 </style>
 
 <template>

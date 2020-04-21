@@ -89,7 +89,7 @@ wepy.component({
     // 剩余天数
     surplusDey () {
       try {
-        let tiem = new Date(this.details.expectSaleDate) - new Date()
+        let tiem = new Date(this.details.releaseDate) - new Date()
         let day = Math.ceil(tiem / 1000 / 60 / 60 / 24)
         day = day > 2 ? day : 2
         return day

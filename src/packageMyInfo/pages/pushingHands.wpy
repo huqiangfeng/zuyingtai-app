@@ -104,10 +104,23 @@ wepy.page({
       })
       let qrCode = getQrCode({
         page: 'pages/index',
-        scene: 'id=1213'
+        scene: 'id=1213',
+        file: 'url'
       })
       Promise.all([ spreaderInfo(), avatarPromise, qrCode ]).then(res => {
-        let imgSrc = res[2].data.maQrCode// base64编码
+        let imgSrc = res[2].data.url// base64编码
+        wx.getImageInfo({
+          src: imgSrc,
+          success (res2) {
+            let data = res[0].data
+            _this.pushinginfo = data
+            data.avatarPash = res[1].path
+            data.qrCode = res2.path
+            _this.on_initImg(data)
+          }
+        })
+
+/*         let imgSrc = res[2].data.maQrCode// base64编码
         let save = wx.getFileSystemManager()
         // 获取随机数
         // 保存本地图片文件路径，也是绘图路径
@@ -128,7 +141,7 @@ wepy.page({
               }
             })
           }
-        })
+        }) */
       }).catch(err => {
         console.log(err)
       })
@@ -148,7 +161,7 @@ wepy.page({
       ctx.fillText(data.userNickname, 180, 783)
       ctx.setFontSize(24)
       // ctx.fillText('推广码： ' + data.spreaderCode, 180, 840)
-      ctx.fillText('推广码： ' + data.userPhone, 180, 840)
+      // ctx.fillText('手机： ' + data.userPhone, 180, 840)
       ctx.draw(true)
       setTimeout(() => {
         wx.canvasToTempFilePath({

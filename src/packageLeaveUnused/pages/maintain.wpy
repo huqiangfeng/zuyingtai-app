@@ -64,7 +64,7 @@
     <div class="checkbox-group" @tap="onChange">
       <van-checkbox icon-size="30rpx" checked-color="#C9AB79" value="{{ checkedProtocol }}"></van-checkbox>
       <div class="t1">我已阅读并同意租英台</div>
-      <div class="t2">《养护协议》</div>
+      <div class="t2"  @tap.stop="on_toProtocol">《养护协议》</div>
     </div>
     <!-- btn -->
     <div class="btn" @tap="submit">提交</div>
@@ -99,6 +99,10 @@ wepy.page({
     tooltipShow: false
   },
   methods: {
+        // 跳转协议
+    on_toProtocol () {
+      wx.navigateTo({ url: '/packageElse/pages/protocolSpecification?pageCode=jifen_guizhe' })
+    },
     // 去选择服务
     on_toSelectServe () {
       let _this = this
@@ -146,7 +150,7 @@ wepy.page({
       if (!_this.checkedProtocol) {
         wx.showModal({
           title: '提示',
-          content: '请阅读并同意寄卖协议',
+          content: '请阅读并同意养护协议',
           success (res) {
             if (res.confirm) {
               console.log('用户点击确定')
