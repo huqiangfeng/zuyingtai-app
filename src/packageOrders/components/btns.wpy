@@ -3,6 +3,12 @@
 .btn-box {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  .yajing {
+    font-size: 30rpx;
+    text-align: left;
+    flex: 1;
+  }
   .btn {
     // margin: 30rpx 0rpx;
     width: 180rpx;
@@ -99,14 +105,15 @@
 <template>
   <!-- 按钮 btns -->
   <div class="btn-box">
+    <div class="yajing" v-if="CHECKING">退还押金 {{ '2600' }}</div>
     <div class="btn btn2" @tap="on_del" v-if="CLOSED">删除订单</div>
     <div class="btn btn2" @tap="on_service" v-if="UNPAID||CLOSED">联系客服</div>
-    <div class="btn btn2" @tap="on_bask" v-if="COMPLETE||USING">晒单</div>
+    <div class="btn btn2" @tap="on_bask" v-if="COMPLETE||USING||CHECKING">晒单</div>
     <!-- <div class="btn btn2" @tap="on_renewal" v-if="USING">续 租</div> -->
     <div class="btn btn1" @tap="on_appointReturn" v-if="USING">归还</div>
     <div class="btn btn1" @tap="on_logistics" v-if="SENDING||RETURNING">查看物流</div>
     <div class="btn btn1" @tap="on_confirmReceipt" v-if="SENDING">确认收货</div>
-    <div class="btn btn1" @tap="on_placeOrder" v-if="CLOSED||COMPLETE">再次下单</div>
+    <div class="btn btn1" @tap="on_placeOrder" v-if="CLOSED||COMPLETE||CHECKING">再次下单</div>
     <div class="btn btn1" @tap="on_pay" v-if="UNPAID">去支付</div>
   </div>
 
@@ -192,6 +199,9 @@ wepy.component({
     },
     RETURNING () { // 归还中
       return this.orderData.orderStatus === 4
+    },
+    CHECKING () { // 验收中
+      return this.orderData.orderStatus === 5
     },
     CLOSED () { // 交易关闭
       return this.orderData.orderStatus === 8
@@ -283,10 +293,21 @@ wepy.component({
     on_confirmReceipt () {
       let _this = this
       let orderId = this.orderData.orderId
-      received({ orderId }).then(res => {
-        if (res.code === 0) {
-          console.log(res)
-          _this.$emit('refresh')
+      wx.showModal({
+        title: '提示',
+        content: '确认收货',
+        success (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+            received({ orderId }).then(res => {
+              if (res.code === 0) {
+                console.log(res)
+                _this.$emit('refresh')
+              }
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
         }
       })
     },

@@ -54,7 +54,7 @@
   }
   .advertising {
     background-color: #fff;
-    padding: 30rpx 40rpx 100rpx;
+    padding: 30rpx 40rpx 40rpx;
     margin-top: 20rpx;
   }
 }
@@ -195,7 +195,7 @@ wepy.component({
         url: '/packageOrders/pages/ordersAdmin',
         success: function (res) {
           // 通过eventChannel向被打开页面传送数据
-          res.eventChannel.emit('getPageData', '全部订单')
+          res.eventChannel.emit('getPageData', '')
         }
       })
     },

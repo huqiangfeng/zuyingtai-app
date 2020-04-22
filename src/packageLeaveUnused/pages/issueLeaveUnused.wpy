@@ -34,7 +34,9 @@
           <div class="title">我 要 卖</div>
           <input class="input" type="number" v-model="price" placeholder="请输入期望价格" />
           <div class="yuan">元</div>
-          <div class="zixun">咨询</div>
+          <button class="zixun" open-type="contact">
+            咨询
+          </button>
         </view>
       </div>
     </div>
@@ -43,7 +45,7 @@
       <div class="contact">
         <view class="input-group ">
           <div class="title">联系方式</div>
-          <input class="input" type="number"  v-model="contact" placeholder="请输入微信号/手机号" />
+          <input class="input" type="number" v-model="contact" placeholder="请输入微信号/手机号" />
         </view>
       </div>
     </div>
@@ -86,7 +88,7 @@ wepy.page({
     tooltipShow: false
   },
   methods: {
-        // 跳转协议
+    // 跳转协议
     on_toProtocol () {
       wx.navigateTo({ url: '/packageElse/pages/protocolSpecification?pageCode=jifen_guizhe' })
     },
@@ -157,7 +159,7 @@ wepy.page({
         }
         formIdle(parameter).then((res) => {
           if (res.code === 0) {
-              // 显示弹框
+            // 显示弹框
             _this.tooltipShow = true
           }
         })

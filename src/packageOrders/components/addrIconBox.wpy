@@ -37,7 +37,7 @@ page {
 
 <template>
   <div class="addr-box">
-    <div v-if="item.addrId" class="addr right-go" @tap="on_toAddrAdmin">
+    <div v-if="item.addrId||item.addrArea" class="addr right-go" @tap="on_toAddrAdmin">
       <image class="img-dingwei" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/dingwei.png" mode="widthFix"></image>
       <div class="addr-det ellipsis">
         <addr item="{{ item }}"></addr>

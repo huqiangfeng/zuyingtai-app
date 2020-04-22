@@ -6,9 +6,13 @@
       margin-top: 2px;
     }
   }
-  .container {
-    margin-bottom: 98rpx;
-  }
+  // .container {
+  //   margin-bottom: 98rpx;
+  // }
+}
+.flooter-zhanwei {
+  box-sizing: content-box;
+  height: 98rpx;
 }
 .flooter {
   position: fixed;
@@ -33,7 +37,7 @@
         <image class="logo" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/logo.png" mode="widthFix"></image>
       </div>
     </mp-navigation-bar>
-    <div class="container" :class="{'iphone-X':iPhoneX}">
+    <div class="container">
       <home v-if="footer===0"></home>
       <choose v-if="footer===1" id="choose"></choose>
       <leave-unused v-if="footer===2"></leave-unused>
@@ -41,6 +45,8 @@
       <my-index v-if="footer===4"></my-index>
     </div>
   </div>
+
+  <div class="flooter-zhanwei" :class="{'iphone-X':iPhoneX}"> ></div>
   <div class="flooter" :class="{'iphone-X':iPhoneX}">
     <flooter></flooter>
   </div>

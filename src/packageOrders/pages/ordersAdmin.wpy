@@ -53,16 +53,26 @@ wepy.page({
         text: '待付款',
         code: 'unpaid'
       },
-      { text: '待收货',
-        code: 'sending'},
-      { text: '待归还',
-        code: 'using' },
-      { text: '归还中',
-        code: 'returning'},
-      { text: '结单',
-        code: 'checking'},
-      { text: '全部订单',
-        code: '' }
+      {
+        text: '待收货',
+        code: 'sending'
+      },
+      {
+        text: '待归还',
+        code: 'using'
+      },
+      {
+        text: '归还中',
+        code: 'returning'
+      },
+      {
+        text: '结单',
+        code: 'checking'
+      },
+      {
+        text: '全部订单',
+        code: ''
+      }
     ],
     ordersList: [] // 订单列表
   },
