@@ -51,7 +51,7 @@ wepy.page({
             let obj = {
               title: item.flowTitle,
               time: item.createTime,
-              value: (item.flowDirection ? '+' : '-') + '¥' + item.flowAmount,
+              value: (item.flowDirection === 1 ? '+' : '-') + '¥' + item.flowAmount,
               extText: '',
               valueActive: false,
               extTextActive: false

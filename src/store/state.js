@@ -10,6 +10,8 @@ export default {
   isShowBindTel: false,
   // 登录的ocde
   code: '',
+  // 推广者用户标识
+  spreader: '',
   // 版本
   versions: 'V1.0.1',
   // 用户信息

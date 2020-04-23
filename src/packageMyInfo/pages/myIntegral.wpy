@@ -22,7 +22,7 @@
     <mp-navigation-bar back="{{ true }}" title="我的积分" ext-class="navigation" color="{{navBackground?'#fff': '' }}" background="{{ navBackground }}" />
     <!-- card -->
     <div class="card">
-      <card-jifeng @refresh="on_refresh" ></card-jifeng>
+      <card-jifeng @refresh="on_refresh"></card-jifeng>
     </div>
     <div class="title">积分记录</div>
     <div class="list">
@@ -48,7 +48,7 @@ wepy.page({
             let obj = {
               title: item.flowTitle,
               time: item.createTime,
-              value: (item.flowDirection ? '+' : '-') + item.flowPoints,
+              value: (item.flowDirection === 1 ? '+' : '-') + item.flowPoints,
               extText: '',
               valueActive: false,
               extTextActive: false
@@ -58,8 +58,8 @@ wepy.page({
         }
       })
     },
-  // 刷新
-    on_refresh() {
+    // 刷新
+    on_refresh () {
       this.getDataInfo()
     }
   },

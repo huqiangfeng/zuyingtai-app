@@ -205,7 +205,7 @@ page {
         <div class="row">
           <div class="left">
             <div class="k">归还日期</div>
-            <div class="v">{{orderData.backTime}}</div>
+            <div class="v">{{orderData.backStartTime}}</div>
           </div>
         </div>
       </div>
@@ -289,12 +289,12 @@ page {
         <!-- 加件费 -->
         <div class="com-row">
           <div class="left">加件费</div>
-          <div class="right">¥{{ orderData.plusFee }}</div>
+          <div class="right">¥{{ orderData.moreGoodsFee }}</div>
         </div>
         <!-- 免赔服务 -->
         <div class="com-row row-ext" v-if="orderData.isInsurance">
           <div class="left left-flex">免赔服务</div>
-          <div class="right">¥{{ orderData.insuranceFee }}</div>
+          <div class="right">¥{{ orderData.dirtyInsureFee }}</div>
         </div>
         <!-- 商品押金 -->
         <div class="com-row row-ext">
@@ -305,7 +305,7 @@ page {
         <div class="com-row">
           <div class="left">奢护
           </div>
-          <div class="right">¥{{ orderData.maintenanceFee }}</div>
+          <div class="right">¥{{ orderData.luxuryNurseFee }}</div>
         </div>
         <!-- 运费 -->
         <div class="com-row">
@@ -350,13 +350,13 @@ page {
       </div>
     </div>
     <!-- 审核结果 -->
-    <div v-if="CHECKING" class="row-box">
+    <div v-if="CHECKING||COMPLETE" class="row-box">
       <div class="title">审核结果</div>
       <!-- 审核状态 -->
       <div class="row">
         <div class="left">
-          <div class="k">审核状态</div>
-          <div class="v">{{orderData.orderNo}}</div>
+          <div class="k">鉴定结果</div>
+          <div class="v">{{orderData.backCheckStatusDisplay}}</div>
         </div>
         <div class="right">
           <button class="kefu" open-type="contact">
@@ -368,19 +368,19 @@ page {
       <div class="row">
         <div class="left">
           <div class="k">审核时间</div>
-          <div class="v">{{orderData.createTime}}</div>
+          <div class="v">{{orderData.settleTime}}</div>
         </div>
       </div>
       <!-- 审核结果 -->
       <div class="row">
         <div class="left">
           <div class="k">审核结果</div>
-          <div class="v">{{orderData.orderPaymentDisplay}}</div>
+          <div class="v">{{orderData.settleAuditStatusDisplay}}</div>
         </div>
       </div>
 
-      <div class="text-describe">
-        撒旦立刻就规划斯蒂芬库里国际化爱的色放了进口国螺丝钉咖啡碱韩国烧烤了才发现韩国撒旦风口浪尖的法律框架和受到法律手段计划开发
+      <div v-if="orderData.backCheckRemark" class="text-describe">
+         {{ orderData.backCheckRemark }}
       </div>
     </div>
 

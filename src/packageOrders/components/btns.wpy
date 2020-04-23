@@ -105,7 +105,7 @@
 <template>
   <!-- 按钮 btns -->
   <div class="btn-box">
-    <div class="yajing" v-if="CHECKING">退还押金 {{ '2600' }}</div>
+    <div class="yajing" v-if="orderData.depositDeduct  ">退还押金 {{ orderData.depositDeduct }}</div>
     <div class="btn btn2" @tap="on_del" v-if="CLOSED">删除订单</div>
     <div class="btn btn2" @tap="on_service" v-if="UNPAID||CLOSED">联系客服</div>
     <div class="btn btn2" @tap="on_bask" v-if="COMPLETE||USING||CHECKING">晒单</div>
@@ -339,6 +339,7 @@ wepy.component({
       }
       sendBack(parameter).then(res => {
         if (res.code === 0) {
+          _this.on_showWuLiuDialog()
           _this.$emit('refresh')
         }
       })

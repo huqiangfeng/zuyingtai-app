@@ -1,4 +1,8 @@
 export default {
+  // 推广者用户标识
+  setSpreader(state, payload) {
+    state.spreader = payload.spreader
+  },
   // 设置用户信息
   setUserInfo(state, payload) {
     state.userInfo = payload.userInfo

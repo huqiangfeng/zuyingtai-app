@@ -16,7 +16,8 @@ export const gitToken = (parameter) => {
       encryptedData: JSON.stringify(parameter.encryptedData),
       iv: JSON.stringify(parameter.iv),
       signature: parameter.signature,
-      code: parameter.code
+      code: parameter.code,
+      spreader: store.state.spreader || ''
     }
     post('/ma/public/login', data)
       .then(res => {
