@@ -163,16 +163,21 @@ wepy.component({
     },
     // 筛选
     to_filtrate () {
+      let _this = this
       wx.navigateTo({
         url: '/packageCommodity/pages/filtrate',
         events: {
           filtrate: data => {
             // 得到筛选条件
-            this.filtrate = data
-            this.initPageNum()
-            this.getPageListData()
-            console.log(this.filtrate)
+            _this.filtrate = data
+            _this.initPageNum()
+            _this.getPageListData()
+            console.log(_this.filtrate)
           }
+        },
+        success: function (res) {
+          // 通过eventChannel向被打开页面传送数据
+          res.eventChannel.emit('checkedFiltrate', _this.filtrate)
         }
       })
     },

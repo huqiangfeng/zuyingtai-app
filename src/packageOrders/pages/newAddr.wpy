@@ -39,6 +39,7 @@
 </template>
 <script>
 import wepy from '@wepy/core'
+import { vailPhone } from './../../utils/util.js'
 import { addUserAddr, updateAddr } from './../../http/api.js'
 wepy.page({
   computed: {
@@ -70,6 +71,26 @@ wepy.page({
         addrPhone: _this.addrPhone,
         addrId: _this.addrId,
         addrAreaCode: _this.regionCode
+      }
+
+      for (const key in data) {
+        if (!data[key] && key !== 'addrDefault' && key !== 'addrId') {
+          wx.showToast({
+            title: '请完善信息之后在提交哦',
+            icon: 'none',
+            duration: 2000
+          })
+          return
+        }
+      }
+
+      if (!vailPhone(data.addrPhone)) {
+        wx.showToast({
+          title: '请输入正确的手机号',
+          icon: 'none',
+          duration: 2000
+        })
+        return
       }
 
       if (data.addrId) {
