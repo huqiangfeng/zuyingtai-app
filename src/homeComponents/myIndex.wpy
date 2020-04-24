@@ -211,7 +211,7 @@ wepy.component({
         if (res.code === 0) {
           let orders = res.data.listRows
           orders.forEach(element => {
-            switch (element.goodsOrderStatusCode) {
+            switch (element.orderStatusCode) {
               case 'unpaid':
                 _this.orders[0].count = element.count
                 break
@@ -229,7 +229,7 @@ wepy.component({
                 break
             }
           })
-          console.log(res)
+          console.log(_this.orders)
         }
       }).catch(_ => {
 

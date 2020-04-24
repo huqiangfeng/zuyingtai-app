@@ -130,7 +130,7 @@
     <div class="checkbox-group" @tap="onChange">
       <van-checkbox icon-size="30rpx" checked-color="#C9AB79" value="{{ checkedProtocol }}"></van-checkbox>
       <div class="t1">我已阅读并同意</div>
-      <div class="t2">《会员卡购买协议》</div>
+      <div class="t2" @tap.stop="on_toProtocol">《会员卡购买协议》</div>
       <!-- <div class="t2">《用户指南》</div> -->
     </div>
     <!-- 购/卡/说明 -->
@@ -209,6 +209,10 @@ wepy.component({
     on_changeVIP (e) {
       this.vipIndex = e.$wx.detail.current
       console.log(e.$wx.detail.current)
+    },
+    // 跳转协议
+    on_toProtocol () {
+      wx.navigateTo({ url: '/packageElse/pages/protocolSpecification?pageCode=member_agreement' })
     },
     // 刷新
     refresh () {

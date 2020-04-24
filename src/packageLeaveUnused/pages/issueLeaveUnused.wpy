@@ -90,7 +90,7 @@ wepy.page({
   methods: {
     // 跳转协议
     on_toProtocol () {
-      wx.navigateTo({ url: '/packageElse/pages/protocolSpecification?pageCode=jifen_guizhe' })
+      wx.navigateTo({ url: '/packageElse/pages/protocolSpecification?pageCode=idle_agreement' })
     },
     // 品牌
     changeCheckedBrand: function (e) {

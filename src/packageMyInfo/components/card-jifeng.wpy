@@ -73,7 +73,7 @@ wepy.component({
   methods: {
     // 跳转协议
     on_toProtocol () {
-      wx.navigateTo({ url: '/packageElse/pages/protocolSpecification?pageCode=jifen_guizhe' })
+      wx.navigateTo({ url: '/packageElse/pages/protocolSpecification?pageCode=points_rule' })
     },
     // 签到
     on_sign () {

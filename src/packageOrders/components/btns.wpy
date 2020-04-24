@@ -120,7 +120,7 @@
   <!-- 支付弹框 -->
   <half-screen-dialog @close="on_showZifu" show="{{ isShowZifu }}">
     <div class="slot-title" slot="title">
-      <div class="t1"> ¥2632.00 </div>
+      <div class="t1"> ¥{{ orderData.orderAmount }} </div>
       <div class="t2"> 应付金额 </div>
     </div>
     <div class="slot-conotent" slot="desc">
@@ -157,7 +157,7 @@
       </div>
       <div class="row">
         <div class="left">租金</div>
-        <div class="right">10元/天</div>
+        <div class="right">{{'未知'}}元/天</div>
       </div>
       <div class="btn" @tap="on_xuZhu">确认下单</div>
     </div>

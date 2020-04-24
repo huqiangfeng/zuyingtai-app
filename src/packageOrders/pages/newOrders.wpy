@@ -196,19 +196,18 @@
       <!-- 免赔服务 -->
       <div @tap="isInsurance = !isInsurance" class="com-row row-ext">
         <div class="left left-flex">
-          <div class="underline" @tap.stop="on_toExplain('mian-pei')">免赔服务</div>
+          <div>免赔服务</div>
           <van-checkbox icon-size="28rpx" checked-color="#C9AB79" value="{{ isInsurance || dirtyInsureFree  }}"></van-checkbox>
-          <!-- <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wenhao.png" mode="widthFix"></image> -->
-          <div class="t1">轻微划痕免赔</div>
+          <div class="t1" @tap.stop="on_toProtocol('dirty_insure_notice')">免赔险须知</div>
         </div>
         <div class="right" :class="{'discardFee':dirtyInsureFree }">¥{{ goods.dirtyInsureFee }}</div>
       </div>
       <!-- 奢护服务 -->
       <div @tap="isluxuryNurseFee = !isluxuryNurseFee" class="com-row row-ext">
         <div class="left left-flex">
-          <div class="underline" @tap.stop="on_toExplain('se-hu')">奢护服务</div>
+          <div>奢护服务</div>
           <van-checkbox icon-size="28rpx" checked-color="#C9AB79" value="{{ isluxuryNurseFee || luxuryNurseFree }}"></van-checkbox>
-          <!-- <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wenhao.png" mode="widthFix"></image> -->
+          <div class="t1" @tap.stop="on_toProtocol('luxury_nurse_notice')">奢护服务标准</div>
         </div>
         <div class="right" :class="{'discardFee':luxuryNurseFree }">¥{{goods.luxuryNurseFee }}</div>
       </div>
@@ -326,9 +325,9 @@ wepy.page({
     on_toVip () {
       wx.navigateTo({ url: '/packageMyInfo/pages/vipMember' })
     },
-    // 跳转说明页
-    on_toExplain (type) {
-      console.log(type)
+    // 跳转协议
+    on_toProtocol (pageCode) {
+      wx.navigateTo({ url: '/packageElse/pages/protocolSpecification?pageCode=' + pageCode })
     },
     // 支付完成
     on_affirm () {

@@ -126,9 +126,10 @@ wepy.page({
     userItemId: '' // 折扣标识
   },
   methods: {
-        // 跳转协议
+    // 跳转协议
     on_toProtocol () {
-      wx.navigateTo({ url: '/packageElse/pages/protocolSpecification?pageCode=jifen_guizhe' })
+      let pageCode = this.authenticateIndex === 1 ? 'identify_agreement' : 'identify_plan'
+      wx.navigateTo({ url: '/packageElse/pages/protocolSpecification?pageCode=' + pageCode })
     },
     // 复制
     on_copy () {

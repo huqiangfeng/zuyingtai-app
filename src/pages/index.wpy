@@ -42,7 +42,7 @@
       <choose v-if="footer===1" id="choose"></choose>
       <leave-unused v-if="footer===2"></leave-unused>
       <collect v-if="footer===3" id="collect"></collect>
-      <my-index v-if="footer===4"></my-index>
+      <my-index v-if="footer===4" id="myIndex"></my-index>
     </div>
   </div>
 
@@ -103,7 +103,11 @@ wepy.page({
     isAuthorization()
   },
   // 生命周期回调—监听页面显示
-  onShow () { },
+  onShow () {
+    if (this.footer === 4) {
+      this.$wx.selectComponent('#myIndex').$wepy.getPageData()
+    }
+  },
   // 生命周期回调—监听页面初次渲染完成
   onReady () {
 

@@ -284,7 +284,7 @@
           <div class="vip-hh">VIP</div>
           <div class="vip-day"> ¥{{ details.memberDayRent }}/天</div>
         </div>
-        <div class="right"> 下单流程 </div>
+        <div class="right" @tap.stop="on_toProtocol"> 下单流程 </div>
       </div>
     </div>
     <!-- vip -->
@@ -456,6 +456,10 @@ wepy.page({
     on_refresh () {
       // this.on_collect()
       this.getPageData()
+    },
+    // 跳转协议
+    on_toProtocol () {
+      wx.navigateTo({ url: '/packageElse/pages/protocolSpecification?pageCode=goods_order_flow' })
     },
     // 跳去vip页
     on_toVip () {

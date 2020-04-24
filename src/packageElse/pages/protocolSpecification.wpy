@@ -36,7 +36,6 @@ wepy.page({
     // 获取页面数据
     getPageData (pageCode) {
       let _this = this
-      pageCode = 'member_agreement'
       getDocPage({ pageCode }).then((res) => {
         if (res.code === 0) {
           _this.html = res.data.pageContent

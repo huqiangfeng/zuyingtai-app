@@ -47,8 +47,7 @@ page {
 <template>
   <div class="page-container">
     <div class="row" v-for="(item,index) in list" :key="index" @tap="on_toDetail(item)">
-      <image v-if="item.msgType" class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi-huoche.png" mode="widthFix"></image>
-      <image v-else-if="item.msgType" class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi-xin.png" mode="widthFix"></image>
+      <image v-if="item.msgCode==='info'" class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi-jiaoyi.png" mode="widthFix"></image>
       <image v-else class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi-jiaoyi.png" mode="widthFix"></image>
       <div class="row-info">
         <div class="header">

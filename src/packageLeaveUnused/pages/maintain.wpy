@@ -99,9 +99,9 @@ wepy.page({
     tooltipShow: false
   },
   methods: {
-        // 跳转协议
+    // 跳转协议
     on_toProtocol () {
-      wx.navigateTo({ url: '/packageElse/pages/protocolSpecification?pageCode=jifen_guizhe' })
+      wx.navigateTo({ url: '/packageElse/pages/protocolSpecification?pageCode=nurse_agreement' })
     },
     // 去选择服务
     on_toSelectServe () {

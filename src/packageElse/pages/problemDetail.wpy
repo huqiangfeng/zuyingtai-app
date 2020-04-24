@@ -15,12 +15,13 @@
 
 <template>
   <div class="page-content">
-    <div class="title">
+    <parser html="{{html}}"></parser>
+    <!-- <div class="title">
       {{ dataInfo.questionTitle }}
     </div>
     <div class="body">
       {{ dataInfo.questionBody }}
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -30,7 +31,7 @@ import { questionDetail } from './../../http/api.js'
 wepy.page({
 
   data: {
-    dataInfo: {}
+    html: ''
   },
   methods: {
     // 获取页面数据
@@ -38,7 +39,7 @@ wepy.page({
       let _this = this
       questionDetail({ questionId: id }).then((res) => {
         if (res.code === 0) {
-          _this.dataInfo = res.data
+          _this.html = res.data.questionBody
           wx.setNavigationBarTitle({ title: res.data.questionTitle })
         }
       })
@@ -79,6 +80,7 @@ wepy.page({
 {
     navigationBarTitleText: '常见问题',
     usingComponents: {
+        'parser': '~@components/parser/parser'
     },
 }
 </config>
