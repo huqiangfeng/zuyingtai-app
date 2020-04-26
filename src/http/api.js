@@ -237,9 +237,13 @@ export const applySpreader = (parameter) => post('/ma/form/spreader', parameter)
 */
 export const spreaderInfo = (parameter) => post('/ma/spreader/info', parameter)
 /*
-奖励流水
+推荐会员
 */
-export const spreaderListReward = (parameter) => post('/ma/spreader/listReward', parameter)
+export const spreaderListUser = (parameter) => post('/ma/spreader/listUser', parameter)
+/*
+推荐充值
+*/
+export const spreaderListOrder = (parameter) => post('/ma/spreader/listOrder', parameter)
 /*
 会员中心
 */

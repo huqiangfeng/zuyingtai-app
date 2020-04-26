@@ -55,11 +55,11 @@
     <div class="data-valbox">
       <div class="item">
         <div class="val">{{ pushinginfo.invited }}</div>
-        <div class="key">邀请人数</div>
+        <div class="key">邀请注册记录</div>
       </div>
       <div class="item">
-        <div class="val">{{ pushinginfo.totalIncome }}</div>
-        <div class="key">奖励金（元）</div>
+        <div class="val">{{ pushinginfo.totalAmount }}</div>
+        <div class="key">邀请付费记录</div>
       </div>
     </div>
     <!-- btn -->

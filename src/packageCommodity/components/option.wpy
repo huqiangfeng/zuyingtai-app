@@ -2,12 +2,14 @@
 .option {
   width: 200rpx;
   height: 88rpx;
-  line-height: 88rpx;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 30rpx;
   font-family: PingFang SC;
   color: #000;
   border-radius: 12rpx;
+  overflow: hidden;
 }
 .bgc {
   background-color: #f4f4f4;
@@ -20,7 +22,9 @@
 
 <template>
   <div class="option" :class="{'active':active,'bgc':bgc}">
-    {{ text }}
+    <div>
+      {{ text }}
+    </div>
   </div>
 </template>
 

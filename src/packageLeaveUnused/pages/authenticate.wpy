@@ -116,7 +116,7 @@ wepy.page({
     index: 0, // 选中的品牌下标
     brands: [], // 品牌
     brand: '', // 品牌
-    authenticateIndex: 0, // 鉴定服务
+    authenticateIndex: '0', // 鉴定服务
     authenticate: [], // 鉴定服务
     userName: '', // 物主姓名
     contact: '', // 联系方式
@@ -128,7 +128,9 @@ wepy.page({
   methods: {
     // 跳转协议
     on_toProtocol () {
-      let pageCode = this.authenticateIndex === 1 ? 'identify_agreement' : 'identify_plan'
+      console.log(this.authenticateIndex)
+      let pageCode = this.authenticateIndex == '1' ? 'identify_agreement' : 'identify_plan'
+      console.log(pageCode)
       wx.navigateTo({ url: '/packageElse/pages/protocolSpecification?pageCode=' + pageCode })
     },
     // 复制
@@ -151,7 +153,6 @@ wepy.page({
     // 鉴定
     changeCheckedAuthenticate: function (e) {
       this.authenticateIndex = e.$wx.detail.value
-      console.log(123)
       if (this.authenticate[e.$wx.detail.value].userItemSurplus > 0) {
         this.userItemId = this.authenticate[e.$wx.detail.value].userItemId
       }
@@ -261,8 +262,6 @@ wepy.page({
       servicePrepayInfo({ itemCode: 'identify' }).then(res => {
         if (res.code === 0) {
           this.authenticate = res.data.itemList
-          console.log(123)
-
           if (res.data.itemList[0].userItemSurplus > 0) {
             this.userItemId = res.data.itemList[0].userItemId
           }

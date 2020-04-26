@@ -76,6 +76,7 @@ export const post = (url, data) => {
         token: wx.getStorageSync('token')
       },
       success(res) {
+        console.log(res)
         wx.hideLoading()
         if (res.data.code === 0) {
           initDataK(res)

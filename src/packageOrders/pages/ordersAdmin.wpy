@@ -8,7 +8,7 @@ page {
     background-color: #fff;
     display: flex;
     .tab {
-      // flex: 1;
+      flex: 1;
       padding: 30rpx 16rpx;
       text-align: center;
       font-size: 30rpx;
@@ -70,7 +70,7 @@ wepy.page({
         code: 'checking'
       },
       {
-        text: '全部订单',
+        text: '全部',
         code: ''
       }
     ],

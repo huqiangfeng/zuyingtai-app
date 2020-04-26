@@ -75,7 +75,7 @@
       <div class="option-item" @tap="on_brandItem(index)" hidden="{{index > 5 && !more}}" v-for="(item, index) in listRows" :key="index">
         <option-item text="{{ item.brandSourceName }}" active="{{ checkedRow === item.brandId }}"></option-item>
       </div>
-      <div class="more" @tap="more = !more">
+      <div v-if="listRows.length > 6" class="more" @tap="more = !more">
         <div>{{ moreText }}</div>
         <image class="img" :class="{'turn':more}" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/jiantouxia.png" mode="widthFix"></image>
       </div>

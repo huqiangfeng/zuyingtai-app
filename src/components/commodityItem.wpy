@@ -8,6 +8,7 @@
   justify-content: center;
   font-family: PingFang SC;
   font-weight: 400;
+  padding-bottom: 15px;
   // 星星
   .xinxin {
     position: absolute;
@@ -40,12 +41,22 @@
       font-size: 24rpx;
     }
   }
-  .img {
+  .img-box {
     width: 100%;
-    margin-bottom: 20rpx;
-    display: block;
+    padding-bottom: 100%;
+    overflow: hidden;
+    position: relative;
+    .img {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      display: block;
+    }
   }
   .name {
+    margin-top: 20rpx;
     font-size: 28rpx;
     color: #30313b;
   }
@@ -79,7 +90,9 @@
       </div>
     </div>
     <!-- 商品 -->
-    <image class="img" src="{{ item.goodsIcon }}" mode="widthFix"></image>
+    <div class="img-box">
+      <image class="img" src="{{ item.goodsIcon }}" mode="widthFix"></image>
+    </div>
     <div class="name">{{item.brandSourceName}}</div>
     <div class="money">¥{{ item.dayRent}}/天</div>
     <div class="v-money">VIP:¥{{item.memberDayRent}}/天</div>

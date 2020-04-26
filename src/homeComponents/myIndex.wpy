@@ -93,7 +93,7 @@
     <nav-box list="{{ serve }}" title="我的服务"></nav-box>
     <!-- 广告 -->
     <div class="advertising">
-      <my-swiper setStyle="height: 200rpx;" indicator="{{ false }}" list="{{ swiper }}"></my-swiper>
+      <my-swiper @tapitem="on_toPushingHands" setStyle="height: 200rpx;" indicator="{{ false }}" list="{{ swiper }}"></my-swiper>
     </div>
   </div>
 

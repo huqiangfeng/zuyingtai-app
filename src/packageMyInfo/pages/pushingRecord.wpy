@@ -8,7 +8,7 @@
     background-image: url('https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/tggl-bg.png');
     background-size: 100%;
     width: 750rpx;
-    height: 528rpx;
+    height: 296rpx;
     color: rgba(255, 255, 255, 1);
     .title-key {
       margin-top: 150rpx;
@@ -22,6 +22,7 @@
       font-weight: 500;
     }
     .bottom-box {
+      background: rgba(255, 255, 255, 0.08);
       display: flex;
       position: absolute;
       width: 100%;
@@ -49,6 +50,16 @@
           opacity: 0.4;
         }
       }
+      &:after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 1px;
+        height: 92rpx;
+        background: rgba(255, 255, 255, 0.4);
+      }
     }
   }
   .page-list {
@@ -64,18 +75,18 @@
 
   <div class="page-container">
     <div class="page-cord">
-      <div class="title-key">累计收益（元）</div>
-      <div class="title-val">{{ totalIncome }}</div>
+      <!-- <div class="title-key">累计收益（元）</div>
+      <div class="title-val">{{ totalIncome }}</div> -->
       <div class="bottom-box">
-        <div class="item">
+        <div class="item" @tap="spreaderListUser">
           <div class="val">{{invited }}</div>
-          <div class="key">邀请人数</div>
+          <div class="key">邀请注册记录</div>
         </div>
         <div class="left-border">
         </div>
-        <div class="item">
-          <div class="val">{{lastWeekIncome }}</div>
-          <div class="key">上周佣金（元）</div>
+        <div class="item" @tap="spreaderListOrder">
+          <div class="val">{{totalAmount }}</div>
+          <div class="key">邀请付费记录</div>
         </div>
       </div>
     </div>
@@ -87,20 +98,47 @@
 
 <script>
 import wepy from '@wepy/core'
-import { spreaderListReward, spreaderInfo } from './../../http/api.js'
+import { spreaderListUser, spreaderListOrder, spreaderInfo } from './../../http/api.js'
 wepy.page({
 
   data: {
     navBackground: '',
-    invited: 0, // 邀请(
-    lastWeekIncome: 0, // 周收益
-    totalIncome: 0,  // 总收益
+    invited: 0, // 邀请注册记录
+    totalAmount: 0,  // 邀请付费记录
     list: []
   },
   methods: {
-    getDataInfo () {
+    // 推手信息
+    spreaderInfo () {
       let _this = this
-      spreaderListReward().then(res => {
+      spreaderInfo().then(res => {
+        _this.invited = res.data.invited
+        _this.totalAmount = res.data.totalAmount
+      })
+    },
+    // 推荐会员
+    spreaderListUser () {
+      let _this = this
+      spreaderListUser().then(res => {
+        if (res.code === 0) {
+          _this.list = res.data.pageRows.map(item => {
+            let obj = {
+              title: item.userNickname,
+              time: item.createTime,
+              value: item.userPhone.substr(0, 4) + '***' + item.userPhone.substr(-4),
+              extText: '',
+              valueActive: false,
+              extTextActive: false
+            }
+            return obj
+          })
+        }
+      })
+    },
+    // 推荐充值
+    spreaderListOrder () {
+      let _this = this
+      spreaderListOrder().then(res => {
         if (res.code === 0) {
           _this.list = res.data.pageRows.map(item => {
             let obj = {
@@ -115,16 +153,11 @@ wepy.page({
           })
         }
       })
-
-      spreaderInfo().then(res => {
-        _this.invited = res.data.invited
-        _this.lastWeekIncome = res.data.lastWeekIncome
-        _this.totalIncome = res.data.totalIncome
-      })
     }
   },
   created () {
-    this.getDataInfo()
+    this.spreaderInfo()
+    this.spreaderListUser()
   },
   // 监听页面加载
   onLoad () {
