@@ -236,7 +236,6 @@ wepy.component({
       let orderId = this.orderData.orderId
       deleteOrder({ orderId }).then(res => {
         if (res.code === 0) {
-          console.log(res)
           _this.$emit('refresh')
         }
       })
@@ -304,7 +303,6 @@ wepy.component({
             console.log('用户点击确定')
             received({ orderId }).then(res => {
               if (res.code === 0) {
-                console.log(res)
                 _this.$emit('refresh')
               }
             })
@@ -353,7 +351,6 @@ wepy.component({
     },
     // 改变续租天数
     on_ChangeDay (e) {
-      console.log(e.$wx.detail)
       this.day = e.$wx.detail
     },
     // 确认续租
@@ -393,7 +390,6 @@ wepy.component({
         paySign: data.tradeInfo.paySign,
         success (res) {
           _this.tooltipShow = true
-          console.log(res)
         },
         fail (res) { }
       })

@@ -30,6 +30,9 @@ export const gitToken = (parameter) => {
           store.dispatch('setShowLogin', {
             isShowLogin: false
           })
+          store.dispatch('setMySpreader', {
+            mySpreader: res.data.spreader
+          })
           if (!res.data.userPhone) {
             store.dispatch('setShowBindTel', {
               isShowBindTel: true
@@ -62,6 +65,8 @@ export const isAuthorization = (url, data) => {
                     }).catch((err) => {
                       reject(err)
                     })
+                  } else {
+                    resolve()
                   }
                 })
               }

@@ -52,10 +52,9 @@ wepy.component({
   computed: {
   },
   methods: {
-    on_tapItem(item) {
+    on_tapItem (item) {
       if (item.imageHref) {
         let dataObj = pageStrAnalysis(item.imageHref)
-        console.log(dataObj)
         if (dataObj.url === 'goods/zone') {
           wx.navigateTo({
             url: '/packageCommodity/pages/goodsZone?zoneId=' + dataObj.zoneId
@@ -69,7 +68,6 @@ wepy.component({
     let _this = this
     getImagePage({ pageKey: 'miniapp_home' }).then(res => {
       if (res.code === 0) {
-        console.log(res)
         _this.images = res.data.images
       }
     })

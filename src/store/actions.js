@@ -1,4 +1,10 @@
 export default {
+  // 设置我的推广者用户标识
+  setMySpreader({
+    commit
+  }, payload) {
+    commit('setMySpreader', payload)
+  },
   // 设置用户信息
   setUserInfo({
     commit

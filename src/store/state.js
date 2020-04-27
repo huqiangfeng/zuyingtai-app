@@ -12,6 +12,8 @@ export default {
   code: '',
   // 推广者用户标识
   spreader: '',
+  // 我的推广者用户标识
+  mySpreader: '',
   // 版本
   versions: 'V1.0.1',
   // 用户信息

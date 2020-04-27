@@ -3,6 +3,10 @@ export default {
   setSpreader(state, payload) {
     state.spreader = payload.spreader
   },
+  // 我的推广者用户标识
+  setMySpreader(state, payload) {
+    state.mySpreader = payload.mySpreader
+  },
   // 设置用户信息
   setUserInfo(state, payload) {
     state.userInfo = payload.userInfo

@@ -208,7 +208,6 @@ wepy.component({
     // 选vip类型
     on_changeVIP (e) {
       this.vipIndex = e.$wx.detail.current
-      console.log(e.$wx.detail.current)
     },
     // 跳转协议
     on_toProtocol () {
@@ -234,7 +233,6 @@ wepy.component({
       payVip(parameter).then(res => {
         if (res.code === 0) {
           _this.WXzifu(res.data)
-          console.log(res)
         }
       })
     },

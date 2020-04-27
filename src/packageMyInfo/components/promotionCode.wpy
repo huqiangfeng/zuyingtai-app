@@ -52,7 +52,7 @@
       <image class="img-icon" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/bofang2.png" mode="widthFix"></image>
     </div>
     <!--  -->
-    <div class="data-valbox">
+    <!-- <div class="data-valbox">
       <div class="item">
         <div class="val">{{ pushinginfo.invited }}</div>
         <div class="key">邀请注册记录</div>
@@ -61,7 +61,7 @@
         <div class="val">{{ pushinginfo.totalAmount }}</div>
         <div class="key">邀请付费记录</div>
       </div>
-    </div>
+    </div> -->
     <!-- btn -->
     <div class="my-btn" @tap="on_save">保存图片</div>
   </div>

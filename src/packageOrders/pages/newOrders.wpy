@@ -260,37 +260,37 @@ import { createOrder, goodsPrepayInfo, getDefaultAddr } from './../../http/api.j
 wepy.page({
   computed: {
     vipRent () { // vip租金
-      return this.goods.memberDayRent * this.tenancyDays
+      return Number((this.goods.memberDayRent * this.tenancyDays).toFixed(2))
     },
     rent () { // 普通人租金
-      return this.goods.dayRent * this.tenancyDays
+      return Number((this.goods.dayRent * this.tenancyDays).toFixed(2))
     },
     spareRent () { // vip比普通人节省租金
-      return this.rent - this.vipRent
+      return Number((this.rent - this.vipRent).toFixed(2))
     },
     // 支付对象
     consumptionObj () {
       let obj = {
         fee: 0,
         sum: 0,
-        deposit: this.goods.goodsDeposit
+        deposit: Number(this.goods.goodsDeposit)
       }
       if (this.account.memberLevel > 0) {
-        obj.deposit = this.goods.memberGoodsDeposit
+        obj.deposit = Number(this.goods.memberGoodsDeposit)
       }
       let zhujing = this.rent
       if (this.account.memberLevel > 0) {
         zhujing = this.vipRent
       }
-      obj.fee = zhujing + this.goods.moreGoodsFee  // 加件费
+      obj.fee = zhujing + Number(this.goods.moreGoodsFee)  // 加件费
       if (this.isInsurance && !this.dirtyInsureFree) { // 免赔
-        obj.fee += this.goods.dirtyInsureFee
+        obj.fee += Number(this.goods.dirtyInsureFee)
       }
       if (this.isluxuryNurseFee && !this.luxuryNurseFree) { // 奢护服务
-        obj.fee += this.goods.luxuryNurseFee
+        obj.fee += Number(this.goods.luxuryNurseFee)
       }
       if (!this.isBaoYou) { // 包邮
-        obj.fee += this.goods.expressFee
+        obj.fee += Number(this.goods.expressFee)
       }
       obj.sum = obj.fee + obj.deposit
       return obj

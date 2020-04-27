@@ -73,7 +73,6 @@ wepy.component({
     }
   },
   attached () {
-    console.log(this.collect)
   }
 })
 </script>

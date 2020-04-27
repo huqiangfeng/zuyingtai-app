@@ -229,7 +229,6 @@ wepy.component({
                 break
             }
           })
-          console.log(_this.orders)
         }
       }).catch(_ => {
 

@@ -152,12 +152,19 @@ wepy.component({
     // 搜索
     on_search (e) {
       this.goodsName = e.$wx.detail
+
       this.initPageNum()
       this.getPageListData()
     },
     // 全部/0元
     onChangeNavActive (e) {
       this.navActive = e
+      if (e === 0) {
+        this.filtrate = {
+          brandId: '',
+          goodsSort: ''
+        }
+      }
       this.initPageNum()
       this.getPageListData()
     },
@@ -172,7 +179,6 @@ wepy.component({
             _this.filtrate = data
             _this.initPageNum()
             _this.getPageListData()
-            console.log(_this.filtrate)
           }
         },
         success: function (res) {

@@ -397,19 +397,20 @@
 
     <!-- 登录 -->
     <info-login @success="on_refresh" />
+    <!-- 绑定手机号 -->
+    <tel-login />
   </div>
 </template>
 <script>
 import wepy from '@wepy/core'
-import { mapActions } from '@wepy/x'
+import { mapActions, mapMutations, mapState } from '@wepy/x'
 import store from '../../store'
 import { disposeUrlParameter, Toast } from '../../utils/util.js'
-import { detailGoods, likeGoods, unlike, GoodsSuggest, getQrCode } from './../../http/api.js'
+import { detailGoods, likeGoods, unlike, GoodsSuggest, getQrCode, isAuthorization } from './../../http/api.js'
 wepy.page({
   store,
   data: {
     iPhoneX: false,
-    html: '<div>Hello World!</div>',
     imgSrc: '', // 海报图片
     goodsId: '',
     details: {
@@ -442,8 +443,12 @@ wepy.page({
     day: 7, // 租用天数
     isInsurance: false // 免赔险
   },
+  computed: {
+    ...mapState(['mySpreader'])
+  },
   methods: {
     ...mapActions(['setShowLogin']),
+    ...mapMutations(['setSpreader']),
     // 预览图片
     on_previewImage (item) {
       let urls = this.details.goodsImages.map(item => item.imageSrc)
@@ -481,7 +486,6 @@ wepy.page({
         if (res.code === 0) {
           res.data.goodsImages = _this.strToArr(res.data.goodsImages)
           _this.details = res.data
-          console.log(_this.details)
         }
       })
       // 推荐商品
@@ -597,7 +601,6 @@ wepy.page({
             wx.saveImageToPhotosAlbum({
               filePath: filePath,
               success: function (res3) {
-                console.log(res3)
                 let data = {
                   imgLogoPash: res[0].path,
                   imgGoods: res[1].path,
@@ -616,7 +619,6 @@ wepy.page({
     },
     // 初始化海报图
     on_initPosterImg (data) {
-      console.log(data)
       let _this = this
       _this.changeShowPoster()
       let ctx = wx.createCanvasContext('myCanvas')
@@ -703,7 +705,6 @@ wepy.page({
     },
     // 改变租用天数
     on_ChangeDay (e) {
-      console.log(e.$wx.detail)
       // this.day = e.$wx.detail
       if (e.$wx.detail === 8 || e.$wx.detail === 29) {
         this.day = 0
@@ -749,11 +750,17 @@ wepy.page({
     let _this = this
     if (e.goodsId) {
       this.goodsId = e.goodsId
+      if (e.spreader) {
+        this.setSpreader({ spreader: e.spreader })
+      }
     } else {
       let pageData = disposeUrlParameter(e.scene)
       this.goodsId = pageData.goodsId
+      this.setSpreader({ spreader: pageData.spreader })
     }
-    this.getPageData()
+    isAuthorization().then(_ => {
+      this.getPageData()
+    })
     wx.getSystemInfo({
       success: function (res) {
         // 根据 model 进行判断
@@ -768,22 +775,15 @@ wepy.page({
   },
   // 生命周期回调—监听页面初次渲染完成
   onReady () { },
-  // 生命周期回调—监听页面隐藏
-  onHide () { },
-  // 生命周期回调—监听页面卸载
-  onUnload () { },
-  // 监听用户下拉动作
-  onPullDownRefresh () { },
-  // 页面上拉触底事件的处理函数
-  onReachBottom () { },
   // 用户点击右上角转发
-  onShareAppMessage () { },
-  // 页面滚动触发事件的处理函数
-  onPageScroll () { },
-  // 页面尺寸改变时触发，详见 响应显示区域变化
-  onResize () { },
-  // 当前是 tab 页时，点击 tab 时触发
-  onTabItemTap () { }
+  onShareAppMessage (e) {
+    let obj = {
+      title: this.details.goodsName,
+      path: `/packageCommodity/pages/details?goodsId=${this.goodsId}&spreader=${this.mySpreader}`,
+      imageUrl: this.details.goodsImages[0].imageSrc
+    }
+    return obj
+  }
 })
 </script>
 <config>
@@ -798,7 +798,8 @@ wepy.page({
       "half-screen-dialog": "~@weui/half-screen-dialog/half-screen-dialog",
       "info-login": "~@components/infoLogin",
       "van-overlay": "~@vant/overlay/index",
-      'parser': '~@components/parser/parser'
+      'parser': '~@components/parser/parser',
+      "tel-login": "~@components/telLogin"
     }
 }
 </config>

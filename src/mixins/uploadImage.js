@@ -23,12 +23,9 @@ export default {
         module: 'item'
       }).then((res) => {
         if (res.code === 0) {
-          console.log(res)
           _this.images = [..._this.images, res.data]
         }
-      }).catch((err) => {
-        console.log(err)
-      })
+      }).catch((err) => {})
     },
     // 删除图片
     imgDelete(event) {

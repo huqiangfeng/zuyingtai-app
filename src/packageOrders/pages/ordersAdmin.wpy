@@ -79,7 +79,6 @@ wepy.page({
   methods: {
     // tab改变了
     on_changeTab (item) {
-      console.log(item)
       this.tabActive = item.code
       this.initPageNum()
       this.getPageListData()
@@ -100,7 +99,6 @@ wepy.page({
     // 获取订单列表
     getPageListData () {
       let _this = this
-
       let parameter = {
         orderFilter: _this.tabActive,
         pageNum: _this.pageNum,

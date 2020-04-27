@@ -53,6 +53,9 @@ function isAuthorization(url, data) {
           store.dispatch('setShowLogin', {
             isShowLogin: true
           })
+          // wx.redirectTo({
+          //   url: '/pages/index'
+          // })
         }
       }
     })
@@ -63,6 +66,7 @@ export const post = (url, data) => {
   if (data) {
     initDataK(data)
   }
+  console.log('url:' + url, data)
   return new Promise((resolve, reject, contentType) => {
     wx.showLoading({
       title: '加载中'
@@ -76,7 +80,7 @@ export const post = (url, data) => {
         token: wx.getStorageSync('token')
       },
       success(res) {
-        console.log(res)
+        console.log('res---', res)
         wx.hideLoading()
         if (res.data.code === 0) {
           initDataK(res)

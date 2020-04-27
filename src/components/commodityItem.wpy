@@ -29,6 +29,7 @@
     overflow: hidden;
     text-align: center;
     line-height: 50rpx;
+    z-index: 2;
     .top {
       background: rgba(201, 171, 121, 0.7);
       font-size: 28rpx;

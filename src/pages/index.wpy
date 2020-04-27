@@ -75,7 +75,7 @@ wepy.page({
   },
   mixins: [scrollNavigationBar],
   computed: {
-    ...mapState(['footer']),
+    ...mapState(['footer', 'mySpreader']),
     navBackground () {
       return this.footer === 4 && !this.scorllBackground ? '#000' : '#fff'
     }
@@ -99,6 +99,9 @@ wepy.page({
     if (e.scene) {
       let pageData = disposeUrlParameter(e.scene)
       this.setSpreader({ spreader: pageData.spreader })
+    }
+    if (e.spreader) {
+      this.setSpreader({ spreader: e.spreader })
     }
     isAuthorization()
   },
@@ -127,7 +130,14 @@ wepy.page({
     }
   },
   // 用户点击右上角转发
-  onShareAppMessage () { },
+  onShareAppMessage () {
+    let obj = {
+      title: '我发现租英台有很多大牌包包\n0元租，赶快来看看吧',
+      path: 'pages/index?spreader=' + this.mySpreader
+      // imageUrl: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/share-bg.png'
+    }
+    return obj
+  },
   // 页面滚动触发事件的处理函数
   onPageScroll () { },
   // 页面尺寸改变时触发，详见 响应显示区域变化

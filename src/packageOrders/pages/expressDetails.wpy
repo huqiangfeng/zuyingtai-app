@@ -149,7 +149,6 @@ wepy.page({
 
       expressDetail(parameter).then(res => {
         if (res.code === 0) {
-          console.log(res)
           _this.steps = res.data.recordList
         }
       })

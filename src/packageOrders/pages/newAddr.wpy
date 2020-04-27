@@ -112,7 +112,6 @@ wepy.page({
       }
     },
     bindRegionChange (e) {
-      console.log(e.$wx.detail)
       this.region = e.$wx.detail.value
       this.regionCode = e.$wx.detail.code[e.$wx.detail.code.length - 1]
     },
@@ -136,7 +135,6 @@ wepy.page({
     let _this = this
     const eventChannel = this.$wx.getOpenerEventChannel()
     eventChannel.on('getDefaultData', function (data) {
-      console.log(data)
       _this.addrAddress = data.addrAddress
       _this.addrContact = data.addrContact
       _this.checked = data.addrDefault == 1

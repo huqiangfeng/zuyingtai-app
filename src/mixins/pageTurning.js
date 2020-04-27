@@ -19,7 +19,6 @@ export default {
   },
   // 上拉加载
   onReachBottom() {
-    console.log('加载了')
     if (this.pageSize === 10) {
       this.pageNum = ++this.pageNum
       this.getPageListData()
