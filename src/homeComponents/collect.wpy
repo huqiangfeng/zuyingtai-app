@@ -1,9 +1,11 @@
 <style lang="less">
 .container {
-  .img-not {
-    width: 100%;
-    box-sizing: border-box;
+  .img-not-box {
     padding: 20rpx 40rpx;
+    box-sizing: border-box;
+    .img-not {
+      width: 670rpx;
+    }
   }
   .list {
     padding: 20rpx 0rpx;
@@ -14,7 +16,9 @@
 <template>
   <div class="container">
     <block v-if="not">
-      <image class="img-not" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/meiyouo.png" mode="widthFix"></image>
+      <div class="img-not-box">
+        <image class="img-not" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/meiyouo.png" mode="widthFix"></image>
+      </div>
     </block>
     <block v-else>
       <div class="list">

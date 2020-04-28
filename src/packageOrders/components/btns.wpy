@@ -227,7 +227,7 @@ wepy.component({
     tooltipShow: false, // 支付成功弹框
     // 用户地址
     isShowZifu: false, // 确认支付
-    paymentMethod: 'ZYT'  // ZYT / WX
+    paymentMethod: 'WX'  // ZYT / WX
   },
   methods: {
     // 删除订单
@@ -243,7 +243,7 @@ wepy.component({
     // 联系客服
     on_service () {
       wx.setClipboardData({
-        data: '客服微信',
+        data: 'zuyingtai001',
         success (res) {
           wx.showToast({
             title: '客服微信已复制',
@@ -254,7 +254,13 @@ wepy.component({
       })
     },
     // 晒单
-    on_bask () { },
+    on_bask () {
+      wx.showToast({
+        title: '敬请期待',
+        icon: 'none',
+        duration: 2000
+      })
+    },
     // 续 租
     on_renewal () {
       this.on_showXuZhuDialog()
@@ -316,7 +322,7 @@ wepy.component({
     on_placeOrder () {
       let goodsId = this.orderData.goodsId
       wx.navigateTo({
-        url: '/packageCommodity/pages/details',
+        url: `/packageCommodity/pages/details?goodsId=${goodsId}`,
         success: function (res) {
           res.eventChannel.emit('getGoodsId', { goodsId })
         }

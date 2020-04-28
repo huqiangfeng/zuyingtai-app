@@ -683,7 +683,7 @@ wepy.page({
     // //  客服
     // on_service () {
     //   wx.setClipboardData({
-    //     data: 'iyavic',
+    //     data: 'zuyingtai001',
     //     success (res) {
     //       wx.showToast({
     //         title: '客服微信号已复制',

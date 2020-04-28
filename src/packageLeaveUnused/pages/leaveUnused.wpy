@@ -48,19 +48,21 @@
   <div class="conetnt">
     <div class="liucheng">变现流程</div>
     <image class="liucheng-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xianzhi-liucheng.png" mode="widthFix"></image>
-    <div class="kefu" @tap="on_copy">微信客服：11110000</div>
+    <div class="kefu" @tap="on_copy">微信客服：zuyingtai001</div>
     <div class="my-btn" @tap="issue">发布闲置</div>
     <image class="guanggao-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xianzhi-guanggao.png" mode="widthFix"></image>
   </div>
 </template>
 <script>
 import wepy from '@wepy/core'
+import share from './../../mixins/share.js'
 import { } from './../../http/api.js'
 
 wepy.page({
   config: {
     navigationBarTitleText: '闲置'
   },
+  mixins: [share],
   data: {
     navBackground: 'transparency'
   },
@@ -68,7 +70,7 @@ wepy.page({
     // 复制
     on_copy () {
       wx.setClipboardData({
-        data: '11110000',
+        data: 'zuyingtai001',
         success (res) {
           wx.showToast({
             title: '客服微信号已复制',

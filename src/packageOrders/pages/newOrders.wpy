@@ -421,10 +421,10 @@ wepy.page({
           res.data.itemList.forEach(element => {
             if (element.itemCode === 'express' && element.itemSurplus > 0) {
               _this.isBaoYou = true // 是否包邮
-            } else if (element.itemCode === 'nurse' && element.itemSurplus > 0) {
+            } else if (element.itemCode === 'luxury_nurse' && element.itemSurplus > 0) {
               _this.isluxuryNurseFee = true //  是否 奢护服务
               _this.luxuryNurseFree = true //  免奢护服务费
-            } else if (element.itemCode === 'dirty' && element.itemSurplus > 0) {
+            } else if (element.itemCode === 'dirty_insure' && element.itemSurplus > 0) {
               _this.isInsurance = true //  是否 奢护服务
               _this.dirtyInsureFree = true //  免奢护服务费
             }

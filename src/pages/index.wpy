@@ -63,6 +63,7 @@ import store from '../store'
 import { isAuthorization } from './../http/api.js'
 import { disposeUrlParameter } from '../utils/util.js'
 import scrollNavigationBar from './../mixins/scroll-navigation-bar.js'
+import share from './../mixins/share.js'
 wepy.page({
   store,
   data: {
@@ -73,9 +74,9 @@ wepy.page({
     animated: false,
     iPhoneX: false
   },
-  mixins: [scrollNavigationBar],
+  mixins: [scrollNavigationBar, share],
   computed: {
-    ...mapState(['footer', 'mySpreader']),
+    ...mapState(['footer']),
     navBackground () {
       return this.footer === 4 && !this.scorllBackground ? '#000' : '#fff'
     }
@@ -107,6 +108,9 @@ wepy.page({
   },
   // 生命周期回调—监听页面显示
   onShow () {
+    if (this.footer === 1) {
+      this.$wx.selectComponent('#choose').$wepy.on_refresh()
+    }
     if (this.footer === 4) {
       this.$wx.selectComponent('#myIndex').$wepy.getPageData()
     }
@@ -128,22 +132,7 @@ wepy.page({
     } else if (this.footer === 3) {
       this.$wx.selectComponent('#collect').onReachBottom()
     }
-  },
-  // 用户点击右上角转发
-  onShareAppMessage () {
-    let obj = {
-      title: '我发现租英台有很多大牌包包\n0元租，赶快来看看吧',
-      path: 'pages/index?spreader=' + this.mySpreader
-      // imageUrl: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/share-bg.png'
-    }
-    return obj
-  },
-  // 页面滚动触发事件的处理函数
-  onPageScroll () { },
-  // 页面尺寸改变时触发，详见 响应显示区域变化
-  onResize () { },
-  // 当前是 tab 页时，点击 tab 时触发
-  onTabItemTap () { }
+  }
 })
 </script>
 <config>

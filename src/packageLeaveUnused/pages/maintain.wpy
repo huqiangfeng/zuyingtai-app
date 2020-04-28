@@ -70,7 +70,7 @@
     <div class="btn" @tap="submit">提交</div>
 
     <div class="footer">
-      <div>微信号：iyavic</div>
+      <div>微信号：zuyingtai001</div>
       <div class="copy" @tap="on_copy">复制</div>
     </div>
   </div>
@@ -118,7 +118,7 @@ wepy.page({
     // 复制
     on_copy () {
       wx.setClipboardData({
-        data: 'iyavic',
+        data: 'zuyingtai001',
         success (res) {
           wx.showToast({
             title: '微信号已复制',

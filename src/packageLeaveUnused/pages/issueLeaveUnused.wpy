@@ -71,13 +71,14 @@
 <script>
 import wepy from '@wepy/core'
 import uploadImage from './../../mixins/uploadImage.js'
+import share from './../../mixins/share.js'
 import { vailPhone } from './../../utils/util.js'
 import { listBrand, formIdle } from './../../http/api.js'
 wepy.page({
   config: {
     navigationBarTitleText: '闲置'
   },
-  mixins: [uploadImage],
+  mixins: [uploadImage, share],
   data: {
     index: 0, // 选中的品牌下标
     brands: [], // 品牌

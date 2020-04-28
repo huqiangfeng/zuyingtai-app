@@ -141,7 +141,7 @@ wepy.component({
         count: 0
       }, {
         text: '结单',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zhifu.png',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/jiedan.png',
         pagePath: '/packageOrders/pages/ordersAdmin',
         data: 'checking',
         count: 0
@@ -160,12 +160,12 @@ wepy.component({
       },
       {
         text: '我要晒单',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zhifu.png',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shaidan.png',
         pagePath: ''
       },
       {
         text: '常见问题',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zhifu.png',
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wenti.png',
         pagePath: '/packageElse/pages/problem'
       }, {
         text: '客服售后',
@@ -175,7 +175,7 @@ wepy.component({
     // 轮播图
     swiper: [
       {
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xuangou.png'
+        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/tuishou.jpg'
       }
     ]
   },

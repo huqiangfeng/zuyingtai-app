@@ -108,7 +108,7 @@ page {
         <div class="item-label">生日</div>
         <div class="item-right">
           <picker mode="date" value="{{userInfo.userBirth}}" bindchange="bindDateChange">
-            <view class="weui-input">{{userInfo.userBirth}}</view>
+            <view class="weui-input">{{userInfo.userBirth||'　'}}</view>
           </picker>
         </div>
       </div>
@@ -158,7 +158,7 @@ page {
     </div>
   </half-screen-dialog>
   <!-- 改手机号 -->
-  <tel-login show="{{ isShowTel }}" @onClickHide="on_changeShowTel" />
+  <tel-login @onClickHide="on_changeShowTel" />
 </template>
 
 <script>
@@ -180,13 +180,14 @@ wepy.page({
     sex: ['保密', '男', '女'], // 性别选择
     isShowDialog: false, // 输入弹框
     inputType: '',  // 输入框类型
-    value: '', // 输入框值
-    isShowTel: false // 手机号弹框
+    value: '' // 输入框值
   },
   methods: {
     // 切换手机号弹框
     on_changeShowTel () {
-      this.isShowTel = !this.isShowTel
+      store.dispatch('setShowBindTel', {
+        isShowBindTel: true
+      })
     },
     // 隐藏输入框
     on_hiddenDialog () {

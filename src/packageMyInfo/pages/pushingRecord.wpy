@@ -63,7 +63,7 @@
     }
   }
   .page-list {
-    padding: 388rpx 0 40rpx;
+    padding: 296rpx 0 40rpx;
   }
 }
 </style>
