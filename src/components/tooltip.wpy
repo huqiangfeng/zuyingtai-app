@@ -5,6 +5,7 @@
   justify-content: center;
   height: 100%;
   z-index: 99999;
+  position: relative;
 }
 .block {
   width: 560rpx;
@@ -63,13 +64,32 @@
   <van-overlay show="{{ show }}">
     <div class="wrapper">
       <div class="block">
-        <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/chengong.png" mode="widthFix"></image>
-        <div class="title" v-if="title">{{ title }}</div>
-        <div class="subhead" v-if="subhead">{{ subhead }}</div>
-        <div class="p" v-if="p1">{{ p1 }}</div>
-        <div class="p" v-if="p2">{{ p2 }}</div>
+        <image
+          class="img"
+          src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/chengong.png"
+          mode="widthFix"
+        ></image>
+        <div
+          class="title"
+          v-if="title"
+        >{{ title }}</div>
+        <div
+          class="subhead"
+          v-if="subhead"
+        >{{ subhead }}</div>
+        <div
+          class="p"
+          v-if="p1"
+        >{{ p1 }}</div>
+        <div
+          class="p"
+          v-if="p2"
+        >{{ p2 }}</div>
         <slot></slot>
-        <button class="btn btn-wx" @tap="affirm">
+        <button
+          class="btn btn-wx"
+          @tap="affirm"
+        >
           确认
         </button>
       </div>

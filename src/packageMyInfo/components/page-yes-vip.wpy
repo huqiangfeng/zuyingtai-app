@@ -97,27 +97,42 @@
       <div class="card">
         <div class="title">{{ memberTitle}}</div>
         <div class="row">
-          <div class="left">{{memberSurplusDays + memberTitle}}</div>
-          <div class="right">剩余：{{ time }}天</div>
+          <div class="left">{{cardDays +"天"+ memberTitle}}</div>
+          <div class="right">剩余：{{ memberSurplusDays }}天</div>
         </div>
       </div>
     </div>
 
     <div class="img-box">
-      <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip-rights.png " mode="widthFix"></image>
+      <image
+        class="img"
+        src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip-rights.png "
+        mode="widthFix"
+      ></image>
     </div>
 
     <!-- list -->
     <div class="list">
-      <div class="item" v-for="(item,index) in itemList" :key="index">
+      <div
+        class="item"
+        v-for="(item,index) in itemList"
+        :key="index"
+      >
         <div class="left">
-          <image class="img" src="{{ item.itemUserIcon  }}" mode="widthFix"></image>
+          <image
+            class="img"
+            src="{{ item.itemUserIcon  }}"
+            mode="widthFix"
+          ></image>
           <div class="text-box">
             <div class="title">{{ item.itemTitle }}</div>
             <div class="p">{{ item.itemDesc }}</div>
           </div>
         </div>
-        <div v-if="item.itemUnit === '次'" class="right">剩余{{item.itemSurplus}}次</div>
+        <div
+          v-if="item.itemUnit === '次'"
+          class="right"
+        >剩余{{item.itemSurplus}}次</div>
       </div>
     </div>
   </div>
@@ -129,6 +144,7 @@ import { vipInfo } from './../../http/api.js'
 wepy.component({
   data: {
     itemList: [],
+    cardDays: '',
     memberSurplusDays: '',
     memberDesc: '',
     memberExpireDate: '',
@@ -151,6 +167,7 @@ wepy.component({
       vipInfo().then(res => {
         if (res.code === 0) {
           _this.itemList = res.data.itemList
+          _this.cardDays = res.data.cardDays
           _this.memberDesc = res.data.memberDesc
           _this.memberExpireDate = res.data.memberExpireDate
           _this.memberLevel = res.data.memberLevel
