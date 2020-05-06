@@ -17,7 +17,7 @@
   <div class="container">
     <block v-if="not">
       <div class="img-not-box">
-        <image class="img-not" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/meiyouo.png" mode="widthFix"></image>
+        <image class="img-not" src="https://app.static.luyishepin.vip/miniapp/dev/images/meiyouo.png" mode="widthFix"></image>
       </div>
     </block>
     <block v-else>

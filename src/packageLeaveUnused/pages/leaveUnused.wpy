@@ -44,13 +44,13 @@
 <template>
   <!-- 头 -->
   <mp-navigation-bar back="{{ true }}" title="{{   navBackground !=='#fff'?'':'我的推广'  }}" ext-class="navigation" color="{{navBackground !=='#fff'?'': '#000' }}" background="{{ navBackground }}" />
-  <image class="bg-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xianzhi-bg.png" mode="widthFix"></image>
+  <image class="bg-img" src="https://app.static.luyishepin.vip/miniapp/dev/images/xianzhi-bg.png" mode="widthFix"></image>
   <div class="conetnt">
     <div class="liucheng">变现流程</div>
-    <image class="liucheng-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xianzhi-liucheng.png" mode="widthFix"></image>
+    <image class="liucheng-img" src="https://app.static.luyishepin.vip/miniapp/dev/images/xianzhi-liucheng.png" mode="widthFix"></image>
     <div class="kefu" @tap="on_copy">微信客服：zuyingtai001</div>
     <div class="my-btn" @tap="issue">发布闲置</div>
-    <image class="guanggao-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xianzhi-guanggao.png" mode="widthFix"></image>
+    <image class="guanggao-img" src="https://app.static.luyishepin.vip/miniapp/dev/images/xianzhi-guanggao.png" mode="widthFix"></image>
   </div>
 </template>
 <script>

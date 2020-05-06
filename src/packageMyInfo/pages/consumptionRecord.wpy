@@ -47,7 +47,7 @@ page {
 <template>
   <div class="page-container">
     <div class="row">
-      <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi-huoche.png" mode="widthFix"></image>
+      <image class="icon-img" src="https://app.static.luyishepin.vip/miniapp/dev/images/xiaoxi-huoche.png" mode="widthFix"></image>
       <div class="row-info">
         <div class="header">
           <div class="title">物流信息</div>
@@ -61,7 +61,7 @@ page {
       </div>
     </div>
     <div class="row">
-      <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi-xin.png" mode="widthFix"></image>
+      <image class="icon-img" src="https://app.static.luyishepin.vip/miniapp/dev/images/xiaoxi-xin.png" mode="widthFix"></image>
       <div class="row-info">
         <div class="header">
           <div class="title">消息通知</div>
@@ -74,7 +74,7 @@ page {
       </div>
     </div>
     <div class="row">
-      <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi-jiaoyi.png" mode="widthFix"></image>
+      <image class="icon-img" src="https://app.static.luyishepin.vip/miniapp/dev/images/xiaoxi-jiaoyi.png" mode="widthFix"></image>
       <div class="row-info">
         <div class="header">
           <div class="title">账户交易信息</div>

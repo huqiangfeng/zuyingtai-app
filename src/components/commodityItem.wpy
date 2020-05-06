@@ -79,8 +79,8 @@
     <!-- 星星 -->
     <div class="xinxin" v-if="collect" @tap.stop="on_collect">
       <!-- isLike === 1 -->
-      <image v-if="collect" class="xinxin-yes img-xinxin" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/yishouchang.png" mode="widthFix"></image>
-      <image v-else class="xinxin-no img-xinxin" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouchang.png" mode="widthFix"></image>
+      <image v-if="collect" class="xinxin-yes img-xinxin" src="https://app.static.luyishepin.vip/miniapp/dev/images/yishouchang.png" mode="widthFix"></image>
+      <image v-else class="xinxin-no img-xinxin" src="https://app.static.luyishepin.vip/miniapp/dev/images/shouchang.png" mode="widthFix"></image>
     </div>
     <!-- 已租用 -->
     <div class="leased" v-if="item.goodsStatus>1">

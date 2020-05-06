@@ -93,7 +93,7 @@ page {
     <div class="account group">
       <div class="header right-go" @tap="on_changeAddAccount">
         <div class="left">
-          <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/yinghangka.png" mode="widthFix"></image>
+          <image class="img" src="https://app.static.luyishepin.vip/miniapp/dev/images/yinghangka.png" mode="widthFix"></image>
 
           <div class="zfb">支付宝：{{ account }}</div>
         </div>

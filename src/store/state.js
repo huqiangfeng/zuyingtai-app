@@ -1,5 +1,5 @@
 export default {
-  baseImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/',
+  baseImageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/',
   // tab选项
   footer: 0,
   // 是否登录

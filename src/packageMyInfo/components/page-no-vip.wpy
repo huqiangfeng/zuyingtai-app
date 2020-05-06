@@ -104,7 +104,7 @@
   <div class="page-no-vip">
     <!-- logo -->
     <div class="page-logo">
-      <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip-logo.png" mode="widthFix"></image>
+      <image class="img" src="https://app.static.luyishepin.vip/miniapp/dev/images/vip-logo.png" mode="widthFix"></image>
     </div>
     <!-- vip-card -->
     <div class="vip-card">
@@ -169,38 +169,38 @@ wepy.component({
       {
         title: '0元体验',
         explain: '打牌包包0元租',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip1.png',
-        actioveImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip1.png'
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/vip1.png',
+        actioveImageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/vip1.png'
       },
       {
         title: '专项折扣',
         explain: '数款包包折扣租',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip2.png',
-        actioveImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip2-act.png'
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/vip2.png',
+        actioveImageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/vip2-act.png'
       },
       {
         title: '专享包包',
         explain: '数款包包优先租',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip3.png',
-        actioveImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip3-act.png'
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/vip3.png',
+        actioveImageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/vip3-act.png'
       },
       {
         title: '5次延长',
         explain: '会员最高延长150天',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip4.png',
-        actioveImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip4-act.png'
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/vip4.png',
+        actioveImageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/vip4-act.png'
       },
       {
         title: '6次包邮',
         explain: '往返包邮',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip5.png',
-        actioveImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip5-act.png'
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/vip5.png',
+        actioveImageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/vip5-act.png'
       },
       {
         title: '3次免费鉴定',
         explain: '鉴定您的自有包包',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip6.png',
-        actioveImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/vip6-act.png'
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/vip6.png',
+        actioveImageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/vip6-act.png'
       }
     ]
   },
@@ -242,7 +242,7 @@ wepy.component({
       if (!_this.checkedProtocol) {
         wx.showModal({
           title: '提示',
-          content: '请阅读并同意寄卖协议',
+          content: '请阅读并同意会员卡购买协议',
           success (res) {
             if (res.confirm) {
               console.log('用户点击确定')

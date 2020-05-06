@@ -16,7 +16,7 @@ wepy.app({
     }
   },
   globalData: {
-    baseImageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/'
+    baseImageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/'
   },
   onLaunch () {
     // this.testAsync()

@@ -103,7 +103,7 @@ page {
       <van-steps textKey="status" descKey="time" direction="vertical" active-icon="checked" active-color="#C9AB79" inactive-color="#999999" steps="{{ steps }}" active="{{ stepsActive }}" />
     </div>
     <div v-else class="not">
-      <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/huoche.png" mode="widthFix"></image>
+      <image class="icon-img" src="https://app.static.luyishepin.vip/miniapp/dev/images/huoche.png" mode="widthFix"></image>
       <div class="p1">暂无物流，商家未发货，请联系客服催单</div>
       <div class="p2">售后微信：zhuyingtai99</div>
     </div>

@@ -102,15 +102,15 @@ wepy.component({
     iPhoneX: false,
     icons: [
       {
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/feixinxin.png',
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/feixinxin.png',
         text: '海报'
       },
       {
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouhouxiao.png',
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/shouhouxiao.png',
         text: '客服'
       }, {
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouchang.png',
-        imageActioveSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/yishouchang.png',
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/shouchang.png',
+        imageActioveSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/yishouchang.png',
         text: '收藏'
       }
     ]

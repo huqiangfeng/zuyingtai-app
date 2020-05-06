@@ -55,9 +55,17 @@ wepy.component({
     on_tapItem (item) {
       if (item.imageHref) {
         let dataObj = pageStrAnalysis(item.imageHref)
+        console.log(dataObj)
         if (dataObj.url === 'goods/zone') {
           wx.navigateTo({
             url: '/packageCommodity/pages/goodsZone?zoneId=' + dataObj.zoneId
+          })
+        } else if (dataObj.url === 'goods/brand') {
+          wx.navigateTo({
+            url: '/packageCommodity/pages/brandDetails',
+            success: function (res) {
+              res.eventChannel.emit('getBrandId', { brandId: dataObj.brandId })
+            }
           })
         }
       }

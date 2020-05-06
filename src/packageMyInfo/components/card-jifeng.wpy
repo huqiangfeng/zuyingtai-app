@@ -46,7 +46,7 @@
     <div class="row">
       <div class="crrent-jifen">当前积分</div>
       <div class="guizhe" @tap="on_toProtocol">
-        <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wenhao.png" mode="widthFix"></image>
+        <image class="img" src="https://app.static.luyishepin.vip/miniapp/dev/images/wenhao.png" mode="widthFix"></image>
         <div>积分规则</div>
       </div>
     </div>

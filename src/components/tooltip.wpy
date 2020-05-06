@@ -1,4 +1,7 @@
 <style lang="less">
+van-overlay {
+  z-index: 9999999;
+}
 .wrapper {
   display: flex;
   align-items: center;
@@ -15,6 +18,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 999999;
   // justify-content: center;
   .img {
     width: 250rpx;
@@ -47,53 +51,34 @@
     height: 80rpx;
     border-radius: 12rpx;
     line-height: 80rpx;
-    text-align: center;
-    font-size: 30rpx;
-    color: rgba(48, 49, 59, 1);
-    margin-top: 30rpx;
     border: 1px solid rgba(48, 49, 59, 1);
-  }
-  .btn-wx {
-    border: none;
     background: rgba(48, 49, 59, 1);
-    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .btn-txt {
+      text-align: center;
+      font-size: 30rpx;
+      color: #fff;
+    }
   }
 }
 </style>
 <template>
   <van-overlay show="{{ show }}">
-    <div class="wrapper">
-      <div class="block">
-        <image
-          class="img"
-          src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/chengong.png"
-          mode="widthFix"
-        ></image>
-        <div
-          class="title"
-          v-if="title"
-        >{{ title }}</div>
-        <div
-          class="subhead"
-          v-if="subhead"
-        >{{ subhead }}</div>
-        <div
-          class="p"
-          v-if="p1"
-        >{{ p1 }}</div>
-        <div
-          class="p"
-          v-if="p2"
-        >{{ p2 }}</div>
+    <cover-view class="wrapper">
+      <cover-view class="block">
+        <cover-image class="img" src="https://app.static.luyishepin.vip/miniapp/dev/images/chengong.png" mode="widthFix"></cover-image>
+        <cover-view class="title" v-if="title">{{ title }}</cover-view>
+        <cover-view class="subhead" v-if="subhead">{{ subhead }}</cover-view>
+        <cover-view class="p" v-if="p1">{{ p1 }}</cover-view>
+        <cover-view class="p" style="margin-bottom:30rpx;" v-if="p2">{{ p2 }}</cover-view>
         <slot></slot>
-        <button
-          class="btn btn-wx"
-          @tap="affirm"
-        >
-          确认
-        </button>
-      </div>
-    </div>
+        <cover-view class="btn" @tap="affirm">
+          <cover-view class="btn-txt">确认</cover-view>
+        </cover-view>
+      </cover-view>
+    </cover-view>
   </van-overlay>
 </template>
 

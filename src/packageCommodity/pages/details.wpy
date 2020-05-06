@@ -292,7 +292,7 @@
       <div>
         成为vip享受更多折扣本次可节约¥{{ details.dayRent - details.memberDayRent }}/天
       </div>
-      <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/bofang.png" mode="widthFix"></image>
+      <image class="icon-img" src="https://app.static.luyishepin.vip/miniapp/dev/images/bofang.png" mode="widthFix"></image>
     </div>
     <!-- 详情 -->
     <div class="container-x-q">
@@ -330,7 +330,7 @@
         </div>
         <div class="right" @tap="on_toPinpai">
           <div class="text">品牌详情</div>
-          <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/bofanghui.png" mode="widthFix"></image>
+          <image class="icon-img" src="https://app.static.luyishepin.vip/miniapp/dev/images/bofanghui.png" mode="widthFix"></image>
         </div>
       </div>
       <div class="jie-sao">{{ details.brandIntro }}</div>
@@ -361,7 +361,7 @@
           <div class="left">
             <div class="title1">
               <div class="text">免赔服务</div>
-              <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wenhao.png" mode="widthFix"></image>
+              <image class="icon-img" src="https://app.static.luyishepin.vip/miniapp/dev/images/wenhao.png" mode="widthFix"></image>
             </div>
             <div class="title2">
               轻微划痕免赔
@@ -383,11 +383,11 @@
         <div class="poster-block">
           <!--关闭弹框 -->
           <div class="poster-close" @tap="changeShowPoster">
-            <image class="close-img img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/caca.png" mode="widthFix"></image>
+            <image class="close-img img" src="https://app.static.luyishepin.vip/miniapp/dev/images/caca.png" mode="widthFix"></image>
           </div>
           <!--保存图片 -->
           <div class="poster-save" @tap="on_posterSave">
-            <image class="save-img img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/save.png" mode="widthFix"></image>
+            <image class="save-img img" src="https://app.static.luyishepin.vip/miniapp/dev/images/save.png" mode="widthFix"></image>
           </div>
           <canvas class="my-canvas" canvas-id="myCanvas" id="myCanvas"></canvas>
           <image class="img-main" src="{{ imgSrc }}" mode="widthFix"></image>
@@ -547,7 +547,7 @@ wepy.page({
       let _this = this
       let imgLogoPromise = new Promise((resolve, reject) => {
         wx.getImageInfo({
-          src: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/logo3.png',
+          src: 'https://app.static.luyishepin.vip/miniapp/dev/images/logo3.png',
           success (res) {
             resolve(res)
           },

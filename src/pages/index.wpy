@@ -34,7 +34,7 @@
   <div class="page-container">
     <mp-navigation-bar back="{{ false }}" ext-class="navigation" show="{{show}}" background="{{ navBackground }}">
       <div slot="left" v-show="footer===0||footer===1||footer===3">
-        <image class="logo" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/logo.png" mode="widthFix"></image>
+        <image class="logo" src="https://app.static.luyishepin.vip/miniapp/dev/images/logo.png" mode="widthFix"></image>
       </div>
     </mp-navigation-bar>
     <div class="container">

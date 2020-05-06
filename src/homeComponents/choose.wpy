@@ -96,7 +96,7 @@
           <div class="nav-l-item" @tap="onChangeNavActive(1)" :class="{'nav-active': navActive=== 1 }">0元专区</div>
         </div>
         <div class="nav-r" @tap="to_filtrate">
-          <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zu.png" mode="widthFix"></image>
+          <image class="img" src="https://app.static.luyishepin.vip/miniapp/dev/images/zu.png" mode="widthFix"></image>
           <div>筛选</div>
         </div>
       </div>
@@ -105,7 +105,7 @@
       </div>
       <!-- 非会员 -->
       <!-- <div class="nonmember">
-        <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zuiyuanzhuanxiang.png" mode="widthFix"></image>
+        <image class="img" src="https://app.static.luyishepin.vip/miniapp/dev/images/zuiyuanzhuanxiang.png" mode="widthFix"></image>
         <div class="p1">您还不是会员！</div>
         <div class="p2">0元专区为VIP会员专享服务</div>
         <div class="btn">加入VIP</div>

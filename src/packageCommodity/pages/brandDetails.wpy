@@ -78,7 +78,7 @@
     </mp-navigation-bar>
     <!-- 页面内容 -->
     <div class="poster">
-      <image class="img-poster" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/brand-bg.png" mode="widthFix"></image>
+      <image class="img-poster" src="https://app.static.luyishepin.vip/miniapp/dev/images/brand-bg.png" mode="widthFix"></image>
     </div>
     <!-- 品牌 -->
     <div class="brand-box">
@@ -94,7 +94,7 @@
       <div class="jie-sao">{{ details.brandIntro }}</div>
 
       <div class="more" @tap="more = !more">
-        <image class="img" :class="{'turn':more}" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/jiantouxia.png" mode="widthFix"></image>
+        <image class="img" :class="{'turn':more}" src="https://app.static.luyishepin.vip/miniapp/dev/images/jiantouxia.png" mode="widthFix"></image>
       </div>
     </div>
     <!-- 商品列表 -->

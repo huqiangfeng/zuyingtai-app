@@ -75,17 +75,17 @@
       <!-- 消息/推 -->
       <div class="icons">
         <div class="tui-icon icon" @tap="on_toPushingHands">
-          <image class="img-icon" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/tui.png" mode="widthFix"></image>
+          <image class="img-icon" src="https://app.static.luyishepin.vip/miniapp/dev/images/tui.png" mode="widthFix"></image>
         </div>
         <div class="ling-icon icon" @tap="on_toInformation" :class="{'active':true}">
-          <image class="img-icon" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/xiaoxi.png" mode="widthFix"></image>
+          <image class="img-icon" src="https://app.static.luyishepin.vip/miniapp/dev/images/xiaoxi.png" mode="widthFix"></image>
         </div>
       </div>
     </div>
     <!-- 订单 -->
     <nav-box @ontitle="on_toOrdersAdmin" list="{{ orders }}" title="全部订单">
       <div class="title">
-        <image class="img-icon" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/bofang1.png" mode="widthFix"></image>
+        <image class="img-icon" src="https://app.static.luyishepin.vip/miniapp/dev/images/bofang1.png" mode="widthFix"></image>
         <div class="text" @tap="to_userAddr">地址管理</div>
       </div>
     </nav-box>
@@ -117,31 +117,31 @@ wepy.component({
 
       {
         text: '待支付',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/zhifu.png',
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/zhifu.png',
         pagePath: '/packageOrders/pages/ordersAdmin',
         data: 'unpaid',
         count: 0
       }, {
         text: '待收货',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouhuo.png',
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/shouhuo.png',
         pagePath: '/packageOrders/pages/ordersAdmin',
         data: 'sending',
         count: 0
       }, {
         text: '待归还',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/daiguihuan.png',
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/daiguihuan.png',
         pagePath: '/packageOrders/pages/ordersAdmin',
         data: 'using',
         count: 0
       }, {
         text: '归还中',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/huihuanzhong.png',
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/huihuanzhong.png',
         pagePath: '/packageOrders/pages/ordersAdmin',
         data: 'returning',
         count: 0
       }, {
         text: '结单',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/jiedan.png',
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/jiedan.png',
         pagePath: '/packageOrders/pages/ordersAdmin',
         data: 'checking',
         count: 0
@@ -151,31 +151,31 @@ wepy.component({
       //
       {
         text: '我要鉴定',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/jianding.png',
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/jianding.png',
         pagePath: '/packageLeaveUnused/pages/authenticate'
       }, {
         text: '我要养护',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/yanghu.png',
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/yanghu.png',
         pagePath: '/packageLeaveUnused/pages/maintain'
       },
       {
         text: '我要晒单',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shaidan.png',
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/shaidan.png',
         pagePath: ''
       },
       {
         text: '常见问题',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wenti.png',
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/wenti.png',
         pagePath: '/packageElse/pages/problem'
       }, {
         text: '客服售后',
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/shouhouda.png',
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/shouhouda.png',
         copy: '客服售后'
       }],
     // 轮播图
     swiper: [
       {
-        imageSrc: 'https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/tuishou.jpg'
+        imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/tuishou.jpg'
       }
     ]
   },

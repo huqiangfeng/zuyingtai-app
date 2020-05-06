@@ -103,7 +103,7 @@
 <template>
   <div class="apply">
     <!-- 背景 -->
-    <image class="img-bg" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/tuishou-bg.png" mode="widthFix">
+    <image class="img-bg" src="https://app.static.luyishepin.vip/miniapp/dev/images/tuishou-bg.png" mode="widthFix">
       <div class="text-box">
         <div class="text1">成为推手达人</div>
         <div class="text2">轻松赚奖励金</div>

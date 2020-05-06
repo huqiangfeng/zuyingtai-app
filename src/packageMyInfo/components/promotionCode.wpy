@@ -49,7 +49,7 @@
     <!-- 推广记录 -->
     <div class="promotion-record" @tap="on_toPushingRecord">
       <div>推广记录</div>
-      <image class="img-icon" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/bofang2.png" mode="widthFix"></image>
+      <image class="img-icon" src="https://app.static.luyishepin.vip/miniapp/dev/images/bofang2.png" mode="widthFix"></image>
     </div>
     <!--  -->
     <!-- <div class="data-valbox">

@@ -58,7 +58,7 @@
 <template>
   <div class="wrapper">
     <div class="block">
-      <image class="img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/{{ imageSrc }}" mode="widthFix"></image>
+      <image class="img" src="https://app.static.luyishepin.vip/miniapp/dev/images/{{ imageSrc }}" mode="widthFix"></image>
       <div class="title" v-if="title">{{ title }}</div>
       <div class="subhead" v-if="subhead">{{ subhead }}</div>
       <div class="p" v-if="p1">{{ p1 }}</div>

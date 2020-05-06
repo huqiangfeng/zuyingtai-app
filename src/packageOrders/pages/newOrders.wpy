@@ -295,7 +295,7 @@
       >
         <!-- <div class="row" @tap="on_changePaymentMethod('ZYT')">
           <div class="left">
-            <image class="icon-img" src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/qian-icon.png" mode="widthFix"></image>
+            <image class="icon-img" src="https://app.static.luyishepin.vip/miniapp/dev/images/qian-icon.png" mode="widthFix"></image>
             <div class="text">租英台账户（余额：¥0）</div>
           </div>
           <div class="right">
@@ -309,7 +309,7 @@
           <div class="left">
             <image
               class="icon-img"
-              src="https://rent-luxury.oss-cn-shanghai.aliyuncs.com/miniapp/dev/images/wx.png"
+              src="https://app.static.luyishepin.vip/miniapp/dev/images/wx.png"
               mode="widthFix"
             ></image>
             <div class="text">微信</div>
