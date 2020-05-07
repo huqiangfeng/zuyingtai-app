@@ -441,13 +441,16 @@ wepy.page({
     checkedAddr: null, // 用户选中地址
     steps: [
       {
-        text: '签收'
+        text: '签收',
+        desc: ''
       },
       {
-        text: '到期'
+        text: '到期',
+        desc: ''
       },
       {
-        text: '归还'
+        text: '归还',
+        desc: ''
       }
     ],
     orderData: {
@@ -491,6 +494,23 @@ wepy.page({
             addrArea: res.data.sendAddrArea,
             addrAddress: res.data.sendAddrAddress
           }
+
+          // orderEndTime // 订单结束时间
+          // _this.steps = [
+          //   {
+          //     text: '签收',
+          //     desc: res.data.sendAcceptTime
+          //   },
+          //   {
+          //     text: '到期',
+          //     desc: res.data.rentDueDate
+          //   },
+          //   {
+          //     text: '归还',
+          //     desc: res.data.backStartTime
+          //   }
+          // ]
+
           // wx.setNavigationBarTitle({ title: _this.orderData.orderStatusDisplay })
         }
       })

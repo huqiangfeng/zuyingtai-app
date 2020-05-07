@@ -48,36 +48,20 @@
       }
     }
     .list {
-      margin-top: 100rpx;
-    }
-    .nonmember {
+      margin: 100rpx auto 0;
+      width: 670rpx;
       display: flex;
-      align-items: center;
-      flex-direction: column;
-      margin-top: 230rpx;
-      .img {
-        width: 322rpx;
-        margin-bottom: 60rpx;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .commodity-item {
+        width: 335rpx;
+        border-bottom: 1px solid #e5e5e5;
+        &:nth-child(2n-1) {
+          border-right: 1px solid #e5e5e5;
+        }
       }
-      .p1 {
-        margin-bottom: 20rpx;
-        font-size: 32rpx;
-        color: rgba(49, 49, 59, 1);
-      }
-      .p2 {
-        margin-bottom: 60rpx;
-        font-size: 26rpx;
-        color: rgba(49, 49, 59, 1);
-      }
-      .btn {
-        width: 200rpx;
-        height: 54rpx;
-        line-height: 54rpx;
-        text-align: center;
-        background: rgba(201, 171, 121, 1);
-        border-radius: 27rpx;
-        font-size: 28rpx;
-        color: rgba(255, 255, 255, 1);
+      .border-none {
+        border: none !important;
       }
     }
   }
@@ -101,15 +85,11 @@
         </div>
       </div>
       <div class="list" v-show="isShowlist">
-        <commodity-list @refresh="on_refresh" list="{{ list }}"></commodity-list>
+        <div class="commodity-item" :class="{ 'border-none':list.length==1 }" v-for="(item,index) in list" :key="index">
+          <commodity-item @tapitem="on_tapItem" @refresh="on_refresh" item="{{item}}"></commodity-item>
+        </div>
+        <!-- <commodity-list @refresh="on_refresh" list="{{ list }}"></commodity-list> -->
       </div>
-      <!-- 非会员 -->
-      <!-- <div class="nonmember">
-        <image class="img" src="https://app.static.luyishepin.vip/miniapp/dev/images/zuiyuanzhuanxiang.png" mode="widthFix"></image>
-        <div class="p1">您还不是会员！</div>
-        <div class="p2">0元专区为VIP会员专享服务</div>
-        <div class="btn">加入VIP</div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -144,6 +124,10 @@ wepy.component({
     list: []
   },
   methods: {
+    on_tapItem (e) {
+      let goodsId = e.goodsId
+      wx.navigateTo({ url: '/packageCommodity/pages/details?goodsId=' + goodsId })
+    },
     // 更新
     on_refresh () {
       // this.on_collect()
@@ -227,7 +211,8 @@ wepy.component({
 {
     usingComponents: {
         "van-search": "~@vant/search/index",
-        "commodity-list": "~@components/commodityList"
+        // "commodity-list": "~@components/commodityList",
+        "commodity-item": "~@components/commodityItem"
     }
 }
 </config>

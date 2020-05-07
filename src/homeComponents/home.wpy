@@ -25,7 +25,7 @@
     <block v-for="(item,index) in images" :key="index">
       <block v-if="item.imageSrc === 'carousel'">
         <div class="swiper">
-          <my-swiper @tapitem="on_tapItem" setStyle="height: 240rpx;" list="{{ item.list }}" />
+          <my-swiper @tapitem="on_tapItem" setStyle="{{ item.imageStyle  }}" list="{{ item.list }}" />
         </div>
       </block>
       <block v-else-if="item.imageSrc === 'list'">
@@ -54,18 +54,29 @@ wepy.component({
   methods: {
     on_tapItem (item) {
       if (item.imageHref) {
+        console.log(item.imageHref)
         let dataObj = pageStrAnalysis(item.imageHref)
         console.log(dataObj)
         if (dataObj.url === 'goods/zone') {
+          // 跳专区
           wx.navigateTo({
             url: '/packageCommodity/pages/goodsZone?zoneId=' + dataObj.zoneId
           })
         } else if (dataObj.url === 'goods/brand') {
+          // 跳品牌
           wx.navigateTo({
             url: '/packageCommodity/pages/brandDetails',
             success: function (res) {
               res.eventChannel.emit('getBrandId', { brandId: dataObj.brandId })
             }
+          })
+        } else if (dataObj.url === 'user/member') {
+          // 跳vip
+          wx.navigateTo({ url: '/packageMyInfo/pages/vipMember' })
+        } else if (dataObj.url === 'goods/detail') {
+          // 跳商品详情
+          wx.navigateTo({
+            url: `/packageCommodity/pages/details?goodsId=${dataObj.goodsId}`
           })
         }
       }

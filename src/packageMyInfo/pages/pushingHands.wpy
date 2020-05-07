@@ -152,7 +152,7 @@ wepy.page({
       ctx.setFillStyle('#fff')
       ctx.fillRect(0, 860, 670, 180)
       ctx.setStrokeStyle('#ddd')
-      ctx.strokeRect(0, 860, 670, 180)
+      ctx.strokeRect(0, 860, 669, 179)
       // 图片
       ctx.drawImage(data.qrCode, 495, 877, 144, 144)
       ctx.setFillStyle('#000000')

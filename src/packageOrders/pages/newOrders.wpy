@@ -138,10 +138,7 @@
     <!-- 商品 -->
     <div class="commodity-box">
       <div class="commodity">
-        <commodity-item
-          isFaHuo="{{ true }}"
-          item="{{ goods }}"
-        ></commodity-item>
+        <commodity-item isFaHuo="{{ true }}" item="{{ goods }}"></commodity-item>
       </div>
       <!-- 租用天数 -->
       <div class="com-row">
@@ -149,25 +146,16 @@
         <div class="right">{{ tenancyDays }}天</div>
       </div>
       <!-- 会员租金 -->
-      <div
-        class="com-row row-ext"
-        v-if="account.memberLevel > 0"
-      >
+      <div class="com-row row-ext" v-if="account.memberLevel > 0">
         <div class="left">
           <div>会员租金</div>
         </div>
         <div class="right jia-ge">¥{{ vipRent }}</div>
       </div>
-      <div
-        v-else
-        class="com-row row-ext"
-      >
+      <div v-else class="com-row row-ext">
         <div class="left">
           <div>非会员租金</div>
-          <div
-            class="left-ext"
-            @tap="on_toVip"
-          >
+          <div class="left-ext" @tap="on_toVip">
             <div class="t1">开通会员本单租金立省</div>
             <div class="t2">¥{{ spareRent }}</div>
             <div class="t3">　去开通 》</div>
@@ -179,29 +167,17 @@
       <div class="com-row row-ext">
         <div class="left">
           <div>商品押金</div>
-          <div
-            class="left-ext"
-            v-if="account.memberLevel < 1 "
-          >包包归还签收后，1-2个工作日内极速退押金</div>
+          <div class="left-ext" v-if="account.memberLevel < 1 ">包包归还签收后，1-2个工作日内极速退押金</div>
         </div>
-        <div
-          class="right jia-ge"
-          :class="{'discardFee':account.memberLevel > 0 }"
-        >¥{{ goods.goodsDeposit }}</div>
+        <div class="right jia-ge" :class="{'discardFee':account.memberLevel > 0 }">¥{{ goods.goodsDeposit }}</div>
       </div>
-      <div
-        class="com-row row-ext"
-        v-if="account.memberLevel < 1"
-      >
+      <div class="com-row row-ext" v-if="account.memberLevel < 1">
         <div class="left">
           <div>会员商品押金</div>
         </div>
         <div class="right jia-ge">¥{{ goods.lowestGoodsDeposit }}</div>
       </div>
-      <div
-        class="com-row row-ext"
-        v-if="account.memberLevel > 1"
-      >
+      <div class="com-row row-ext" v-if="account.memberLevel > 1">
         <div class="left">
           <div>会员商品押金</div>
           <div class="left-ext">包包归还签收后，1-2个工作日内极速退押金</div>
@@ -218,81 +194,40 @@
         <div class="right">¥{{ goods.moreGoodsFee }}</div>
       </div>
       <!-- 免赔服务 -->
-      <div
-        @tap="isInsurance = !isInsurance"
-        class="com-row row-ext"
-      >
+      <div @tap="isInsurance = !isInsurance" class="com-row row-ext">
         <div class="left left-flex">
           <div>免赔服务</div>
-          <van-checkbox
-            icon-size="28rpx"
-            checked-color="#C9AB79"
-            value="{{ isInsurance || dirtyInsureFree  }}"
-          ></van-checkbox>
-          <div
-            class="t1"
-            @tap.stop="on_toProtocol('dirty_insure_notice')"
-          >免赔险须知</div>
+          <van-checkbox icon-size="28rpx" checked-color="#C9AB79" value="{{ isInsurance || dirtyInsureFree  }}"></van-checkbox>
+          <div class="t1" @tap.stop="on_toProtocol('dirty_insure_notice')">免赔险须知</div>
         </div>
-        <div
-          class="right"
-          :class="{'discardFee':dirtyInsureFree }"
-        >¥{{ goods.dirtyInsureFee }}</div>
+        <div class="right" :class="{'discardFee':dirtyInsureFree }">¥{{ goods.dirtyInsureFee }}</div>
       </div>
       <!-- 奢护服务 -->
-      <div
-        @tap="isluxuryNurseFee = !isluxuryNurseFee"
-        class="com-row row-ext"
-      >
+      <div @tap="isluxuryNurseFee = !isluxuryNurseFee" class="com-row row-ext">
         <div class="left left-flex">
           <div>奢护服务</div>
-          <van-checkbox
-            icon-size="28rpx"
-            checked-color="#C9AB79"
-            value="{{ isluxuryNurseFee || luxuryNurseFree }}"
-          ></van-checkbox>
-          <div
-            class="t1"
-            @tap.stop="on_toProtocol('luxury_nurse_notice')"
-          >奢护服务标准</div>
+          <van-checkbox icon-size="28rpx" checked-color="#C9AB79" value="{{ isluxuryNurseFee || luxuryNurseFree }}"></van-checkbox>
+          <div class="t1" @tap.stop="on_toProtocol('luxury_nurse_notice')">奢护服务标准</div>
         </div>
-        <div
-          class="right"
-          :class="{'discardFee':luxuryNurseFree }"
-        >¥{{goods.luxuryNurseFee }}</div>
+        <div class="right" :class="{'discardFee':luxuryNurseFree }">¥{{goods.luxuryNurseFee }}</div>
       </div>
       <!-- 顺丰快递 -->
       <div class="com-row">
         <div class="left">顺丰快递来回</div>
-        <div
-          class="right"
-          :class="{'discardFee':isBaoYou }"
-        >¥{{ goods.expressFee }}</div>
+        <div class="right" :class="{'discardFee':isBaoYou }">¥{{ goods.expressFee }}</div>
       </div>
     </div>
     <!-- 支付 -->
     <div class="zhufu">
-      <zhifu-bar
-        @zhifu="on_showZifu"
-        dataObj="{{ consumptionObj }}"
-      ></zhifu-bar>
+      <zhifu-bar @zhifu="on_showZifu" dataObj="{{ consumptionObj }}"></zhifu-bar>
     </div>
     <!-- 支付弹框 -->
-    <half-screen-dialog
-      @close="on_showZifu"
-      show="{{ isShowZifu }}"
-    >
-      <div
-        class="slot-title"
-        slot="title"
-      >
+    <half-screen-dialog @close="on_showZifu" show="{{ isShowZifu }}">
+      <div class="slot-title" slot="title">
         <div class="t1"> ¥{{ consumptionObj.sum }} </div>
         <div class="t2"> 应付金额 </div>
       </div>
-      <div
-        class="slot-conotent"
-        slot="desc"
-      >
+      <div class="slot-conotent" slot="desc">
         <!-- <div class="row" @tap="on_changePaymentMethod('ZYT')">
           <div class="left">
             <image class="icon-img" src="https://app.static.luyishepin.vip/miniapp/dev/images/qian-icon.png" mode="widthFix"></image>
@@ -302,40 +237,20 @@
             <van-checkbox icon-size="40rpx" checked-color="#C9AB79" value="{{ paymentMethod === 'ZYT' }}"></van-checkbox>
           </div>
         </div> -->
-        <div
-          class="row"
-          @tap="on_changePaymentMethod('WX')"
-        >
+        <div class="row" @tap="on_changePaymentMethod('WX')">
           <div class="left">
-            <image
-              class="icon-img"
-              src="https://app.static.luyishepin.vip/miniapp/dev/images/wx.png"
-              mode="widthFix"
-            ></image>
+            <image class="icon-img" src="https://app.static.luyishepin.vip/miniapp/dev/images/wx.png" mode="widthFix"></image>
             <div class="text">微信</div>
           </div>
           <div class="right">
-            <van-checkbox
-              icon-size="40rpx"
-              checked-color="#C9AB79"
-              value="{{ paymentMethod === 'WX' }}"
-            ></van-checkbox>
+            <van-checkbox icon-size="40rpx" checked-color="#C9AB79" value="{{ paymentMethod === 'WX' }}"></van-checkbox>
           </div>
         </div>
-        <div
-          class="btn"
-          @tap="on_zifu"
-        >确认支付</div>
+        <div class="btn" @tap="on_zifu">确认支付</div>
       </div>
     </half-screen-dialog>
     <!-- 弹框 -->
-    <tooltip
-      @affirm="on_affirm"
-      show="{{ tooltipShow }}"
-      title="支付成功"
-      p1="您的包包正在打包中，可在我的订单中"
-      p2="查看订单状态"
-    ></tooltip>
+    <tooltip @affirm="on_affirm" show="{{ tooltipShow }}" title="支付成功" p1="您的包包正在打包中，可在我的订单中" p2="查看订单状态"></tooltip>
   </div>
 </template>
 <script>
@@ -355,27 +270,34 @@ wepy.page({
     },
     // 支付对象
     consumptionObj () {
+      let goodsDeposit = this.goods.goodsDeposit || 0
+      let memberGoodsDeposit = this.goods.memberGoodsDeposit || 0
+      let moreGoodsFee = this.goods.moreGoodsFee || 0
+      let dirtyInsureFee = this.goods.dirtyInsureFee || 0
+      let luxuryNurseFee = this.goods.luxuryNurseFee || 0
+      let expressFee = this.goods.expressFee || 0
+
       let obj = {
         fee: 0,
         sum: 0,
-        deposit: Number(this.goods.goodsDeposit)
+        deposit: goodsDeposit
       }
       if (this.account.memberLevel > 0) {
-        obj.deposit = Number(this.goods.memberGoodsDeposit)
+        obj.deposit = Number(memberGoodsDeposit.toFixed(2))
       }
       let zhujing = this.rent
       if (this.account.memberLevel > 0) {
         zhujing = this.vipRent
       }
-      obj.fee = zhujing + Number(this.goods.moreGoodsFee)  // 加件费
+      obj.fee = Number((zhujing + moreGoodsFee).toFixed(2))// 加件费
       if (this.isInsurance && !this.dirtyInsureFree) { // 免赔
-        obj.fee += Number(this.goods.dirtyInsureFee)
+        obj.fee += Number(dirtyInsureFee.toFixed(2))
       }
       if (this.isluxuryNurseFee && !this.luxuryNurseFree) { // 奢护服务
-        obj.fee += Number(this.goods.luxuryNurseFee)
+        obj.fee += Number(luxuryNurseFee.toFixed(2))
       }
       if (!this.isBaoYou) { // 包邮
-        obj.fee += Number(this.goods.expressFee)
+        obj.fee += Number(expressFee.toFixed(2))
       }
       obj.sum = Number((obj.fee + obj.deposit).toFixed(2))
       return obj

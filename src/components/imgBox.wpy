@@ -14,17 +14,8 @@
 
 <template>
   <div class="container">
-    <div
-      class="arr-item"
-      v-for="(item,index) in list"
-      :key="index"
-    >
-      <image
-      @tap="on_tapItem(item)"
-        class="arr-img"
-        src="{{ item.imageSrc }}"
-        mode="widthFix"
-      ></image>
+    <div class="arr-item" v-for="(item,index) in list" :key="index">
+      <image @tap="on_tapItem(item)" style="{{  item.imageStyle }}" class="arr-img" src="{{ item.imageSrc }}" mode="widthFix"></image>
     </div>
   </div>
 </template>
@@ -39,7 +30,7 @@ wepy.component({
     }
   },
   methods: {
-    on_tapItem(item) {
+    on_tapItem (item) {
       this.$emit('tapitem', item)
     }
   }

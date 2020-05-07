@@ -134,11 +134,16 @@ export const pageStrAnalysis = (str) => {
     return ''
   }
   let params = {}
-  params.url = str.slice(6, str.indexOf('?'))
-  let hash = str.slice(str.indexOf('?') + 1).split('&')
-  for (let i = 0; i < hash.length; i++) {
-    let h = hash[i].split('=') //
-    params[h[0]] = h[1]
+
+  if (str.indexOf('?') > 0) {
+    params.url = str.slice(6, str.indexOf('?'))
+    let hash = str.slice(str.indexOf('?') + 1).split('&')
+    for (let i = 0; i < hash.length; i++) {
+      let h = hash[i].split('=') //
+      params[h[0]] = h[1]
+    }
+  } else {
+    params.url = str.slice(6, str.length)
   }
   return params
 }

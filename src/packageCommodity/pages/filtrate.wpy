@@ -40,7 +40,7 @@
   .type-box {
     .brand-box();
     margin-top: 20rpx;
-    padding-bottom: 170rpx;
+    // padding-bottom: 170rpx;
   }
 
   .bon-box {
@@ -93,6 +93,7 @@
         <option-item text="{{ item.text }}" active="{{ checkedType === item.id }}" bgc="{{ true }}"></option-item>
       </div>
     </div>
+    <div style="height: 100rpx;"></div>
     <!-- btn -->
     <div class="bon-box">
       <div class="btn-reset" @tap="on_reset">重置</div>
