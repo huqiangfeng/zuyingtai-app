@@ -23,12 +23,12 @@
   <div class="container">
     <!--  -->
     <block v-for="(item,index) in images" :key="index">
-      <block v-if="item.imageSrc === 'carousel'">
+      <block v-if="item.cellCategory === 'carousel'">
         <div class="swiper">
-          <my-swiper @tapitem="on_tapItem" setStyle="{{ item.imageStyle  }}" list="{{ item.list }}" />
+          <my-swiper @tapitem="on_tapItem" setStyle="{{ item.cellStyle  }}" list="{{ item.list }}" />
         </div>
       </block>
-      <block v-else-if="item.imageSrc === 'list'">
+      <block v-else-if="item.cellCategory === 'list'">
         <img-box @tapitem="on_tapItem" list="{{ item.list }}"></img-box>
       </block>
       <block v-else>
@@ -53,9 +53,9 @@ wepy.component({
   },
   methods: {
     on_tapItem (item) {
-      if (item.imageHref) {
-        console.log(item.imageHref)
-        let dataObj = pageStrAnalysis(item.imageHref)
+      if (item.cellHref) {
+        console.log(item.cellHref)
+        let dataObj = pageStrAnalysis(item.cellHref)
         console.log(dataObj)
         if (dataObj.url === 'goods/zone') {
           // 跳专区

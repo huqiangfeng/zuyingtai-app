@@ -15,7 +15,7 @@
 <template>
   <div class="container">
     <div class="arr-item" v-for="(item,index) in list" :key="index">
-      <image @tap="on_tapItem(item)" style="{{  item.imageStyle }}" class="arr-img" src="{{ item.imageSrc }}" mode="widthFix"></image>
+      <image @tap="on_tapItem(item)" style="{{  item.imageStyle?item.imageStyle:item.cellStyle }}" class="arr-img" src="{{ item.imageSrc?item.imageSrc:item.cellSrc }}" mode="widthFix"></image>
     </div>
   </div>
 </template>

@@ -111,7 +111,7 @@ page {
 </template>
 <script>
 import wepy from '@wepy/core'
-import { expressDetail } from './../../http/api.js'
+import { orderSfExpress } from './../../http/api.js'
 wepy.page({
   computed: {
     isShowSteps () {
@@ -121,7 +121,7 @@ wepy.page({
   data: {
     stepsActive: 0, // 步骤条
     steps: [],
-    AddrPhone: '', // 手机
+    orderId: '', // 订单号
     expressNo: null // 物流号
   },
   methods: {
@@ -135,7 +135,7 @@ wepy.page({
       const eventChannel = this.$wx.getOpenerEventChannel()
       eventChannel.on('getPageData', function (pageData) {
         _this.expressNo = pageData.expressNo
-        _this.AddrPhone = pageData.AddrPhone
+        _this.orderId = pageData.orderId
         _this.getDetails()
       })
     },
@@ -144,10 +144,9 @@ wepy.page({
       let _this = this
       let parameter = {
         expressNo: _this.expressNo, // 快递单号
-        receiverPhone: _this.AddrPhone  // 收件人
+        orderId: _this.orderId  // 收件人
       }
-
-      expressDetail(parameter).then(res => {
+      orderSfExpress(parameter).then(res => {
         if (res.code === 0) {
           _this.steps = res.data.recordList
         }

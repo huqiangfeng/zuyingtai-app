@@ -9,7 +9,7 @@
   <swiper style="{{ setStyle }}" autoplay="{{autoplay}}" indicator-dots="{{ indicator }}" indicator-color="#30313B" indicator-active-color="#C9AB79">
     <block v-for="(item,index) in list" :key="index">
       <swiper-item interval="2000">
-        <image class="img-swiper" @tap="on_tapItem(item)" src="{{ item.imageSrc }}" mode="widthFix"></image>
+        <image class="img-swiper" @tap="on_tapItem(item)" src="{{ item.imageSrc?item.imageSrc:item.cellSrc }}" mode="widthFix"></image>
       </swiper-item>
     </block>
   </swiper>

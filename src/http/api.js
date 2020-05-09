@@ -113,8 +113,9 @@ export const savePhone = (parameter) => post('/ma/user/savePhone', parameter)
   快递信息
 expressNo	快递单号
 receiverPhone	收件人
+orderId	订单标识
 */
-export const expressDetail = (parameter) => post('/ma/express/sfInfo', parameter)
+export const orderSfExpress = (parameter) => post('/ma/express/orderSfExpress', parameter)
 /*
   积分记录
 */

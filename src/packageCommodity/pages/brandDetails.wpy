@@ -44,6 +44,13 @@
       font-size: 24rpx;
       color: rgba(49, 49, 59, 1);
       line-height: 36rpx;
+      &.text-more {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+      }
     }
     .more {
       width: 100%;
@@ -78,7 +85,7 @@
     </mp-navigation-bar>
     <!-- 页面内容 -->
     <div class="poster">
-      <image class="img-poster" src="https://app.static.luyishepin.vip/miniapp/dev/images/brand-bg.png" mode="widthFix"></image>
+      <image class="img-poster" src="{{ details.brandBanner }}" mode="widthFix"></image>
     </div>
     <!-- 品牌 -->
     <div class="brand-box">
@@ -91,7 +98,7 @@
           <image class="img-logo" src="{{ details.brandLogo }}" mode="widthFix"></image>
         </div>
       </div>
-      <div class="jie-sao">{{ details.brandIntro }}</div>
+      <div class="jie-sao" :class="{'text-more':!more}">{{ details.brandIntro }}</div>
 
       <div class="more" @tap="more = !more">
         <image class="img" :class="{'turn':more}" src="https://app.static.luyishepin.vip/miniapp/dev/images/jiantouxia.png" mode="widthFix"></image>

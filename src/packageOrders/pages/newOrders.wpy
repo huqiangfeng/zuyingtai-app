@@ -177,7 +177,7 @@
         </div>
         <div class="right jia-ge">¥{{ goods.lowestGoodsDeposit }}</div>
       </div>
-      <div class="com-row row-ext" v-if="account.memberLevel > 1">
+      <div class="com-row row-ext" v-if="account.memberLevel > 0">
         <div class="left">
           <div>会员商品押金</div>
           <div class="left-ext">包包归还签收后，1-2个工作日内极速退押金</div>
@@ -299,6 +299,7 @@ wepy.page({
       if (!this.isBaoYou) { // 包邮
         obj.fee += Number(expressFee.toFixed(2))
       }
+      obj.fee = Number(obj.fee.toFixed(2))
       obj.sum = Number((obj.fee + obj.deposit).toFixed(2))
       return obj
     }
@@ -350,7 +351,7 @@ wepy.page({
       let parameter = {
         addrId: _this.checkedAddr.addrId,
         goodsId: _this.goodsId,
-        insure: _this.isInsurance ? 1 : 0,
+        // insure: _this.isInsurance ? 1 : 0,
         rentDays: _this.tenancyDays,
         dirtyInsure: _this.isInsurance ? 1 : 0,
         luxuryNurse: _this.isluxuryNurseFee ? 1 : 0,

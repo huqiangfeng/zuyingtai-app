@@ -77,7 +77,7 @@
         <div class="tui-icon icon" @tap="on_toPushingHands">
           <image class="img-icon" src="https://app.static.luyishepin.vip/miniapp/dev/images/tui.png" mode="widthFix"></image>
         </div>
-        <div class="ling-icon icon" @tap="on_toInformation" :class="{'active':true}">
+        <div class="ling-icon icon" @tap="on_toInformation" :class="{'active':false}">
           <image class="img-icon" src="https://app.static.luyishepin.vip/miniapp/dev/images/xiaoxi.png" mode="widthFix"></image>
         </div>
       </div>
