@@ -161,7 +161,7 @@ wepy.component({
       {
         text: '我要晒单',
         imageSrc: 'https://app.static.luyishepin.vip/miniapp/dev/images/shaidan.png',
-        pagePath: ''
+        copy: '客服售后'
       },
       {
         text: '常见问题',

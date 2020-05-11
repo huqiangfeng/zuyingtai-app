@@ -217,5 +217,6 @@ wepy.page({
       'journal-account': './../components/journalAccount',
     },
     "navigationStyle": "custom",
+     "enablePullDownRefresh": true, // 开启页面下拉刷新
 }
 </config>

@@ -100,5 +100,6 @@ wepy.page({
         'card-account': './../components/card-account',
     },
     "navigationStyle": "custom",
+    "enablePullDownRefresh": true, // 开启页面下拉刷新
 }
 </config>

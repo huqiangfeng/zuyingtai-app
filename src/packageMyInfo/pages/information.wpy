@@ -129,6 +129,7 @@ wepy.page({
 {
     navigationBarTitleText: '消息',
     usingComponents: {
-    }
+    },
+    "enablePullDownRefresh": true, // 开启页面下拉刷新
 }
 </config>

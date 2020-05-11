@@ -80,16 +80,19 @@ wepy.component({
           })
         }
       }
+    },
+    getImagePage () {
+      let _this = this
+      getImagePage({ pageKey: 'miniapp_home' }).then(res => {
+        if (res.code === 0) {
+          _this.images = res.data.images
+        }
+      })
     }
   },
   // 在组件实例刚刚被创建时执行
   created () {
-    let _this = this
-    getImagePage({ pageKey: 'miniapp_home' }).then(res => {
-      if (res.code === 0) {
-        _this.images = res.data.images
-      }
-    })
+    this.getImagePage()
   }
 })
 </script>

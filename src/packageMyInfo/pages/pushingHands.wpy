@@ -23,16 +23,33 @@
 </style>
 <template>
   <!-- 头 -->
-  <mp-navigation-bar back="{{ true }}" title="{{   navBackground !=='#fff'?'':'我的推广'  }}" ext-class="navigation" color="{{navBackground !=='#fff'?'': '#000' }}" background="{{ navBackground }}" />
+  <mp-navigation-bar
+    back="{{ true }}"
+    title="{{   navBackground !=='#fff'?'':'我的推广'  }}"
+    ext-class="navigation"
+    color="{{navBackground !=='#fff'?'': '#000' }}"
+    background="{{ navBackground }}"
+  />
   <!-- 申请 -->
   <apply-pushing-hands v-if="showType==='apply'"></apply-pushing-hands>
   <!-- 审核中 -->
   <audit-pushing-hands v-if="showType==='audit'"></audit-pushing-hands>
   <!-- 推广码 -->
   <block v-if="showType==='promotion-code'">
-    <canvas class="my-canvas" canvas-id="myCanvas" id="myCanvas"></canvas>
-    <image class="img-main" src="{{ imgSrc }}" mode="widthFix"></image>
-    <promotion-code @save="on_save" :pushinginfo="pushinginfo"></promotion-code>
+    <canvas
+      class="my-canvas"
+      canvas-id="myCanvas"
+      id="myCanvas"
+    ></canvas>
+    <image
+      class="img-main"
+      src="{{ imgSrc }}"
+      mode="widthFix"
+    ></image>
+    <promotion-code
+      @save="on_save"
+      :pushinginfo="pushinginfo"
+    ></promotion-code>
   </block>
 </template>
 <script>

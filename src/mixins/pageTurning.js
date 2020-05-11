@@ -11,8 +11,8 @@ export default {
   },
   // 下拉刷新
   onPullDownRefresh() {
-    this.initPageNum()
     if (typeof this.getPageListData() === 'function') {
+      this.initPageNum()
       this.getPageListData()
     }
     wx.stopPullDownRefresh()

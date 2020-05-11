@@ -100,5 +100,6 @@ wepy.page({
         'card-jifeng': './../components/card-jifeng',
     },
     "navigationStyle": "custom",
+     "enablePullDownRefresh": true, // 开启页面下拉刷新
 }
 </config>

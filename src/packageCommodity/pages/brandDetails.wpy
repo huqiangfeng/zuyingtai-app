@@ -176,6 +176,7 @@ wepy.page({
         "commodity-list": "~@components/commodityList",
          'mp-navigation-bar': '~@weui/navigation-bar/navigation-bar',
     },
-    "navigationStyle": "custom"
+    "navigationStyle": "custom",
+    "enablePullDownRefresh": true, // 开启页面下拉刷新
 }
 </config>

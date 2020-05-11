@@ -135,6 +135,7 @@ wepy.page({
     navigationBarTitleText: "我的订单",
     usingComponents: {
         "commodity-item-box": "./../components/commodityItem-box",
-    }
+    },
+    "enablePullDownRefresh": true, // 开启页面下拉刷新
 }
 </config>

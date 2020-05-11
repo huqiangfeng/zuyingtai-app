@@ -213,6 +213,7 @@ wepy.component({
         "van-search": "~@vant/search/index",
         // "commodity-list": "~@components/commodityList",
         "commodity-item": "~@components/commodityItem"
-    }
+    },
+    "enablePullDownRefresh": true, // 开启页面下拉刷新
 }
 </config>

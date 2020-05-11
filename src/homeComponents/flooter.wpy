@@ -84,6 +84,15 @@ wepy.component({
         wx.navigateTo({ url: url })
         return
       }
+      if (data.index == 4) {
+        wx.setBackgroundColor({
+          backgroundColorTop: '#000000' // 窗口的背景色为白色
+        })
+      } else {
+        wx.setBackgroundColor({
+          backgroundColorTop: '#ffffff' // 窗口的背景色为白色
+        })
+      }
       this.changeFooter({ footer: data.index })
       wx.pageScrollTo({
         scrollTop: 0,

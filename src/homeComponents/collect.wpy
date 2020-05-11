@@ -90,6 +90,7 @@ wepy.component({
     usingComponents: {
       "commodity-list": "~@components/commodityList",
       // "info-login": "~@components/infoLogin"
-    }
+    },
+    "enablePullDownRefresh": true, // 开启页面下拉刷新
 }
 </config>
