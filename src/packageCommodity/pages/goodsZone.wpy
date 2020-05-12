@@ -18,11 +18,20 @@
 <template>
   <div class="page-container">
     <!-- 导航 头部 -->
-    <mp-navigation-bar back="{{ true }}" ext-class="navigation" show="{{true}}" background="transparent">
+    <mp-navigation-bar
+      back="{{ true }}"
+      ext-class="navigation"
+      show="{{true}}"
+      background="transparent"
+    >
     </mp-navigation-bar>
     <!-- 页面内容 -->
     <div class="poster">
-      <image class="img-poster" src="{{ details.zoneBanner }}" mode="widthFix"></image>
+      <image
+        class="img-poster"
+        src="{{ details.zoneBanner }}"
+        mode="widthFix"
+      ></image>
     </div>
 
     <!-- 商品列表 -->
@@ -59,7 +68,7 @@ wepy.page({
       })
     },
     // 商品列表
-    getPageListData (data) {
+    getPageListData () {
       let _this = this
       zoneGoods({
         zoneId: _this.zoneId,

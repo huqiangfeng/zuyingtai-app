@@ -58,16 +58,39 @@
 <template>
   <div class="wrapper">
     <div class="block">
-      <image class="img" src="https://app.static.luyishepin.vip/miniapp/dev/images/{{ imageSrc }}" mode="widthFix"></image>
-      <div class="title" v-if="title">{{ title }}</div>
-      <div class="subhead" v-if="subhead">{{ subhead }}</div>
-      <div class="p" v-if="p1">{{ p1 }}</div>
-      <div class="p" v-if="p2">{{ p2 }}</div>
+      <image
+        class="img"
+        src="https://app.static.luyishepin.vip/miniapp/dev/images/{{ imageSrc }}"
+        mode="widthFix"
+      ></image>
+      <div
+        class="title"
+        v-if="title"
+      >{{ title }}</div>
+      <div
+        class="subhead"
+        v-if="subhead"
+      >{{ subhead }}</div>
+      <div
+        class="p"
+        v-if="p1"
+      >{{ p1 }}</div>
+      <div
+        class="p"
+        v-if="p2"
+      >{{ p2 }}</div>
       <slot></slot>
-      <button v-if="type==='defeated'" class="my-btn" @tap="reset">
+      <button
+        v-if="type==='defeated'"
+        class="my-btn"
+        @tap="reset"
+      >
         重新申请
       </button>
-      <div class="text" v-if="type==='defeated'">前往消息 》</div>
+      <div
+        class="text"
+        v-if="type==='defeated'"
+      >前往消息 》</div>
     </div>
   </div>
 </template>
@@ -83,10 +106,10 @@ wepy.component({
       return this.type === 'audit' ? '审核中' : '审核失败'
     },
     p1 () {
-      return this.type === 'audit' ? '您的资料正在审核中，请耐心等待' : '您的资料已审核，未能通过成为推手'
+      return this.type === 'audit' ? '感谢您的支持，推手权限已提交' : '您的资料已审核，未能通过成为推手'
     },
     p2 () {
-      return this.type === 'audit' ? '1~3个工作日审核完成' : '具体原因可在消息中查看'
+      return this.type === 'audit' ? '请耐心等待' : '具体原因可在消息中查看'
     }
   },
   data: {

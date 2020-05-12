@@ -81,11 +81,20 @@
 <template>
   <div class="page-container">
     <!-- 导航 头部 -->
-    <mp-navigation-bar back="{{ true }}" ext-class="navigation" show="{{true}}" background="transparent">
+    <mp-navigation-bar
+      back="{{ true }}"
+      ext-class="navigation"
+      show="{{true}}"
+      background="transparent"
+    >
     </mp-navigation-bar>
     <!-- 页面内容 -->
     <div class="poster">
-      <image class="img-poster" src="{{ details.brandBanner }}" mode="widthFix"></image>
+      <image
+        class="img-poster"
+        src="{{ details.brandBanner }}"
+        mode="widthFix"
+      ></image>
     </div>
     <!-- 品牌 -->
     <div class="brand-box">
@@ -95,13 +104,28 @@
           <div class="name2">{{ details.brandChineseName }}</div>
         </div>
         <div class="right">
-          <image class="img-logo" src="{{ details.brandLogo }}" mode="widthFix"></image>
+          <image
+            class="img-logo"
+            src="{{ details.brandLogo }}"
+            mode="widthFix"
+          ></image>
         </div>
       </div>
-      <div class="jie-sao" :class="{'text-more':!more}">{{ details.brandIntro }}</div>
+      <div
+        class="jie-sao"
+        :class="{'text-more':!more}"
+      >{{ details.brandIntro }}</div>
 
-      <div class="more" @tap="more = !more">
-        <image class="img" :class="{'turn':more}" src="https://app.static.luyishepin.vip/miniapp/dev/images/jiantouxia.png" mode="widthFix"></image>
+      <div
+        class="more"
+        @tap="more = !more"
+      >
+        <image
+          class="img"
+          :class="{'turn':more}"
+          src="https://app.static.luyishepin.vip/miniapp/dev/images/jiantouxia.png"
+          mode="widthFix"
+        ></image>
       </div>
     </div>
     <!-- 商品列表 -->
@@ -119,6 +143,7 @@ wepy.page({
   },
   mixins: [pageTurning],
   data: {
+    brandId: '',
     details: {},
     list: [],
     // 更多
@@ -126,19 +151,23 @@ wepy.page({
   },
   methods: {
     // 品牌详情
-    getBrandData (data) {
+    getBrandData () {
+
       let _this = this
-      detailBrand(data).then(res => {
+      detailBrand({ brandId: this.brandId }).then(res => {
         if (res.code === 0) {
           _this.details = res.data
         }
       })
     },
     // 商品列表
-    getPageListData (data) {
+    getPageListData () {
       let _this = this
-      data.pageNum = _this.pageNum
-      data.pageSize = _this.pageSize
+      let data = {
+        brandId: _this.brandId,
+        pageNum: _this.pageNum,
+        pageSize: _this.pageSize,
+      }
       listGoods(data).then(res => {
         if (res.code === 0) {
           // 设置信息数组
@@ -155,8 +184,9 @@ wepy.page({
       let _this = this
       const eventChannel = this.$wx.getOpenerEventChannel()
       eventChannel.on('getBrandId', function (data) {
-        _this.getBrandData(data)
-        _this.getPageListData(data)
+        _this.brandId = data.brandId
+        _this.getBrandData()
+        _this.getPageListData()
       })
     }
   },

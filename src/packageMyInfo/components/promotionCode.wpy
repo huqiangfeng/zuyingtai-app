@@ -33,11 +33,20 @@
       }
     }
   }
-
-  .my-btn {
+  .bot-box {
     margin: 60rpx auto;
-    width: 420rpx;
-    background: rgba(48, 49, 59, 1);
+    display: flex;
+    justify-content: space-between;
+    .my-btn:first-child {
+      color: rgba(48, 49, 59, 1);
+      background: #fff;
+      border: 1px solid rgba(48, 49, 59, 1);
+    }
+    .my-btn {
+      width: 320rpx;
+      border-radius: 12rpx;
+      background: rgba(48, 49, 59, 1);
+    }
   }
 }
 </style>
@@ -47,9 +56,16 @@
   </div> -->
   <div class="wrapper">
     <!-- 推广记录 -->
-    <div class="promotion-record" @tap="on_toPushingRecord">
-      <div>推广记录</div>
-      <image class="img-icon" src="https://app.static.luyishepin.vip/miniapp/dev/images/bofang2.png" mode="widthFix"></image>
+    <div
+      class="promotion-record"
+      @tap="to_apply"
+    >
+      <div>成为推手</div>
+      <image
+        class="img-icon"
+        src="https://app.static.luyishepin.vip/miniapp/dev/images/bofang2.png"
+        mode="widthFix"
+      ></image>
     </div>
     <!--  -->
     <!-- <div class="data-valbox">
@@ -63,7 +79,16 @@
       </div>
     </div> -->
     <!-- btn -->
-    <div class="my-btn" @tap="on_save">保存图片</div>
+    <div class="bot-box">
+      <div
+        class="my-btn"
+        @tap="on_toPushingRecord"
+      >推广记录</div>
+      <div
+        class="my-btn"
+        @tap="on_save"
+      >保存图片</div>
+    </div>
   </div>
 </template>
 
@@ -86,6 +111,10 @@ wepy.component({
     // 保存图片
     on_save () {
       this.$emit('save')
+    },
+    // 申请
+    to_apply () {
+      this.$emit('toapply')
     }
   },
   // 在组件实例刚刚被创建时执行

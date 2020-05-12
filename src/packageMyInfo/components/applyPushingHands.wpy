@@ -154,7 +154,7 @@
             placeholder="请输入姓名"
           />
         </div>
-        <div class="wx-te input-group">
+        <!-- <div class="wx-te input-group">
           <div class="key">电话/微信</div>
           <input
             class="input"
@@ -162,7 +162,7 @@
             v-model="tel"
             placeholder="请输入电话/微信"
           />
-        </div>
+        </div> -->
       </div>
       <!-- 协议 -->
       <div
@@ -275,15 +275,15 @@ wepy.component({
           })
           return
         }
-        if (!vailPhone(_this.tel)) {
-          wx.showModal({
-            title: '提示',
-            content: '请输入正确的手机号',
-            success (res) {
-            }
-          })
-          return
-        }
+        // if (!vailPhone(_this.tel)) {
+        //   wx.showModal({
+        //     title: '提示',
+        //     content: '请输入正确的手机号',
+        //     success (res) {
+        //     }
+        //   })
+        //   return
+        // }
         _this.throttle = false
         _this.showDialog = true
         applySpreader({

@@ -39,22 +39,52 @@
 
 <template>
   <div class="page-container">
-    <mp-navigation-bar back="{{ false }}" ext-class="{{ navigationClass }}" show="{{show}}" background="{{ navBackground }}">
-      <div slot="left" v-show="footer===0||footer===1||footer===3">
-        <image class="logo" src="https://app.static.luyishepin.vip/miniapp/dev/images/logo.png" mode="widthFix"></image>
+    <mp-navigation-bar
+      back="{{ false }}"
+      ext-class="{{ navigationClass }}"
+      show="{{show}}"
+      background="{{ navBackground }}"
+    >
+      <div
+        slot="left"
+        v-show="footer===0||footer===1||footer===3"
+      >
+        <image
+          class="logo"
+          src="https://app.static.luyishepin.vip/miniapp/dev/images/logo.png"
+          mode="widthFix"
+        ></image>
       </div>
     </mp-navigation-bar>
     <div class="container">
-      <home v-if="footer===0" id="home"></home>
-      <choose v-if="footer===1" id="choose"></choose>
+      <home
+        v-if="footer===0"
+        id="home"
+      ></home>
+      <choose
+        v-if="footer===1"
+        id="choose"
+      ></choose>
       <leave-unused v-if="footer===2"></leave-unused>
-      <collect v-if="footer===3" id="collect"></collect>
-      <my-index v-if="footer===4" id="myIndex"></my-index>
+      <collect
+        v-if="footer===3"
+        id="collect"
+      ></collect>
+      <my-index
+        v-if="footer===4"
+        id="myIndex"
+      ></my-index>
     </div>
   </div>
 
-  <div class="flooter-zhanwei" :class="{'iphone-X':iPhoneX}"></div>
-  <div class="flooter" :class="{'iphone-X':iPhoneX}">
+  <div
+    class="flooter-zhanwei"
+    :class="{'iphone-X':iPhoneX}"
+  ></div>
+  <div
+    class="flooter"
+    :class="{'iphone-X':iPhoneX}"
+  >
     <flooter></flooter>
   </div>
   <!--  登录弹框  -->
@@ -85,7 +115,7 @@ wepy.page({
     ...mapState(['footer']),
     navBackground () {
       // return this.footer === 4 && !this.scorllBackground ? '#000' : '#fff'
-      return this.footer === 4 && '#000'
+      return this.footer === 4 ? '#000' : '#fff'
     },
     navigationClass () {
       return this.footer === 4 ? 'navigation-bg' : 'navigation'

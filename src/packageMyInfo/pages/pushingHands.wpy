@@ -94,7 +94,6 @@ wepy.page({
   methods: {
     // 刷新页面数据
     on_refresh () {
-
     },
     // 保存图片
     on_save () {
