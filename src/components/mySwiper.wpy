@@ -6,10 +6,25 @@
 </style>
 
 <template>
-  <swiper style="{{ setStyle }}" autoplay="{{autoplay}}" indicator-dots="{{ indicator }}" indicator-color="#30313B" indicator-active-color="#C9AB79">
-    <block v-for="(item,index) in list" :key="index">
+  <swiper
+    @change="on_change"
+    style="{{ setStyle }}"
+    autoplay="{{autoplay}}"
+    indicator-dots="{{ indicator }}"
+    indicator-color="#30313B"
+    indicator-active-color="#C9AB79"
+  >
+    <block
+      v-for="(item,index) in list"
+      :key="index"
+    >
       <swiper-item interval="2000">
-        <image class="img-swiper" @tap="on_tapItem(item)" src="{{ item.imageSrc?item.imageSrc:item.cellSrc }}" mode="widthFix"></image>
+        <image
+          class="img-swiper"
+          @tap="on_tapItem(item)"
+          src="{{ item.imageSrc?item.imageSrc:item.cellSrc }}"
+          mode="widthFix"
+        ></image>
       </swiper-item>
     </block>
   </swiper>
@@ -41,6 +56,10 @@ wepy.component({
   methods: {
     on_tapItem (item) {
       this.$emit('tapitem', item)
+    },
+    on_change (e) {
+      let index = e.$wx.detail.current
+      this.$emit('change', index)
     }
   }
 })

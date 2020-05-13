@@ -148,9 +148,6 @@ wepy.page({
   },
   // 生命周期回调—监听页面显示
   onShow () {
-    if (this.footer === 1) {
-      this.$wx.selectComponent('#choose').$wepy.on_refresh()
-    }
     if (this.footer === 4) {
       this.$wx.selectComponent('#myIndex').$wepy.getPageData()
     }

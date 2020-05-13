@@ -21,6 +21,54 @@
       font-size: 98rpx;
       font-weight: 500;
     }
+    .invited-box {
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.08);
+      position: absolute;
+      padding-left: 40rpx;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+      .invited {
+        display: flex;
+        justify-content: center;
+        align-items: left;
+        flex-direction: column;
+        height: 150rpx;
+        flex: 1;
+        line-height: 1;
+        color: rgba(255, 255, 255, 1);
+        text-shadow: 0px -1px 2px rgba(0, 0, 0, 0.3);
+        .val {
+          font-size: 60rpx;
+          margin-top: 20rpx;
+        }
+        .key {
+          font-size: 24rpx;
+        }
+      }
+      .vip-btn {
+        box-sizing: border-box;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 10rpx 10rpx 10rpx 5rpx;
+        height: 56rpx;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 28rpx 0px 0px 28rpx;
+        font-size: 24rpx;
+        font-weight: 500;
+        color: rgba(123, 82, 34, 1);
+        display: flex;
+        align-items: center;
+        .vip-img {
+          width: 48rpx;
+          height: 48rpx;
+          margin-right: 10rpx;
+        }
+      }
+    }
     .bottom-box {
       background: rgba(255, 255, 255, 0.08);
       display: flex;
@@ -71,22 +119,57 @@
 <template>
 
   <!-- 头 -->
-  <mp-navigation-bar back="{{ true }}" title="推广记录" ext-class="navigation" color="#fff" background="{{ navBackground }}" />
+  <mp-navigation-bar
+    back="{{ true }}"
+    title="推广记录"
+    ext-class="navigation"
+    color="#fff"
+    background="{{ navBackground }}"
+  />
 
   <div class="page-container">
     <div class="page-cord">
       <!-- <div class="title-key">累计收益（元）</div>
       <div class="title-val">{{ totalIncome }}</div> -->
-      <div class="bottom-box">
-        <div class="item" @tap="changeTab('user')">
+      <div
+        v-if="spreaderStatus == 2"
+        class="bottom-box"
+      >
+        <div
+          class="item"
+          @tap="changeTab('user')"
+        >
           <div class="val">{{invited }}</div>
           <div class="key">邀请注册记录</div>
         </div>
         <div class="left-border">
         </div>
-        <div class="item" @tap="changeTab('order')">
+        <div
+          class="item"
+          @tap="changeTab('order')"
+        >
           <div class="val">{{totalAmount }}</div>
           <div class="key">邀请付费记录</div>
+        </div>
+      </div>
+      <div
+        v-else
+        class="invited-box"
+      >
+        <div class="invited">
+          <div class="key">邀请注册记录</div>
+          <div class="val">{{invited }}</div>
+        </div>
+        <div
+          class="vip-btn"
+          @tap="to_vip"
+        >
+          <image
+            class="vip-img"
+            src="https://app.static.luyishepin.vip/miniapp/dev/images/vip-icon.png"
+            mode="widthFix"
+          ></image>
+          <div>{{userInfo.memberLevel==0?'成为会员':'会员中心'}}</div>
         </div>
       </div>
     </div>
@@ -98,18 +181,29 @@
 
 <script>
 import wepy from '@wepy/core'
+import store from '../../store'
+import { mapState } from '@wepy/x'
 import pageTurning from './../../mixins/pageTurning.js'
 import { spreaderListUser, spreaderListOrder, spreaderInfo } from './../../http/api.js'
 wepy.page({
   mixins: [pageTurning],
+  store,
+  computed: {
+    ...mapState(['userInfo']),
+  },
   data: {
     navBackground: '',
     invited: 0, // 邀请注册记录
     totalAmount: 0,  // 邀请付费记录
+    spreaderStatus: 2,// 状态  // 0 未提交 1是等待，2 是通过 ，3是没通过
     list: [],
     tabActive: 'user'
   },
   methods: {
+    // 去vip
+    to_vip () {
+      wx.navigateTo({ url: '/packageMyInfo/pages/vipMember' })
+    },
     changeTab (tabActive) {
       this.tabActive = tabActive
       this.initPageNum()
@@ -122,6 +216,7 @@ wepy.page({
       spreaderInfo().then(res => {
         _this.invited = res.data.invited
         _this.totalAmount = res.data.totalAmount
+        _this.spreaderStatus = res.data.spreaderStatus
       })
     },
     // 推荐会员

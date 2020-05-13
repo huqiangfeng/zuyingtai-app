@@ -74,16 +74,26 @@ page {
 <template>
   <div class="page-container">
     <!-- 头像 -->
-    <div class="item item-cell__bd right-go" @tap="getAvatar">
+    <div
+      class="item item-cell__bd right-go"
+      @tap="getAvatar"
+    >
       <div class="item-content ">
         <div class="item-label">头像</div>
         <div class="item-right">
-          <image class="img-header" src="{{ userInfo.userAvatar }}" mode="widthFix"></image>
+          <image
+            class="img-header"
+            src="{{ userInfo.userAvatar }}"
+            mode="widthFix"
+          ></image>
         </div>
       </div>
     </div>
     <!-- 昵称 -->
-    <div class="item item-cell__bd right-go" @tap="on_tapItem('昵称')">
+    <div
+      class="item item-cell__bd right-go"
+      @tap="on_tapItem('昵称')"
+    >
       <div class="item-content">
         <div class="item-label">昵称</div>
         <div class="item-right">
@@ -96,7 +106,11 @@ page {
       <div class="item-content">
         <div class="item-label">性别</div>
         <div class="item-right">
-          <picker bindchange="bindSexChange" value="{{userInfo.userGender}}" range="{{sex}}">
+          <picker
+            bindchange="bindSexChange"
+            value="{{userInfo.userGender}}"
+            range="{{sex}}"
+          >
             <div class="itemselect itemselect_in-select-after">{{sex[userInfo.userGender]}}</div>
           </picker>
         </div>
@@ -107,14 +121,21 @@ page {
       <div class="item-content">
         <div class="item-label">生日</div>
         <div class="item-right">
-          <picker mode="date" value="{{userInfo.userBirth}}" bindchange="bindDateChange">
+          <picker
+            mode="date"
+            value="{{userInfo.userBirth}}"
+            bindchange="bindDateChange"
+          >
             <view class="weui-input">{{userInfo.userBirth||'　'}}</view>
           </picker>
         </div>
       </div>
     </div>
     <!-- 手机号 -->
-    <div class="item item-cell__bd right-go" @tap="on_tapItem('newTelLogin')">
+    <div
+      class="item item-cell__bd right-go"
+      @tap="on_tapItem('newTelLogin')"
+    >
       <div class="item-content">
         <div class="item-label">手机号</div>
         <div class="item-right">
@@ -123,10 +144,22 @@ page {
       </div>
     </div>
     <!-- 加入租英台推手 -->
-    <div class="item item-cell__bd right-go" style="margin-top:30rpx;">
-      <div class="item-content" @tap="on_tapItem('pushingHands')">
-        <div class="item-label" v-if="userInfo.spreaderRole ===1">我的推荐</div>
-        <div class="item-label" v-else>加入租英台推手</div>
+    <div
+      class="item item-cell__bd right-go"
+      style="margin-top:30rpx;"
+    >
+      <div
+        class="item-content"
+        @tap="on_tapItem('pushingHands')"
+      >
+        <div
+          class="item-label"
+          v-if="userInfo.spreaderRole ===1"
+        >我的推荐</div>
+        <div
+          class="item-label"
+          v-else
+        >加入租英台推手</div>
         <div class="item-right">
         </div>
       </div>
@@ -135,7 +168,10 @@ page {
     <div class="item item-cell__bd">
       <div class="item-content">
         <div class="item-label">当前版本</div>
-        <div class="item-right" style="color:#31313B">
+        <div
+          class="item-right"
+          style="color:#31313B"
+        >
           {{ versions }}
         </div>
       </div>
@@ -144,17 +180,32 @@ page {
   </div>
 
   <!-- 屏风弹框-物流 -->
-  <half-screen-dialog @close="on_hiddenDialog" show="{{isShowDialog}}">
-    <div slot="desc" class="screen-dialog">
+  <half-screen-dialog
+    @close="on_hiddenDialog"
+    show="{{isShowDialog}}"
+  >
+    <div
+      slot="desc"
+      class="screen-dialog"
+    >
       <!-- <div class="row">
         <div class="left">物流公司</div>
         <div class="right">顺丰</div>
       </div> -->
       <div class="row">
         <!-- 名字 -->
-        <input class="express-input" adjust-position="{{true}}" cursor-spacing="15" v-model="value" placeholder="请输入{{ inputType }}" />
+        <input
+          class="express-input"
+          adjust-position="{{true}}"
+          cursor-spacing="15"
+          v-model="value"
+          placeholder="请输入{{ inputType }}"
+        />
       </div>
-      <div class="btn" @tap="on_inputSubmit">提交</div>
+      <div
+        class="btn"
+        @tap="on_inputSubmit"
+      >提交</div>
     </div>
   </half-screen-dialog>
   <!-- 改手机号 -->
@@ -206,7 +257,7 @@ wepy.page({
     // 点击项
     on_tapItem (type) {
       if (type === 'pushingHands') {
-        wx.navigateTo({ url: '/packageMyInfo/pages/pushingHands' })
+        wx.navigateTo({ url: '/packageMyInfo/pages/pushingHands?showType=promotion-code' })
       } else if (type === 'newTelLogin') {
         this.on_changeShowTel()
       } else {

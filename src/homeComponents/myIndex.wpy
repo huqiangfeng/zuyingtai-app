@@ -74,26 +74,60 @@
       </div>
       <!-- 消息/推 -->
       <div class="icons">
-        <div class="tui-icon icon" @tap="on_toPushingHands">
-          <image class="img-icon" src="https://app.static.luyishepin.vip/miniapp/dev/images/tui.png" mode="widthFix"></image>
+        <div
+          class="tui-icon icon"
+          @tap="on_toPushingHands('apply')"
+        >
+          <image
+            class="img-icon"
+            src="https://app.static.luyishepin.vip/miniapp/dev/images/tui.png"
+            mode="widthFix"
+          ></image>
         </div>
-        <div class="ling-icon icon" @tap="on_toInformation" :class="{'active':false}">
-          <image class="img-icon" src="https://app.static.luyishepin.vip/miniapp/dev/images/xiaoxi.png" mode="widthFix"></image>
+        <div
+          class="ling-icon icon"
+          @tap="on_toInformation"
+          :class="{'active':false}"
+        >
+          <image
+            class="img-icon"
+            src="https://app.static.luyishepin.vip/miniapp/dev/images/xiaoxi.png"
+            mode="widthFix"
+          ></image>
         </div>
       </div>
     </div>
     <!-- 订单 -->
-    <nav-box @ontitle="on_toOrdersAdmin" list="{{ orders }}" title="全部订单">
+    <nav-box
+      @ontitle="on_toOrdersAdmin"
+      list="{{ orders }}"
+      title="全部订单"
+    >
       <div class="title">
-        <image class="img-icon" src="https://app.static.luyishepin.vip/miniapp/dev/images/bofang1.png" mode="widthFix"></image>
-        <div class="text" @tap="to_userAddr">地址管理</div>
+        <image
+          class="img-icon"
+          src="https://app.static.luyishepin.vip/miniapp/dev/images/bofang1.png"
+          mode="widthFix"
+        ></image>
+        <div
+          class="text"
+          @tap="to_userAddr"
+        >地址管理</div>
       </div>
     </nav-box>
     <!-- 服务 -->
-    <nav-box list="{{ serve }}" title="我的服务"></nav-box>
+    <nav-box
+      list="{{ serve }}"
+      title="我的服务"
+    ></nav-box>
     <!-- 广告 -->
     <div class="advertising">
-      <my-swiper @tapitem="on_toPushingHands" setStyle="height: 200rpx;" indicator="{{ false }}" list="{{ swiper }}"></my-swiper>
+      <my-swiper
+        @tapitem="on_toPushingHands"
+        setStyle="height: 200rpx;"
+        indicator="{{ false }}"
+        list="{{ swiper }}"
+      ></my-swiper>
     </div>
   </div>
 
@@ -182,8 +216,9 @@ wepy.component({
   methods: {
     ...mapActions(['setUserInfo']),
     // 推手
-    on_toPushingHands () {
-      wx.navigateTo({ url: '/packageMyInfo/pages/pushingHands' })
+    on_toPushingHands (type) {
+      let showType = type === 'apply' ? 'apply' : 'promotion-code'
+      wx.navigateTo({ url: '/packageMyInfo/pages/pushingHands?showType=' + showType })
     },
     // 消息
     on_toInformation () {

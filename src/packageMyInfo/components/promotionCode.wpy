@@ -57,6 +57,7 @@
   <div class="wrapper">
     <!-- 推广记录 -->
     <div
+      v-if="pushinginfo.spreaderStatus ===0 || pushinginfo.spreaderStatus ===3"
       class="promotion-record"
       @tap="to_apply"
     >
@@ -66,6 +67,12 @@
         src="https://app.static.luyishepin.vip/miniapp/dev/images/bofang2.png"
         mode="widthFix"
       ></image>
+    </div>
+    <div
+      v-else
+      class="promotion-record"
+    >
+      　
     </div>
     <!--  -->
     <!-- <div class="data-valbox">
@@ -87,7 +94,7 @@
       <div
         class="my-btn"
         @tap="on_save"
-      >保存图片</div>
+      >分享海报</div>
     </div>
   </div>
 </template>

@@ -57,6 +57,12 @@
 					"pathName": "packageLeaveUnused/pages/leaveUnused",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "packageMyInfo/pages/pushingRecord",
+					"pathName": "packageMyInfo/pages/pushingRecord",
+					"scene": null
 				}
 			]
 		}

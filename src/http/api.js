@@ -243,6 +243,10 @@ export const applySpreader = (parameter) => post('/ma/form/spreader', parameter)
 */
 export const spreaderInfo = (parameter) => post('/ma/spreader/info', parameter)
 /*
+海报
+*/
+export const spreaderPoster = (parameter) => post('/ma/spreader/poster', parameter)
+/*
 推荐会员
 */
 export const spreaderListUser = (parameter) => post('/ma/spreader/listUser', parameter)

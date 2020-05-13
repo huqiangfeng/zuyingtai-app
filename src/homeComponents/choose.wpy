@@ -71,22 +71,54 @@
 <template>
   <div class="container">
     <!-- 搜索 -->
-    <van-search @search="on_search" value="{{ goodsName }}" shape="round" placeholder="请输入搜索关键词" />
+    <van-search
+      @search="on_search"
+      value="{{ goodsName }}"
+      shape="round"
+      placeholder="请输入搜索关键词"
+    />
     <!-- 主要内容 -->
     <div class="main">
       <div class="nav">
         <div class="nav-l">
-          <div class="nav-l-item" @tap="onChangeNavActive(0)" :class="{'nav-active': navActive=== 0 }">全部</div>
-          <div class="nav-l-item" @tap="onChangeNavActive(1)" :class="{'nav-active': navActive=== 1 }">0元专区</div>
+          <div
+            class="nav-l-item"
+            @tap="onChangeNavActive(0)"
+            :class="{'nav-active': navActive=== 0 }"
+          >全部</div>
+          <div
+            class="nav-l-item"
+            @tap="onChangeNavActive(1)"
+            :class="{'nav-active': navActive=== 1 }"
+          >0元专区</div>
         </div>
-        <div class="nav-r" @tap="to_filtrate">
-          <image class="img" src="https://app.static.luyishepin.vip/miniapp/dev/images/zu.png" mode="widthFix"></image>
+        <div
+          class="nav-r"
+          @tap="to_filtrate"
+        >
+          <image
+            class="img"
+            src="https://app.static.luyishepin.vip/miniapp/dev/images/zu.png"
+            mode="widthFix"
+          ></image>
           <div>筛选</div>
         </div>
       </div>
-      <div class="list" v-show="isShowlist">
-        <div class="commodity-item" :class="{ 'border-none':list.length==1 }" v-for="(item,index) in list" :key="index">
-          <commodity-item @tapitem="on_tapItem" @refresh="on_refresh" item="{{item}}"></commodity-item>
+      <div
+        class="list"
+        v-show="isShowlist"
+      >
+        <div
+          class="commodity-item"
+          :class="{ 'border-none':list.length==1 }"
+          v-for="(item,index) in list"
+          :key="index"
+        >
+          <commodity-item
+            @tapitem="on_tapItem"
+            @refresh="on_refresh"
+            item="{{item}}"
+          ></commodity-item>
         </div>
         <!-- <commodity-list @refresh="on_refresh" list="{{ list }}"></commodity-list> -->
       </div>
@@ -136,7 +168,6 @@ wepy.component({
     // 搜索
     on_search (e) {
       this.goodsName = e.$wx.detail
-
       this.initPageNum()
       this.getPageListData()
     },

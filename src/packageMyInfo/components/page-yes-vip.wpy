@@ -130,9 +130,10 @@
           </div>
         </div>
         <div
-          v-if="item.itemUnit === '次'"
+          v-if="item.itemSurplus > 0"
           class="right"
         >剩余{{item.itemSurplus}}次</div>
+        <dvi v-else>有</dvi>
       </div>
     </div>
   </div>
