@@ -36,11 +36,25 @@
 </style>
 
 <template>
-  <div class="container" @tap="on_setOrLogin">
+  <div
+    class="container"
+    @tap="on_setOrLogin"
+  >
     <div class="left">
-      <image class="img-head" v-if="userInfo.userAvatar" src="{{ userInfo.userAvatar }}"></image>
-      <image class="img-head" v-else src="https://app.static.luyishepin.vip/miniapp/dev/images/touxiang.png"></image>
-      <image class="set-img" src="https://app.static.luyishepin.vip/miniapp/dev/images/sezhi.png"></image>
+      <image
+        class="img-head"
+        v-if="userInfo.userAvatar"
+        src="{{ userInfo.userAvatar }}"
+      ></image>
+      <image
+        class="img-head"
+        v-else
+        src="https://app.static.luyishepin.vip/miniapp/dev/images/touxiang.png"
+      ></image>
+      <image
+        class="set-img"
+        src="https://app.static.luyishepin.vip/miniapp/dev/images/sezhi.png"
+      ></image>
     </div>
     <div class="right">
       <div class="name">{{ name }}</div>

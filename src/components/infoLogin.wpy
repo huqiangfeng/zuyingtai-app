@@ -60,7 +60,11 @@
   <van-overlay show="{{ isShowLogin }}">
     <div class="wrapper">
       <div class="block">
-        <image class="img logo" src="https://app.static.luyishepin.vip/miniapp/dev/images/logo3.png" mode="widthFix"></image>
+        <image
+          class="img logo"
+          src="https://app.static.luyishepin.vip/miniapp/dev/images/logo3.png"
+          mode="widthFix"
+        ></image>
         <!-- <div class="p">租英台奢侈包包</div>
         <div class="p">100%正品保证·放心选购</div> -->
         <div class="p">租英台申请获得以下权限：</div>
@@ -68,7 +72,12 @@
           获得你的公开信息（昵称、头像、地
           区及性别）
         </div>
-        <button class="btn btn-wx" open-type="getUserInfo" type="primary" @getuserinfo="getTokenLogin">
+        <button
+          class="btn btn-wx"
+          open-type="getUserInfo"
+          type="primary"
+          @getuserinfo="getTokenLogin"
+        >
           授权信息
         </button>
       </div>

@@ -217,7 +217,8 @@ wepy.component({
     ...mapActions(['setUserInfo']),
     // 推手
     on_toPushingHands (type) {
-      let showType = type === 'apply' ? 'apply' : 'promotion-code'
+      // let showType = type === 'apply' ? 'apply' : 'promotion-code'
+      let showType = 'promotion-code'
       wx.navigateTo({ url: '/packageMyInfo/pages/pushingHands?showType=' + showType })
     },
     // 消息
