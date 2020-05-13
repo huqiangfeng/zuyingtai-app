@@ -56,6 +56,8 @@
 <template>
   <!-- 头 -->
   <mp-navigation-bar
+    @back="on_back"
+    delta="{{ delta }}"
     back="{{ true }}"
     title="{{   navBackground !=='#fff'?'':'我的推广'  }}"
     ext-class="navigation"
@@ -63,7 +65,10 @@
     background="{{ navBackground }}"
   />
   <!-- 申请 -->
-  <apply-pushing-hands v-if="showType==='apply'"></apply-pushing-hands>
+  <apply-pushing-hands
+    @audit="on_audit"
+    v-if="showType==='apply'"
+  ></apply-pushing-hands>
   <!-- 审核中 -->
   <audit-pushing-hands v-if="showType==='audit'"></audit-pushing-hands>
   <!-- 推广码 -->
@@ -152,6 +157,7 @@ wepy.page({
     }
   },
   data: {
+    delta: 1,
     showShare: false, // is分享
     swiperIndex: 0, // 轮播角标
     // 轮播图
@@ -165,10 +171,15 @@ wepy.page({
     },
     type: 'apply'
   },
+
   methods: {
     // 分享
-    on_share () {
-
+    on_back (e) {
+      let delta = e.$wx.detail.delta
+      if (delta == -1) {
+        this.delta = 1
+        this.type = 'promotion-code'
+      }
     },
     // 显示分享
     on_showShare () {
@@ -177,6 +188,13 @@ wepy.page({
     // 跳申请
     on_toapply () {
       this.type = 'apply'
+      this.delta = -1
+    },
+    // 跳审核
+    on_audit () {
+      this.type = 'audit'
+      this.spreaderStatus = 1
+      this.delta = 1
     },
     // 刷新页面数据
     on_refresh () {

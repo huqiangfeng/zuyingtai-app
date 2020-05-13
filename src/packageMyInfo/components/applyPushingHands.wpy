@@ -291,6 +291,7 @@ wepy.component({
           name: _this.name
         }).then(res => {
           _this.throttle = true
+          _this.$emit('audit')
           wx.showModal({
             title: '提示',
             content: '申请已提交',
