@@ -327,7 +327,6 @@ wepy.page({
   onShow () { },
   // 生命周期回调—监听页面卸载
   onUnload () {
-    console.log('123')
     store.dispatch('setShowBindTel', {
       isShowBindTel: false
     })
