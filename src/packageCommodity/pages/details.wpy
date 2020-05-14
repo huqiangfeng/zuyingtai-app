@@ -273,7 +273,11 @@
   <div class="page-container">
     <!-- 轮播 -->
     <div class="swiper">
-      <my-swiper @tapitem="on_previewImage" setStyle="height: 750rpx;" list="{{ details.goodsImages }}" />
+      <my-swiper
+        @tapitem="on_previewImage"
+        setStyle="height: 750rpx;"
+        list="{{ details.goodsImages }}"
+      />
     </div>
     <!-- 价格 -->
     <div class="container">
@@ -284,15 +288,25 @@
           <div class="vip-hh">VIP</div>
           <div class="vip-day"> ¥{{ details.memberDayRent }}/天</div>
         </div>
-        <div class="right" @tap.stop="on_toProtocol"> 下单流程 </div>
+        <div
+          class="right"
+          @tap.stop="on_toProtocol"
+        > 下单流程 </div>
       </div>
     </div>
     <!-- vip -->
-    <div class="vip-tt" @tap="on_toVip">
+    <div
+      class="vip-tt"
+      @tap="on_toVip"
+    >
       <div>
         成为vip享受更多折扣本次可节约¥{{ details.dayRent - details.memberDayRent }}/天
       </div>
-      <image class="icon-img" src="https://app.static.luyishepin.vip/miniapp/dev/images/bofang.png" mode="widthFix"></image>
+      <image
+        class="icon-img"
+        src="https://app.static.luyishepin.vip/miniapp/dev/images/bofang.png"
+        mode="widthFix"
+      ></image>
     </div>
     <!-- 详情 -->
     <div class="container-x-q">
@@ -322,15 +336,26 @@
     <div class="container-pinpai">
       <div class="logo-box">
         <div class="left">
-          <image class="img-logo" src="{{ details.brandLogo }}" mode="widthFix"></image>
+          <image
+            class="img-logo"
+            src="{{ details.brandLogo }}"
+            mode="widthFix"
+          ></image>
           <div class="pp-name">
             <div class="name1">{{ details.brandSourceName }}</div>
             <div class="name2">{{ details.brandChineseName }}</div>
           </div>
         </div>
-        <div class="right" @tap="on_toPinpai">
+        <div
+          class="right"
+          @tap="on_toPinpai"
+        >
           <div class="text">品牌详情</div>
-          <image class="icon-img" src="https://app.static.luyishepin.vip/miniapp/dev/images/bofanghui.png" mode="widthFix"></image>
+          <image
+            class="icon-img"
+            src="https://app.static.luyishepin.vip/miniapp/dev/images/bofanghui.png"
+            mode="widthFix"
+          ></image>
         </div>
       </div>
       <div class="jie-sao">{{ details.brandIntro }}</div>
@@ -339,22 +364,47 @@
     <div class="container">
       <div class="title">推荐</div>
       <div class="tj-list">
-        <div class="commodity-item" v-for="(item,index) in list" :key="index">
-          <commodity-item @tapitem="on_tapItem" item="{{item}}"></commodity-item>
+        <div
+          class="commodity-item"
+          v-for="(item,index) in list"
+          :key="index"
+        >
+          <commodity-item
+            @tapitem="on_tapItem"
+            item="{{item}}"
+          ></commodity-item>
         </div>
       </div>
     </div>
     <div :class="{'iphone-X':iPhoneX}"></div>
     <!-- 下单 -->
-    <xiadan-bar @xiadan="on_showDialog" details="{{ details }}" @collect="on_collect" @poster="on_poster" @service="on_service"></xiadan-bar>
+    <xiadan-bar
+      @xiadan="on_showDialog"
+      details="{{ details }}"
+      @collect="on_collect"
+      @poster="on_poster"
+      @service="on_service"
+    ></xiadan-bar>
     <!-- 屏风弹框 -->
-    <half-screen-dialog @close="on_showDialog" show="{{showDialog}}">
-      <div slot="desc" class="screen-dialog">
+    <half-screen-dialog
+      @close="on_showDialog"
+      show="{{showDialog}}"
+    >
+      <div
+        slot="desc"
+        class="screen-dialog"
+      >
         <div class="row">
           <div class="left">租用天数</div>
           <div class="right">
             <!-- step="7" -->
-            <stepper value="{{ day }}" integer @change="on_ChangeDay" min="7" max="30"></stepper>
+            <stepper
+              value="{{ day }}"
+              integer
+              @change="on_ChangeDay"
+              min="7"
+              max="30"
+            ></stepper>
           </div>
         </div>
         <!-- <div class="row">
@@ -372,7 +422,10 @@
             <switch checked="{{ isInsurance }}" @change="on_ChangeGoodsInsurance" size="24px"></switch>
           </div>
         </div> -->
-        <div class="btn" @tap="on_xiadan">确认下单</div>
+        <div
+          class="btn"
+          @tap="on_xiadan"
+        >确认下单</div>
       </div>
     </half-screen-dialog>
 
@@ -382,15 +435,37 @@
       <view class="poster-wrapper">
         <div class="poster-block">
           <!--关闭弹框 -->
-          <div class="poster-close" @tap="changeShowPoster">
-            <image class="close-img img" src="https://app.static.luyishepin.vip/miniapp/dev/images/caca.png" mode="widthFix"></image>
+          <div
+            class="poster-close"
+            @tap="changeShowPoster"
+          >
+            <image
+              class="close-img img"
+              src="https://app.static.luyishepin.vip/miniapp/dev/images/caca.png"
+              mode="widthFix"
+            ></image>
           </div>
           <!--保存图片 -->
-          <div class="poster-save" @tap="on_posterSave">
-            <image class="save-img img" src="https://app.static.luyishepin.vip/miniapp/dev/images/save.png" mode="widthFix"></image>
+          <div
+            class="poster-save"
+            @tap="on_posterSave"
+          >
+            <image
+              class="save-img img"
+              src="https://app.static.luyishepin.vip/miniapp/dev/images/save.png"
+              mode="widthFix"
+            ></image>
           </div>
-          <canvas class="my-canvas" canvas-id="myCanvas" id="myCanvas"></canvas>
-          <image class="img-main" src="{{ imgSrc }}" mode="widthFix"></image>
+          <canvas
+            class="my-canvas"
+            canvas-id="myCanvas"
+            id="myCanvas"
+          ></canvas>
+          <image
+            class="img-main"
+            src="{{ imgSrc }}"
+            mode="widthFix"
+          ></image>
         </div>
       </view>
     </van-overlay>
@@ -587,32 +662,6 @@ wepy.page({
             _this.on_initPosterImg(data)
           }
         })
-        /*
-        let imgSrc = res[2].data.maQrCode// base64编码
-        let save = wx.getFileSystemManager()
-        // 获取随机数
-        // 保存本地图片文件路径，也是绘图路径
-        let filePath = `${wx.env.USER_DATA_PATH}/qrcode.png`
-        save.writeFile({
-          filePath: filePath,
-          data: imgSrc,
-          encoding: 'base64',
-          success: res2 => {
-            wx.saveImageToPhotosAlbum({
-              filePath: filePath,
-              success: function (res3) {
-                let data = {
-                  imgLogoPash: res[0].path,
-                  imgGoods: res[1].path,
-                  qrCode: filePath
-                }
-                // 初始化海报图
-                _this.on_initPosterImg(data)
-              }
-            })
-          }
-        })
-        */
       }).catch(err => {
         console.log(err)
       })

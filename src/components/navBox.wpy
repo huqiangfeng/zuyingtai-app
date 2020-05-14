@@ -24,11 +24,13 @@
     width: 100%;
     display: flex;
     justify-content: space-evenly;
+    padding: 0 30rpx;
     .list-item {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      margin: 0 auto;
       button {
         background-color: #fff;
         border: none;
@@ -62,20 +64,39 @@
 <template>
   <div class="container">
     <div class="title">
-      <div class="title-left" @tap="on_title">{{ title }}</div>
+      <div
+        class="title-left"
+        @tap="on_title"
+      >{{ title }}</div>
       <div class="title-right">
         <slot></slot>
       </div>
     </div>
     <div class="list-box">
-      <div @tap="on_item(item)" class="list-item" v-for="(item,index) in list" :key="index">
-        <button v-if="item.copy === '客服售后'" open-type="contact">
-          <van-icon size="60rpx" info="{{ item.count||''  }}" name="{{ item.imageSrc }}"></van-icon>
+      <div
+        @tap="on_item(item)"
+        class="list-item"
+        v-for="(item,index) in list"
+        :key="index"
+      >
+        <button
+          v-if="item.copy === '客服售后'"
+          open-type="contact"
+        >
+          <van-icon
+            size="60rpx"
+            info="{{ item.count||''  }}"
+            name="{{ item.imageSrc }}"
+          ></van-icon>
           <!-- <image class="img" src="{{ item.imageSrc }}" mode="widthFix"></image> -->
           <div class="text"> {{item.text }} </div>
         </button>
         <block v-else>
-          <van-icon size="60rpx" info="{{ item.count||''  }}" name="{{ item.imageSrc }}"></van-icon>
+          <van-icon
+            size="60rpx"
+            info="{{ item.count||''  }}"
+            name="{{ item.imageSrc }}"
+          ></van-icon>
           <!-- <image class="img" src="{{ item.imageSrc }}" mode="widthFix"></image> -->
           <div class="text"> {{item.text }} </div>
         </block>
