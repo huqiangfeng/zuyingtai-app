@@ -23,7 +23,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"appid": "wx6d318358778a71f2",
+	"appid": "wx759047d74588cbba",
 	"projectname": "zuyingtai",
 	"miniprogramRoot": "weapp/",
 	"simulatorType": "wechat",
@@ -62,6 +62,14 @@
 					"id": -1,
 					"name": "packageMyInfo/pages/pushingRecord",
 					"pathName": "packageMyInfo/pages/pushingRecord",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "packageElse/pages/NotFound",
+					"pathName": "packageElse/pages/NotFound",
+					"query": "",
 					"scene": null
 				}
 			]

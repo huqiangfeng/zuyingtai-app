@@ -135,8 +135,10 @@ import store from '../../store'
 import { mapState } from '@wepy/x'
 import { spreaderInfo, getQrCode, spreaderPoster } from './../../http/api.js'
 import { Toast } from '../../utils/util.js'
+import share from './../../mixins/share.js'
 wepy.page({
   store,
+  mixins: [share],
   computed: {
     ...mapState(['userInfo']),
     navBackground () {
@@ -254,6 +256,10 @@ wepy.page({
             }
           })
         })
+        wx.showLoading({
+          title: '加载中'
+        })
+
         Promise.all([qrCodeUrl, ...arrPromise]).then(res => {
           let data = {
             qrCode: res.shift(),
@@ -301,6 +307,9 @@ wepy.page({
             _this.swiper.push({
               imageSrc: res.tempFilePath
             })
+            if (_this.pushinginfo.posterList.length == _this.swiper.length) {
+              wx.hideLoading()
+            }
             if (data.poster.length > 1) {
               data.poster.shift()
               _this.on_initImg(data)
@@ -320,17 +329,6 @@ wepy.page({
   onLoad (e) {
     this.type = e.showType
     this.getDataInfo()
-  },
-  // 用户点击右上角转发
-  onShareAppMessage () {
-
-    let obj = {
-      title: '我发现租英台有很多大牌包包\n0元租，赶快来看看吧',
-      path: 'pages/index?spreader=' + store.state.mySpreader,
-      // imageUrl: this.swiper[this.swiperIndex].imageSrc
-    }
-    console.log(obj);
-    return obj
   },
   // 生命周期回调—监听页面显示
   onShow () {

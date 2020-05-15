@@ -57,7 +57,7 @@
   <div class="wrapper">
     <!-- 推广记录 -->
     <div
-      v-if="pushinginfo.spreaderStatus ===0 || pushinginfo.spreaderStatus ===3"
+      v-if="pushinginfo.spreaderStatus ===0 || pushinginfo.spreaderStatus ===3 || !pushinginfo.spreaderStatus"
       class="promotion-record"
       @tap="to_apply"
     >

@@ -17,12 +17,20 @@
   <div class="container">
     <block v-if="not">
       <div class="img-not-box">
-        <image class="img-not" src="https://app.static.luyishepin.vip/miniapp/dev/images/meiyouo.png" mode="widthFix"></image>
+        <image
+          class="img-not"
+          src="https://app.static.luyishepin.vip/miniapp/dev/images/meiyouo.png"
+          mode="widthFix"
+        ></image>
       </div>
     </block>
     <block v-else>
       <div class="list">
-        <commodity-list collect="{{ true }}" @refresh="on_refresh" list="{{ list }}"></commodity-list>
+        <commodity-list
+          collect="{{ true }}"
+          @refresh="on_refresh"
+          list="{{ list }}"
+        ></commodity-list>
       </div>
     </block>
   </div>
@@ -34,7 +42,10 @@
 import wepy from '@wepy/core'
 import pageTurning from './../mixins/pageTurning.js'
 import { listFavorites } from './../http/api.js'
+import store from '../store'
+import { mapActions } from '@wepy/x'
 wepy.component({
+  store,
   config: {
     navigationBarTitleText: '收藏'
   },
@@ -49,6 +60,7 @@ wepy.component({
     }
   },
   methods: {
+    ...mapActions(['changePageLoading']),
     // 更新
     on_refresh () {
       // this.on_collect()
@@ -70,6 +82,7 @@ wepy.component({
           }
           this.pageSize = res.data.pageRows.length
         }
+        _this.changePageLoading({ pageLoading: false })
       })
     },
     // 上拉加载

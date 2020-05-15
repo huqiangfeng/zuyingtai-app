@@ -138,6 +138,7 @@
 import wepy from '@wepy/core'
 import pageTurning from './../../mixins/pageTurning.js'
 import { detailBrand, listGoods } from './../../http/api.js'
+import { to_404 } from './../../utils/util.js'
 wepy.page({
   computed: {
   },
@@ -157,7 +158,11 @@ wepy.page({
       detailBrand({ brandId: this.brandId }).then(res => {
         if (res.code === 0) {
           _this.details = res.data
+        } else {
+          to_404()
         }
+      }).catch(_ => {
+        to_404()
       })
     },
     // 商品列表

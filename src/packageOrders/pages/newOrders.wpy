@@ -340,7 +340,7 @@
 </template>
 <script>
 import wepy from '@wepy/core'
-import { Toast } from './../../utils/util.js'
+import { Toast, to_404 } from './../../utils/util.js'
 import { createOrder, goodsPrepayInfo, getDefaultAddr } from './../../http/api.js'
 wepy.page({
   computed: {
@@ -522,7 +522,11 @@ wepy.page({
               _this.dirtyInsureFree = true //  免奢护服务费
             }
           })
+        } else {
+          to_404()
         }
+      }).catch(_ => {
+        to_404()
       })
     },
     // 获取默认用户地址

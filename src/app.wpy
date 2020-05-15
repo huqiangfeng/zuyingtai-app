@@ -139,8 +139,10 @@ wepy.app({
         'pages/problem',
         // 问题详情
         'pages/problemDetail',
-        //协议说明
-        'pages/protocolSpecification'
+        // 协议说明
+        'pages/protocolSpecification',
+        // 404
+        'pages/NotFound'
       ],
       independent: true
     }

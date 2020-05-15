@@ -130,7 +130,10 @@
 import wepy from '@wepy/core'
 import pageTurning from './../mixins/pageTurning.js'
 import { listGoods } from './../http/api.js'
+import store from '../store'
+import { mapActions } from '@wepy/x'
 wepy.component({
+  store,
   config: {
     navigationBarTitleText: '选款',
     usingComponents: {}
@@ -156,6 +159,7 @@ wepy.component({
     list: []
   },
   methods: {
+    ...mapActions(['changePageLoading']),
     on_tapItem (e) {
       let goodsId = e.goodsId
       wx.navigateTo({ url: '/packageCommodity/pages/details?goodsId=' + goodsId })
@@ -222,6 +226,7 @@ wepy.component({
           }
           this.pageSize = res.data.pageRows.length
         }
+        _this.changePageLoading({ pageLoading: false })
       })
     },
     // 上拉加载

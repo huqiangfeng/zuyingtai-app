@@ -22,17 +22,30 @@
 <template>
   <div class="container">
     <!--  -->
-    <block v-for="(item,index) in images" :key="index">
+    <block
+      v-for="(item,index) in images"
+      :key="index"
+    >
       <block v-if="item.cellCategory === 'carousel'">
         <div class="swiper">
-          <my-swiper @tapitem="on_tapItem" setStyle="{{ item.cellStyle  }}" list="{{ item.list }}" />
+          <my-swiper
+            @tapitem="on_tapItem"
+            setStyle="{{ item.cellStyle  }}"
+            list="{{ item.list }}"
+          />
         </div>
       </block>
       <block v-else-if="item.cellCategory === 'list'">
-        <img-box @tapitem="on_tapItem" list="{{ item.list }}"></img-box>
+        <img-box
+          @tapitem="on_tapItem"
+          list="{{ item.list }}"
+        ></img-box>
       </block>
       <block v-else>
-        <img-box @tapitem="on_tapItem" list="{{ [item] }}"></img-box>
+        <img-box
+          @tapitem="on_tapItem"
+          list="{{ [item] }}"
+        ></img-box>
       </block>
     </block>
   </div>
@@ -42,7 +55,10 @@
 import wepy from '@wepy/core'
 import { getImagePage } from './../http/api.js'
 import { pageStrAnalysis } from './../utils/util.js'
+import store from '../store'
+import { mapActions } from '@wepy/x'
 wepy.component({
+  store,
   config: {
     navigationBarTitleText: '首页'
   },
@@ -52,6 +68,7 @@ wepy.component({
   computed: {
   },
   methods: {
+    ...mapActions(['changePageLoading']),
     on_tapItem (item) {
       if (item.cellHref) {
         console.log(item.cellHref)
@@ -86,6 +103,8 @@ wepy.component({
       getImagePage({ pageKey: 'miniapp_home' }).then(res => {
         if (res.code === 0) {
           _this.images = res.data.images
+
+          _this.changePageLoading({ pageLoading: false })
         }
       })
     }
@@ -93,7 +112,7 @@ wepy.component({
   // 在组件实例刚刚被创建时执行
   created () {
     this.getImagePage()
-  }
+  },
 })
 </script>
 

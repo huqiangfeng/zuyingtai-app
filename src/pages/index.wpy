@@ -35,6 +35,58 @@
     display: flex;
   }
 }
+
+.loading-box {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9995;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 2s ease-in 3s;
+  pointer-events: none;
+}
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0.4;
+  }
+  98% {
+    opacity: 0;
+  }
+  100% {
+    display: none;
+    opacity: 0;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0.4;
+  }
+  98% {
+    opacity: 0;
+  }
+  100% {
+    display: none;
+    opacity: 0;
+  }
+}
+
+.fadeOut {
+  animation: fadeOut 1s;
+  -webkit-animation: fadeOut 1s;
+  animation-fill-mode: forwards;
+}
 </style>
 
 <template>
@@ -77,6 +129,7 @@
     </div>
   </div>
 
+  <!--flooter  -->
   <div
     class="flooter-zhanwei"
     :class="{'iphone-X':iPhoneX}"
@@ -88,17 +141,28 @@
     <flooter></flooter>
   </div>
   <!--  登录弹框  -->
-  <info-login />
+  <info-login
+    @complete="loginComplete"
+    @success="loginSuccess"
+  />
   <!-- 绑定手机号 -->
   <tel-login />
+
+  <!-- Loading 加载 -->
+  <div
+    class="loading-box"
+    :class="{'fadeOut':!pageLoading}"
+  >
+    <!-- <van-loading type="spinner" /> -->
+  </div>
 </template>
 
 <script>
 import wepy from '@wepy/core'
-import { mapState, mapMutations } from '@wepy/x'
+import { mapState, mapMutations, mapActions } from '@wepy/x'
 import store from '../store'
 import { isAuthorization } from './../http/api.js'
-import { disposeUrlParameter } from '../utils/util.js'
+import { disposeUrlParameter, to_404 } from '../utils/util.js'
 import share from './../mixins/share.js'
 wepy.page({
   store,
@@ -112,7 +176,7 @@ wepy.page({
   },
   mixins: [share],
   computed: {
-    ...mapState(['footer']),
+    ...mapState(['footer', 'pageLoading']),
     navBackground () {
       // return this.footer === 4 && !this.scorllBackground ? '#000' : '#fff'
       return this.footer === 4 ? '#000' : '#fff'
@@ -122,7 +186,24 @@ wepy.page({
     }
   },
   methods: {
-    ...mapMutations(['setSpreader'])
+    ...mapMutations(['setSpreader']),
+    ...mapActions(['changePageLoading']),
+    // 登录弹框结束
+    loginComplete () {
+      this.changePageLoading({ pageLoading: false })
+    },
+    // 登录成功
+    loginSuccess () {
+      if (this.footer === 0) {
+        this.$wx.selectComponent('#home').$wepy.getImagePage()
+      } else if (this.footer === 1) {
+        this.$wx.selectComponent('#choose').$wepy.getPageListData()
+      } else if (this.footer === 3) {
+        this.$wx.selectComponent('#collect').$wepy.getPageListData()
+      } else if (this.footer === 4) {
+        this.$wx.selectComponent('#myIndex').$wepy.getPageData()
+      }
+    }
   },
   created () {
     let _this = this
@@ -144,7 +225,7 @@ wepy.page({
     if (e.spreader) {
       this.setSpreader({ spreader: e.spreader })
     }
-    isAuthorization()
+    // isAuthorization()
   },
   // 生命周期回调—监听页面显示
   onShow () {
@@ -194,7 +275,8 @@ wepy.page({
       "my-index":"~@/homeComponents/myIndex",
       'mp-navigation-bar': '~@weui/navigation-bar/navigation-bar',
       "info-login": "~@components/infoLogin",
-      "tel-login": "~@components/telLogin"
+      "tel-login": "~@components/telLogin",
+      "van-loading": "~@vant/loading/index"
     },
     "enablePullDownRefresh": true, // 开启页面下拉刷新
     "navigationStyle": "custom",

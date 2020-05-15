@@ -68,10 +68,11 @@
 import wepy from '@wepy/core'
 import store from '../store'
 import { mapState } from '@wepy/x'
+import { isAuthorization } from './../http/api.js'
 wepy.component({
   store,
   computed: {
-    ...mapState(['userInfo']),
+    ...mapState(['userInfo', 'login']),
     name () {
       return this.userInfo.userNickname ? this.userInfo.userNickname : '登录/注册'
     },
@@ -90,12 +91,13 @@ wepy.component({
   props: {},
   methods: {
     on_setOrLogin () {
-      if (this.userInfo.userPhone) {
+      // this.userInfo.userPhone &&
+      if (this.login) {
         wx.navigateTo({
           url: '/packageMyInfo/pages/setMyInfo'
         })
       } else {
-
+        isAuthorization()
       }
     }
   }

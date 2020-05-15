@@ -1,4 +1,10 @@
 export default {
+  // 设置PageLoading
+  changePageLoading({
+    commit
+  }, payload) {
+    commit('changePageLoading', payload)
+  },
   // 设置我的推广者用户标识
   setMySpreader({
     commit

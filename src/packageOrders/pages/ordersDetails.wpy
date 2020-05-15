@@ -185,12 +185,21 @@ page {
       <!-- 状态 -->
       <div class="order-status">{{ orderData.orderStatusDisplay }}</div>
       <!-- 地址 -->
-      <div v-if="PAID||UNPAID||CLOSED||SENDING" class="addr">
-        <addr-icon-box amend="{{ false }}" item="{{ checkedAddr }}"></addr-icon-box>
+      <div
+        v-if="PAID||UNPAID||CLOSED||SENDING"
+        class="addr"
+      >
+        <addr-icon-box
+          amend="{{ false }}"
+          item="{{ checkedAddr }}"
+        ></addr-icon-box>
       </div>
 
       <!-- 归还物流信息 -->
-      <div v-else-if="COMPLETE||CHECKING||SETTLE" class="row-box">
+      <div
+        v-else-if="COMPLETE||CHECKING||SETTLE"
+        class="row-box"
+      >
         <!-- 归还物流 -->
         <div class="row">
           <div class="left">
@@ -198,7 +207,10 @@ page {
             <div class="v">{{orderData.backExpressNo}}</div>
           </div>
           <div class="right">
-            <div class="copy" @tap="on_copy(orderData.backExpressNo)">复制</div>
+            <div
+              class="copy"
+              @tap="on_copy(orderData.backExpressNo)"
+            >复制</div>
           </div>
         </div>
         <!--  -->
@@ -210,22 +222,40 @@ page {
         </div>
       </div>
 
-      <div v-else-if="USING||RETURNING" class="stay-return">
-        <van-steps active-icon="checked" active-color="#C9AB79" inactive-color="#ddd" steps="{{ steps }}" active="{{ stepsActive }}" />
+      <div
+        v-else-if="USING||RETURNING"
+        class="stay-return"
+      >
+        <van-steps
+          active-icon="checked"
+          active-color="#C9AB79"
+          inactive-color="#ddd"
+          steps="{{ steps }}"
+          active="{{ stepsActive }}"
+        />
       </div>
 
     </div>
     <!-- 商品 -->
     <div class="commodity-box">
       <div class="commodity">
-        <commodity-item isDetail="{{ true }}" item="{{ orderData }}"></commodity-item>
+        <commodity-item
+          isDetail="{{ true }}"
+          item="{{ orderData }}"
+        ></commodity-item>
       </div>
       <!-- 归还地址 -->
-      <div v-if="USING" class="row-box">
+      <div
+        v-if="USING"
+        class="row-box"
+      >
         <div class="row">
           <div class="left title">归还地址</div>
           <div class="right">
-            <div class="copy" @tap="on_copySite()">复制</div>
+            <div
+              class="copy"
+              @tap="on_copySite()"
+            >复制</div>
           </div>
         </div>
         <!-- 收件人　 -->
@@ -251,7 +281,10 @@ page {
         </div>
       </div>
       <!-- 归还信息 -->
-      <div v-else-if="RETURNING" class="row-box">
+      <div
+        v-else-if="RETURNING"
+        class="row-box"
+      >
         <div class="title">归还信息</div>
         <!-- 订单编号 -->
         <div class="row">
@@ -274,7 +307,10 @@ page {
             <div class="v">{{orderData.backExpressNo}}</div>
           </div>
           <div class="right">
-            <div class="copy" @tap="on_copy(orderData.backExpressNo)">复制</div>
+            <div
+              class="copy"
+              @tap="on_copy(orderData.backExpressNo)"
+            >复制</div>
           </div>
         </div>
       </div>
@@ -292,7 +328,10 @@ page {
           <div class="right">¥{{ orderData.moreGoodsFee }}</div>
         </div>
         <!-- 免赔服务 -->
-        <div class="com-row row-ext" v-if="orderData.isInsurance">
+        <div
+          class="com-row row-ext"
+          v-if="orderData.isInsurance"
+        >
           <div class="left left-flex">免赔服务</div>
           <div class="right">¥{{ orderData.dirtyInsureFee }}</div>
         </div>
@@ -322,7 +361,10 @@ page {
     </div>
 
     <!-- 订单 -->
-    <div v-if="!USING&&!RETURNING||CHECKING||SETTLE" class="row-box">
+    <div
+      v-if="!USING&&!RETURNING||CHECKING||SETTLE"
+      class="row-box"
+    >
       <div class="title">订单信息</div>
       <!-- 订单编号 -->
       <div class="row">
@@ -331,7 +373,10 @@ page {
           <div class="v">{{orderData.orderNo}}</div>
         </div>
         <div class="right">
-          <div class="copy" @tap="on_copy(orderData.orderNo)">复制</div>
+          <div
+            class="copy"
+            @tap="on_copy(orderData.orderNo)"
+          >复制</div>
         </div>
       </div>
       <!-- 下单时间 -->
@@ -350,7 +395,10 @@ page {
       </div>
     </div>
     <!-- 审核结果 -->
-    <div v-if="CHECKING||COMPLETE||SETTLE" class="row-box">
+    <div
+      v-if="CHECKING||COMPLETE||SETTLE"
+      class="row-box"
+    >
       <div class="title">审核结果</div>
       <!-- 审核状态 -->
       <div class="row">
@@ -360,7 +408,10 @@ page {
         </div>
         <div class="right">
           <!-- open-type="contact" -->
-          <button class="kefu" @tap="on_copyWX">
+          <button
+            class="kefu"
+            @tap="on_copyWX"
+          >
             联系客服
           </button>
         </div>
@@ -382,7 +433,10 @@ page {
           </div>
         </div>
 
-        <div v-if="orderData.backCheckRemark" class="text-describe">
+        <div
+          v-if="orderData.backCheckRemark"
+          class="text-describe"
+        >
           {{ orderData.backCheckRemark }}
         </div>
       </block>
@@ -391,13 +445,17 @@ page {
 
     <!-- 按钮 btns -->
     <div class="btn-box">
-      <btns @refresh="on_refresh" orderData="{{ orderData }}"></btns>
+      <btns
+        @refresh="on_refresh"
+        orderData="{{ orderData }}"
+      ></btns>
     </div>
   </div>
 </template>
 <script>
 import wepy from '@wepy/core'
 import { detailOrder } from './../../http/api.js'
+import { to_404 } from './../../utils/util.js'
 wepy.page({
   computed: {
     UNPAID () { // 等待付款
@@ -512,7 +570,11 @@ wepy.page({
           // ]
 
           // wx.setNavigationBarTitle({ title: _this.orderData.orderStatusDisplay })
+        } else {
+          to_404()
         }
+      }).catch(_ => {
+        to_404()
       })
     },
     // 刷新数据

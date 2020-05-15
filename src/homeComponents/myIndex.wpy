@@ -139,11 +139,11 @@
 import wepy from '@wepy/core'
 import store from '../store'
 import { mapState, mapActions } from '@wepy/x'
-import { getUserInfo, goodsOrderCountUnfinished } from './../http/api.js'
+import { getUserInfo, goodsOrderCountUnfinished, isAuthorization } from './../http/api.js'
 wepy.component({
   store,
   computed: {
-    ...mapState(['userInfo'])
+    ...mapState(['userInfo', 'login'])
   },
   data: {
     // 订单nav
@@ -214,30 +214,46 @@ wepy.component({
     ]
   },
   methods: {
-    ...mapActions(['setUserInfo']),
+    ...mapActions(['setUserInfo', 'changePageLoading']),
     // 推手
     on_toPushingHands (type) {
-      // let showType = type === 'apply' ? 'apply' : 'promotion-code'
-      let showType = 'promotion-code'
-      wx.navigateTo({ url: '/packageMyInfo/pages/pushingHands?showType=' + showType })
+      if (this.login) {
+        // let showType = type === 'apply' ? 'apply' : 'promotion-code'
+        let showType = 'promotion-code'
+        wx.navigateTo({ url: '/packageMyInfo/pages/pushingHands?showType=' + showType })
+      } else {
+        isAuthorization()
+      }
     },
     // 消息
     on_toInformation () {
-      wx.navigateTo({ url: '/packageMyInfo/pages/information' })
+      if (this.login) {
+        wx.navigateTo({ url: '/packageMyInfo/pages/information' })
+      } else {
+        isAuthorization()
+      }
     },
     // 订单管理
     on_toOrdersAdmin () {
-      wx.navigateTo({
-        url: '/packageOrders/pages/ordersAdmin',
-        success: function (res) {
-          // 通过eventChannel向被打开页面传送数据
-          res.eventChannel.emit('getPageData', '')
-        }
-      })
+      if (this.login) {
+        wx.navigateTo({
+          url: '/packageOrders/pages/ordersAdmin',
+          success: function (res) {
+            // 通过eventChannel向被打开页面传送数据
+            res.eventChannel.emit('getPageData', '')
+          }
+        })
+      } else {
+        isAuthorization()
+      }
     },
     //  跳转地址管理
     to_userAddr () {
-      wx.navigateTo({ url: '/packageOrders/pages/addrAdmin' })
+      if (this.login) {
+        wx.navigateTo({ url: '/packageOrders/pages/addrAdmin' })
+      } else {
+        isAuthorization()
+      }
     },
     // 获取用户信息
     getPageData () {
@@ -265,6 +281,7 @@ wepy.component({
                 break
             }
           })
+          _this.changePageLoading({ pageLoading: false })
         }
       }).catch(_ => {
 

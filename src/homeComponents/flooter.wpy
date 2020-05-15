@@ -30,11 +30,30 @@
 <template>
   <!--miniprogram/custom-tab-bar/index.wxml-->
   <view class="tab-bar">
-    <view wx:for="{{list}}" wx:key="index" class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
-      <image v-show="footer === index" src="{{item.selectedIconPath }}"></image>
-      <image v-show="footer !== index" src="{{ item.iconPath}}"></image>
-      <view v-show="footer === index" style="color: {{selectedColor }}">{{item.text}}</view>
-      <view v-show="footer !== index" style="color: {{ color}}">{{item.text}}</view>
+    <view
+      wx:for="{{list}}"
+      wx:key="index"
+      class="tab-bar-item"
+      data-path="{{item.pagePath}}"
+      data-index="{{index}}"
+      bindtap="switchTab"
+    >
+      <image
+        v-show="footer === index"
+        src="{{item.selectedIconPath }}"
+      ></image>
+      <image
+        v-show="footer !== index"
+        src="{{ item.iconPath}}"
+      ></image>
+      <view
+        v-show="footer === index"
+        style="color: {{selectedColor }}"
+      >{{item.text}}</view>
+      <view
+        v-show="footer !== index"
+        style="color: {{ color}}"
+      >{{item.text}}</view>
     </view>
   </view>
 </template>
@@ -76,7 +95,7 @@ wepy.component({
     }]
   },
   methods: {
-    ...mapMutations(['changeFooter']),
+    ...mapMutations(['changeFooter', 'changePageLoading']),
     switchTab (e) {
       const data = e.currentTarget.dataset
       const url = data.path
@@ -86,7 +105,7 @@ wepy.component({
       }
       if (data.index == 4) {
         wx.setBackgroundColor({
-          backgroundColorTop: '#000000' // 窗口的背景色为白色
+          backgroundColorTop: '#000000' // 窗口的背景色为黑色
         })
       } else {
         wx.setBackgroundColor({
@@ -94,6 +113,7 @@ wepy.component({
         })
       }
       this.changeFooter({ footer: data.index })
+      this.changePageLoading({ pageLoading: true })
       wx.pageScrollTo({
         scrollTop: 0,
         duration: 0

@@ -15,6 +15,10 @@ export default {
   changeFooter(state, payload) {
     state.footer = payload.footer
   },
+  // 设置PageLoading
+  changePageLoading(state, payload) {
+    state.pageLoading = payload.pageLoading
+  },
   // 登录
   setLogin(state, payload) {
     state.login = payload.isLogin

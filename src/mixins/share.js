@@ -8,8 +8,8 @@ export default {
   onShareAppMessage() {
     let obj = {
       title: '我发现租英台有很多大牌包包\n0元租，赶快来看看吧',
-      path: 'pages/index?spreader=' + store.state.mySpreader
-      // imageUrl: 'https://app.static.luyishepin.vip/miniapp/dev/images/share-bg.png'
+      path: 'pages/index?spreader=' + store.state.mySpreader,
+      imageUrl: 'https://app.static.luyishepin.vip/miniapp/dev/images/share-bg.png'
     }
     return obj
   }

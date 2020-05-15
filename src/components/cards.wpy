@@ -39,8 +39,15 @@
 
 <template>
   <div class="container">
-    <div @tap="on_changePage('vip')" class="vip card">
-      <image class="img" src="https://app.static.luyishepin.vip/miniapp/dev/images/v.png" mode="widthFix"></image>
+    <div
+      @tap="on_changePage('vip')"
+      class="vip card"
+    >
+      <image
+        class="img"
+        src="https://app.static.luyishepin.vip/miniapp/dev/images/v.png"
+        mode="widthFix"
+      ></image>
       <block v-if="userInfo.memberLevel === 0">
         <div class="k">Member</div>
         <div class="v">开通VIP</div>
@@ -50,13 +57,27 @@
         <div class="v">剩余{{ time }}天</div>
       </block>
     </div>
-    <div @tap="on_changePage('jifen')" class="integral card">
-      <image class="img" src="https://app.static.luyishepin.vip/miniapp/dev/images/yuanxinxing.png" mode="widthFix"></image>
+    <div
+      @tap="on_changePage('jifen')"
+      class="integral card"
+    >
+      <image
+        class="img"
+        src="https://app.static.luyishepin.vip/miniapp/dev/images/yuanxinxing.png"
+        mode="widthFix"
+      ></image>
       <div class="k">积分</div>
       <div class="v">{{ userInfo.userPoints }}</div>
     </div>
-    <div @tap="on_changePage('yue')" class="balance card">
-      <image class="img" src="https://app.static.luyishepin.vip/miniapp/dev/images/qian.png" mode="widthFix"></image>
+    <div
+      @tap="on_changePage('yue')"
+      class="balance card"
+    >
+      <image
+        class="img"
+        src="https://app.static.luyishepin.vip/miniapp/dev/images/qian.png"
+        mode="widthFix"
+      ></image>
       <div class="k">流水</div>
       <!-- <div class="v">¥999999.00</div> -->
     </div>
@@ -67,10 +88,11 @@
 import wepy from '@wepy/core'
 import store from '../store'
 import { mapState } from '@wepy/x'
+import { isAuthorization } from './../http/api.js'
 wepy.component({
   store,
   computed: {
-    ...mapState(['userInfo']),
+    ...mapState(['userInfo', 'login']),
     // 会员剩余时间
     time () {
       if (this.userInfo.memberExpireDate) {
@@ -83,6 +105,12 @@ wepy.component({
   props: {},
   methods: {
     on_changePage (type) {
+
+      if (!this.login) {
+        isAuthorization()
+        return
+      }
+
       switch (type) {
         case 'jifen':
           wx.navigateTo({ url: '/packageMyInfo/pages/myIntegral' })

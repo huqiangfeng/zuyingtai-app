@@ -166,3 +166,10 @@ export const Toast = (str, icon) => {
     duration: 2000
   })
 }
+
+//  404 NotFound
+export const to_404 = () => {
+  wx.navigateTo({
+    url: '/packageElse/pages/NotFound'
+  })
+}

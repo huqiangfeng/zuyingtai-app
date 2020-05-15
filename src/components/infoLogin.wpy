@@ -80,6 +80,10 @@
         >
           授权信息
         </button>
+        <div
+          class="btn"
+          @tap="onClickHide"
+        >取 消</div>
       </div>
     </div>
   </van-overlay>
@@ -111,7 +115,16 @@ wepy.component({
       data.code = _this.code
       gitToken(data).then(res => {
         _this.$emit('success')
+        _this.$emit('complete')
       })
+    },
+    // 隐藏弹框
+    onClickHide () {
+      store.dispatch('setShowLogin', {
+        isShowLogin: false
+      })
+      this.$emit('failed')
+      this.$emit('complete')
     }
   }
 })

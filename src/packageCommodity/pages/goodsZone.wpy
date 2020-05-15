@@ -44,6 +44,7 @@
 import wepy from '@wepy/core'
 import pageTurning from './../../mixins/pageTurning.js'
 import { zoneInfo, zoneGoods } from './../../http/api.js'
+import { to_404 } from './../../utils/util.js'
 wepy.page({
   computed: {
   },
@@ -62,9 +63,11 @@ wepy.page({
       }).then((res) => {
         if (res.code === 0) {
           _this.details = res.data
+        } else {
+          to_404()
         }
       }).catch((err) => {
-
+        to_404()
       })
     },
     // 商品列表

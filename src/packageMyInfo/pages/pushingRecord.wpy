@@ -232,7 +232,7 @@ wepy.page({
             let obj = {
               title: item.userNickname,
               time: item.createTime,
-              value: item.userPhone.substr(0, 4) + '***' + item.userPhone.substr(-4),
+              value: item.userPhone.substr(0, 5) + '****' + item.userPhone.substr(-2),
               extText: '',
               valueActive: false,
               extTextActive: false

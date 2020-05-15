@@ -107,7 +107,14 @@
 
 <script>
 import wepy from '@wepy/core'
+import store from '../store'
+import { mapState } from '@wepy/x'
+import { isAuthorization } from './../http/api.js'
 wepy.component({
+  store,
+  computed: {
+    ...mapState(['login'])
+  },
   props: {
     list: {
       type: [Array],
@@ -120,6 +127,12 @@ wepy.component({
   },
   methods: {
     on_item (item) {
+
+      if (!this.login) {
+        isAuthorization()
+        return
+      }
+
       if (item.pagePath) {
         wx.navigateTo({
           url: item.pagePath,

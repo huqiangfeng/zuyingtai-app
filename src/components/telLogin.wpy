@@ -69,7 +69,10 @@
           class="btn"
           @tap="to_newTelLogin"
         >手机验证码登录</div> -->
-        <!-- <div class="btn" @tap="onClickHide">取 消</div> -->
+        <div
+          class="btn"
+          @tap="onClickHide"
+        >取 消</div>
       </div>
 
     </div>
