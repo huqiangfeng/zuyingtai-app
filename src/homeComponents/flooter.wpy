@@ -99,6 +99,9 @@ wepy.component({
     switchTab (e) {
       const data = e.currentTarget.dataset
       const url = data.path
+      if (this.footer == data.index) {
+        return
+      }
       if (url === '/packageLeaveUnused/pages/leaveUnused') {
         wx.navigateTo({ url: url })
         return
